@@ -82,7 +82,7 @@ int main( int argc, char **argv )
 {
 	if ( argc < 2 )
 	{
-		std::cerr << "用法：" << argv[0] << "<端口号>" << std::endl ;
+		std::cerr << "Guide:" << argv[0] << "<Port Number>" << std::endl ;
 		return - 1;
 	}
 	// prepare to listen socket
