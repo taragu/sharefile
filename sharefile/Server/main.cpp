@@ -22,7 +22,6 @@ void *clientthread( void *arg )
 			goto error ;
 		}
 		std::cout << "command:" << commandbuf << std::endl ;
-        // execute command
 		if ( !strncmp( COMMAND_LS, commandbuf, strlen(COMMAND_LS) ) )
 		{
 			if ( -1 == command.LsCommand( ) )
