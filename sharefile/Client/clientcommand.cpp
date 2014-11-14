@@ -143,12 +143,12 @@ error:
 // help
 int ClientCommand::HelpCommand( void ) const
 {
-	std::cout << "help           show help" << std::endl ;
-	std::cout << "ls             show contents under current directory" << std::endl ;
-	std::cout << "get filename     download file from server" << std::endl ;
-	std::cout << "put filename     upload file to server" << std::endl ;
-	std::cout << "cd  filename     enter a directory" << std::endl ;
-	std::cout << "by             quit" << std::endl; 
+	std::cout << "help               show help" << std::endl ;
+	std::cout << "ls                 show contents under current directory" << std::endl ;
+	std::cout << "get <filename>     download file from server" << std::endl ;
+	std::cout << "put <filename>     upload file to server" << std::endl ;
+	std::cout << "cd  <filename>     enter a directory" << std::endl ;
+	std::cout << "by                 quit" << std::endl; 
 	return 0 ;
 }
 

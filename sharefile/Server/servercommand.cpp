@@ -61,7 +61,7 @@ error:
 
 int ServerCommand::QuitCommand( ) const
 {
-	std::cout << "有客户端退出" << std::endl; 
+	std::cout << "One client ends" << std::endl; 
 	return close( m_sockfd ) ;
 }
 
