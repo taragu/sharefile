@@ -14,14 +14,14 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName){
   return 0;
 }
 
-bool UserDbEditor(std::string s)
+bool UserDbEditor(std::string s, sqlite3 * db_user)
 {
-  sqlite3 *db_user;
+  //sqlite3 *db_user;
   char *zErrMsg = 0;
   int rc;
   
 
-  /* Open database */
+  /* Open database 
   rc = sqlite3_open("UsersTable.db", &db_user);
   if( rc ){
     fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db_user));
@@ -31,7 +31,7 @@ bool UserDbEditor(std::string s)
     fprintf(stderr, "Opened database successfully\n");
   }
 
-
+  */
    /* Execute SQL statement */
   rc = sqlite3_exec(db_user, s.c_str(), callback, 0, &zErrMsg);
    if( rc != SQLITE_OK ){
@@ -40,8 +40,8 @@ bool UserDbEditor(std::string s)
    }else{
      fprintf(stdout, "%s successfully\n", s.c_str());
    }
-   sqlite3_close(db_user);
-   return 0;
+   //sqlite3_close(db_user);
+   return 1;
 }
 
 
