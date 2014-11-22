@@ -19,4 +19,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     clientcommand.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    signupform.ui \
+    signup_warning_dialog.ui \
+    filemanager.ui
