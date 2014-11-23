@@ -16,10 +16,9 @@ public:
 
   static ClientCommand * clientCommand;
 
-//  static void createClientCommand(char * ip, int portnumber) {
-//    clientCommand = new ClientCommand( ip, portnumber) ;
-//    clientCommand->manager() ;
-//  }
+  static void setClientCommand(ClientCommand * _clientCommand) {
+    clientCommand = _clientCommand;
+  }
 
 //  static ClientCommand * getClientCommand() {
 //      return clientCommand;

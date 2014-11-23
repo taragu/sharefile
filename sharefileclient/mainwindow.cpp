@@ -47,16 +47,17 @@ void MainWindow::on_signup_button_clicked()
 void MainWindow::on_connect_button_clicked()
 {
     //add local files: call the lscommand method in clientcommand, and then add all of them to the list widget
-    ClientCommand * clientCommand = ClientCommandManager::clientCommand;
-    std::set<std::string> filesSet = clientCommand->LsCommand();
-    int size = filesSet.size();
-    std::set<std::string>::iterator it = filesSet.begin();
-    for (int i=0;i<size;i++){
-        std::advance(it, i);
-        std::string thisFile = *it;
-        QString qstr = QString::fromStdString(thisFile);
-        ui->localfiles_list->addItem(qstr);
-    }
+//    ClientCommand * clientCommand = ClientCommandManager::clientCommand;
+    //TODO: MOVE THESE TO THE ONCLICK OF THE ENTER DIRECTORY CONFIRM BUTTON
+//    std::set<std::string> filesSet = clientCommand->LsCommand();
+//    int size = filesSet.size();
+//    std::set<std::string>::iterator it = filesSet.begin();
+//    for (int i=0;i<size;i++){
+//        std::advance(it, i);
+//        std::string thisFile = *it;
+//        QString qstr = QString::fromStdString(thisFile);
+//        ui->localfiles_list->addItem(qstr);
+//    }
     //connect
     ConnectDialog connect;
     connect.setModal(true);

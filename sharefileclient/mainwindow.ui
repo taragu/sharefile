@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>641</width>
-    <height>513</height>
+    <height>579</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,21 +30,21 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>110</y>
-      <width>111</width>
+      <x>10</x>
+      <y>100</y>
+      <width>231</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>Local Files</string>
+     <string>Type in your directory:</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>120</y>
+      <x>260</x>
+      <y>370</y>
       <width>131</width>
       <height>21</height>
      </rect>
@@ -56,20 +56,20 @@
    <widget class="QListWidget" name="localfiles_list">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>130</x>
       <y>150</y>
-      <width>171</width>
-      <height>192</height>
+      <width>381</width>
+      <height>161</height>
      </rect>
     </property>
    </widget>
    <widget class="QListWidget" name="serverfiles_list">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>150</y>
-      <width>191</width>
-      <height>192</height>
+      <x>130</x>
+      <y>400</y>
+      <width>381</width>
+      <height>131</height>
      </rect>
     </property>
    </widget>
@@ -77,19 +77,19 @@
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>240</y>
-      <width>151</width>
-      <height>41</height>
+      <y>320</y>
+      <width>81</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Upload Selected Files</string>
+     <string>Upload</string>
     </property>
    </widget>
    <widget class="QPushButton" name="signup_button">
     <property name="geometry">
      <rect>
-      <x>530</x>
+      <x>10</x>
       <y>0</y>
       <width>99</width>
       <height>27</height>
@@ -102,8 +102,8 @@
    <widget class="QPushButton" name="connect_button">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>30</y>
+      <x>230</x>
+      <y>0</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -115,8 +115,8 @@
    <widget class="QPushButton" name="signin_button">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>70</y>
+      <x>120</x>
+      <y>0</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -125,30 +125,81 @@
      <string>Sign in</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>641</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuSharefile">
-    <property name="title">
-     <string>I want to...</string>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>70</y>
+      <width>391</width>
+      <height>21</height>
+     </rect>
     </property>
-    <addaction name="separator"/>
-    <addaction name="separator"/>
-   </widget>
-   <widget class="QMenu" name="menuNotifications">
-    <property name="title">
-     <string>Notifications</string>
+    <property name="text">
+     <string>PLEASE ENTER IP ADDRESS BEFORE DOING ANYTHING</string>
     </property>
    </widget>
-   <addaction name="menuSharefile"/>
-   <addaction name="menuNotifications"/>
+   <widget class="QTextEdit" name="cd_textedit">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>100</y>
+      <width>271</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cd_button">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>100</y>
+      <width>99</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Confirm</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>0</y>
+      <width>99</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add a Friend</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>0</y>
+      <width>99</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Messages</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>320</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Share</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
