@@ -8,23 +8,12 @@
 #include <string>
 #include <set>
 
-void add_local_files() {
-    //call the lscommand method in clientcommand, and then add all of them to the list widget
-    ClientCommand * clientCommand = ClientCommandManager.getClientCommand();
-    std::set<std::string> filesSet = clientCommand->LsCommand();
-    int size = filesSet.size();
-    for (int i=0;i<size;i++){
-        ui.localfiles_list->addItem(filesSet[i]);
-    }
-}
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    add_local_files();
 }
 
 MainWindow::~MainWindow()
@@ -57,6 +46,18 @@ void MainWindow::on_signup_button_clicked()
 //open dialog to enter ip address
 void MainWindow::on_connect_button_clicked()
 {
+    //add local files: call the lscommand method in clientcommand, and then add all of them to the list widget
+    ClientCommand * clientCommand = ClientCommandManager::clientCommand;
+    std::set<std::string> filesSet = clientCommand->LsCommand();
+    int size = filesSet.size();
+    std::set<std::string>::iterator it = filesSet.begin();
+    for (int i=0;i<size;i++){
+        std::advance(it, i);
+        std::string thisFile = *it;
+        QString qstr = QString::fromStdString(thisFile);
+        ui->localfiles_list->addItem(qstr);
+    }
+    //connect
     ConnectDialog connect;
     connect.setModal(true);
     connect.exec();

@@ -6,19 +6,24 @@
 #include <string>
 #include <set>
 
+
+
+
 class ClientCommandManager {
-  ClientCommand * clientCommand;
 
+    //ClientCommand * clientCommand;
 public:
-  static void createClientCommand(char * ip, int portnumber) {
-    ClientCommand * _clientcommand = new ClientCommand( ip, portnumber) ;
-    clientCommand = _clientCommand;
-    _clientcommand->manager() ;
-  }
 
-  static ClientCommand * getClientCommand() {
-      return clientCommand;
-  }
+  static ClientCommand * clientCommand;
+
+//  static void createClientCommand(char * ip, int portnumber) {
+//    clientCommand = new ClientCommand( ip, portnumber) ;
+//    clientCommand->manager() ;
+//  }
+
+//  static ClientCommand * getClientCommand() {
+//      return clientCommand;
+//  }
 };
 
 #endif
