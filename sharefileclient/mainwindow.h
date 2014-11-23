@@ -24,6 +24,8 @@ private slots:
 
     void on_connect_button_clicked();
 
+    void on_cd_button_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
