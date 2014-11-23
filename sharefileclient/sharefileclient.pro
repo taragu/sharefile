@@ -21,7 +21,8 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     clientcommand.h \
     signupdialog.h \
-    connectdialog.h
+    connectdialog.h \
+    clientcommandmanager.h
 
 FORMS    += mainwindow.ui \
     signupdialog.ui \

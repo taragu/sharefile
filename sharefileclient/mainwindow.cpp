@@ -3,10 +3,19 @@
 #include "signupdialog.h"
 #include "connectdialog.h"
 #include "clientcommand.h"
+#include "clientcommandmanager.h"
+#include <iostream>
+#include <string>
+#include <set>
 
 void add_local_files() {
-    //TODO call the lscommand method in clientcommand, and then add all of them to the list widget
-
+    //call the lscommand method in clientcommand, and then add all of them to the list widget
+    ClientCommand * clientCommand = ClientCommandManager.getClientCommand();
+    std::set<std::string> filesSet = clientCommand->LsCommand();
+    int size = filesSet.size();
+    for (int i=0;i<size;i++){
+        ui.localfiles_list->addItem(filesSet[i]);
+    }
 }
 
 
@@ -22,9 +31,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-
-
 
 //TODO: move local files to server
 void MainWindow::on_movefiles_button_clicked()
