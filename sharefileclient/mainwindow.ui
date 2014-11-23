@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>446</width>
-    <height>314</height>
+    <width>641</width>
+    <height>513</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>230</x>
       <y>40</y>
       <width>181</width>
       <height>21</height>
@@ -30,67 +30,67 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>90</y>
-      <width>81</width>
-      <height>16</height>
+      <x>90</x>
+      <y>110</y>
+      <width>111</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>Username</string>
+     <string>Local Files</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>430</x>
       <y>120</y>
-      <width>67</width>
-      <height>17</height>
+      <width>131</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>Password</string>
+     <string>Uploaded Files</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="main_username_textfield">
+   <widget class="QListWidget" name="localfiles_list">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>80</y>
-      <width>141</width>
-      <height>31</height>
+      <x>50</x>
+      <y>150</y>
+      <width>171</width>
+      <height>192</height>
      </rect>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="main_password_textfield">
+   <widget class="QListWidget" name="serverfiles_list">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>120</y>
-      <width>141</width>
-      <height>31</height>
+      <x>400</x>
+      <y>150</y>
+      <width>191</width>
+      <height>192</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="login_button">
+   <widget class="QPushButton" name="movefiles_button">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>160</y>
-      <width>99</width>
-      <height>27</height>
+      <x>230</x>
+      <y>240</y>
+      <width>151</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>Login</string>
+     <string>Upload Selected Files</string>
     </property>
    </widget>
    <widget class="QPushButton" name="signup_button">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>200</y>
+      <x>530</x>
+      <y>0</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -105,16 +105,24 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>446</width>
+     <width>641</width>
      <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSharefile">
     <property name="title">
-     <string>Sharefile</string>
+     <string>I want to...</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuNotifications">
+    <property name="title">
+     <string>Notifications</string>
     </property>
    </widget>
    <addaction name="menuSharefile"/>
+   <addaction name="menuNotifications"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -125,6 +133,39 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionSignin">
+   <property name="text">
+    <string>Sign in</string>
+   </property>
+  </action>
+  <action name="actionSignup">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Sign up</string>
+   </property>
+  </action>
+  <action name="actionAdd_a_friend">
+   <property name="text">
+    <string>Add a friend</string>
+   </property>
+  </action>
+  <action name="actionChat_with_a_friend">
+   <property name="text">
+    <string>Chat with a friend</string>
+   </property>
+  </action>
+  <action name="actionFriend_requests">
+   <property name="text">
+    <string>Friend requests</string>
+   </property>
+  </action>
+  <action name="actionMessages">
+   <property name="text">
+    <string>Messages</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
