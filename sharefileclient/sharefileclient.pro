@@ -15,11 +15,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     clientcommand.cpp \
-    signupdialog.cpp
+    signupdialog.cpp \
+    connectdialog.cpp
 
 HEADERS  += mainwindow.h \
     clientcommand.h \
-    signupdialog.h
+    signupdialog.h \
+    connectdialog.h
 
 FORMS    += mainwindow.ui \
-    signupdialog.ui
+    signupdialog.ui \
+    connectdialog.ui

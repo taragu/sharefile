@@ -22,6 +22,8 @@ private slots:
 
     void on_signup_button_clicked();
 
+    void on_connect_button_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
