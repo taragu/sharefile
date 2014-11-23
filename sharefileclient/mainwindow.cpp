@@ -60,7 +60,6 @@ void MainWindow::on_cd_button_clicked()
     ClientCommandManager::clientCommand->CdCommand(path) ;
     //add local files: call the lscommand method in clientcommand, and then add all of them to the list widget
     ClientCommand * clientCommand = ClientCommandManager::clientCommand;
-    //TODO: MOVE THESE TO THE ONCLICK OF THE ENTER DIRECTORY CONFIRM BUTTON
     std::set<std::string> filesSet = clientCommand->LsCommand();
     int size = filesSet.size();
     std::set<std::string>::iterator it = filesSet.begin();
