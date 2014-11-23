@@ -1,4 +1,7 @@
 #include "clientcommand.h"
+#include <iostream>
+#include <string>
+#include <set>
 #define COMMAND_BUF_SIZE  256
 #define END 1234
 
@@ -56,6 +59,7 @@ error:
 // get file
 int ClientCommand::GetCommand( const char *fileName ) const
 {
+
     int retval = 0 ;
     char command[COMMAND_BUF_SIZE] ;
     bzero( command, sizeof(command) ) ;
@@ -153,8 +157,9 @@ int ClientCommand::HelpCommand( void ) const
 }
 
 
-int ClientCommand::LsCommand( void ) const
+std::set<std::string> ClientCommand::LsCommand( void ) const
 {
+    std::set<std::string> returnSet;
     int retval = 0 ;
     char filename[RECV_BUF_SIZE] ;
     bzero( filename, sizeof(filename) ) ;
@@ -168,22 +173,23 @@ int ClientCommand::LsCommand( void ) const
     {
         if ( END == *(int*)filename )
         {
-            printf( "\n" ) ;
+            //printf( "\n" ) ;
             goto done ;
         }
         else if ( DT_DIR == *(int*)filename )
         {
-            printf( "\033[0;34m%s\033[0m \t", filename+sizeof(int) ) ;
+            //printf( "\033[0;34m%s\033[0m \t", filename+sizeof(int) ) ;
         }
         else
         {
-            printf( "%s \t", filename+sizeof(int) ) ;
+            //printf( "%s \t", filename+sizeof(int) ) ;
+            returnSet.insert(std::string(filename));
         }
         fflush( stdout ) ;
         bzero( filename, sizeof(filename) ) ;
     }
 done:
-    return retval ;
+    return returnSet;
 error:
     retval = - 1;
     goto done ;

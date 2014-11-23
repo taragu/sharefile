@@ -2,12 +2,20 @@
 #include "ui_mainwindow.h"
 #include "signupdialog.h"
 #include "connectdialog.h"
+#include "clientcommand.h"
+
+void add_local_files() {
+    //TODO call the lscommand method in clientcommand, and then add all of them to the list widget
+
+}
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    add_local_files();
 }
 
 MainWindow::~MainWindow()
@@ -23,6 +31,15 @@ void MainWindow::on_movefiles_button_clicked()
 {
 
 }
+
+//example of adding an item to list widget
+//connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(newItem()));
+//void MyForm::newItem()
+//{
+//ui.listWidget->addItem(ui.lineEdit->text());
+//}
+
+
 //open the signup widget
 void MainWindow::on_signup_button_clicked()
 {

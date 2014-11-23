@@ -12,6 +12,8 @@
 #include <netinet/in.h>
 #include <fcntl.h>
 #include <dirent.h>
+#include <string>
+#include <set>
 
 #include <iostream>
 
@@ -36,7 +38,7 @@ public:
     int GetCommand( const char *fileName ) const ;
     int PutCommand( const char *fileName ) const ;
     int HelpCommand( void ) const ;
-    int LsCommand( void ) const ;
+    std::set<std::string> LsCommand( void ) const ;
     int CdCommand( const char *path ) ;
     int manager( void ) ;
 private:
