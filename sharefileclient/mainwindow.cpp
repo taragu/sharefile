@@ -15,16 +15,30 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ipWarning = new IPWarning();
+    signinWarning = new SigninWarning();
 }
 
 MainWindow::~MainWindow()
 {
+    delete ipWarning;
+    delete signinWarning;
     delete ui;
 }
 
 //TODO: move local files to server
 void MainWindow::on_movefiles_button_clicked()
 {
+    if (ClientCommandManager::clientCommand == NULL) {
+        ipWarning->setModal(true);
+        ipWarning->exec();
+        return;
+    }
+    if (signupDialog == NULL) {
+        signinWarning->setModal(true);
+        signinWarning->exec();
+        return;
+    }
+    //TODO
 
 }
 
@@ -44,9 +58,9 @@ void MainWindow::on_signup_button_clicked()
         ipWarning->exec();
         return;
     }
-    SignUpDialog signup;
-    signup.setModal(true);
-    signup.exec();
+    signupDialog = new SignUpDialog();
+    signupDialog->setModal(true);
+    signupDialog->exec();
 }
 
 //open dialog to enter ip address
@@ -63,6 +77,11 @@ void MainWindow::on_cd_button_clicked()
     if (ClientCommandManager::clientCommand == NULL) {
         ipWarning->setModal(true);
         ipWarning->exec();
+        return;
+    }
+    if (signupDialog == NULL) {
+        signinWarning->setModal(true);
+        signinWarning->exec();
         return;
     }
     //call this method: int ClientCommand::CdCommand( const char *path )

@@ -17,16 +17,19 @@ SOURCES += main.cpp\
     clientcommand.cpp \
     signupdialog.cpp \
     connectdialog.cpp \
-    ipwarning.cpp
+    ipwarning.cpp \
+    signinwarning.cpp
 
 HEADERS  += mainwindow.h \
     clientcommand.h \
     signupdialog.h \
     connectdialog.h \
     clientcommandmanager.h \
-    ipwarning.h
+    ipwarning.h \
+    signinwarning.h
 
 FORMS    += mainwindow.ui \
     signupdialog.ui \
     connectdialog.ui \
-    ipwarning.ui
+    ipwarning.ui \
+    signinwarning.ui

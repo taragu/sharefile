@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include <ipwarning.h>
+#include <signinwarning.h>
+#include <signupdialog.h>
+
 
 namespace Ui {
 class MainWindow;
@@ -17,7 +20,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
+//    void on_pushButton_clicked();
 
     void on_movefiles_button_clicked();
 
@@ -29,7 +32,10 @@ private slots:
 
 private:
     IPWarning * ipWarning;
+    SigninWarning * signinWarning;
     Ui::MainWindow *ui;
+    SignUpDialog * signupDialog;
+
 };
 
 #endif // MAINWINDOW_H
