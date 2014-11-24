@@ -23,10 +23,10 @@ ConnectDialog::~ConnectDialog()
 void ConnectDialog::on_buttonBox_accepted()
 {
     //store the ip address, create an instance of client command
-    char * ip = (char *)ui->ip_textedit->toPlainText().toStdString().c_str();
-    qDebug() << "ip is " << ip << "\n";
+    qDebug() << "ip plain text to latin data is " <<  ui->ip_textedit->toPlainText().toLatin1().data()<< "\n";
+    char * ip = ui->ip_textedit->toPlainText().toLatin1().data();
     ClientCommand * clientCommandPointer = new ClientCommand(ip, ui->portnumber_textedit->toPlainText().toInt());
     ClientCommandManager::setClientCommand(clientCommandPointer);
-    qDebug() << "AFTER CONSTRUCTING CLIENTCOMMAND" << "\n";
     ClientCommandManager::clientCommand->manager() ;
+
 }

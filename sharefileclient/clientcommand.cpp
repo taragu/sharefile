@@ -8,32 +8,20 @@
 
 ClientCommand::ClientCommand( const char *ip, int port )
 {
-    qDebug() << "***entering ClientCommand constructor" << "\n";
     struct sockaddr_in addr ;
-    qDebug() << "***0" << "\n";
     bzero( &addr, sizeof(addr) ) ;
-    qDebug() << "***1" << "\n";
     m_sockfd = socket( AF_INET, SOCK_STREAM, 0 ) ;
-    qDebug() << "***2" << "\n";
     if ( -1 == m_sockfd )
     {
-        qDebug() << "***socket" << "\n";
         perror( "socket" ) ;
-        qDebug() << "***socket" << "\n";
         return ;
     }
     addr.sin_family = AF_INET ;
-    qDebug() << "***3" << "\n";
     addr.sin_port = htons( port ) ;
-    qDebug() << "***4" << "\n";
-    qDebug() << "***ip is " << ip << "\n";
     addr.sin_addr.s_addr = inet_addr( ip ) ;
-    qDebug() << "***5" << "\n";
     if ( -1 == connect( m_sockfd, (SA*)&addr, sizeof(addr) ) )
     {
-        qDebug() << "***connect" << "\n";
         perror( "connect" ) ;
-        qDebug() << "***connect" << "\n";
         return ;
     }
     m_bstart = true ;
