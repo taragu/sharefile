@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <ipwarning.h>
 
 namespace Ui {
 class MainWindow;
@@ -27,6 +28,7 @@ private slots:
     void on_cd_button_clicked();
 
 private:
+    IPWarning * ipWarning;
     Ui::MainWindow *ui;
 };
 

@@ -44,8 +44,8 @@ public:
     int PutCommand( string fileName ) const ;
     int HelpCommand( void ) const ;
     int CdCommand( string path ) ;
-    int LoginCommand( void ) ;
-    int RegisterCommand( void ) ;
+    int LoginCommand( std::string username, std::string password ) ;
+    int RegisterCommand( std::string username, std::string password ) ;
     int ShareCommand( string file, string user ) ;
     int RmCommand( string strfilename ) ;
     int manager( void ) ;

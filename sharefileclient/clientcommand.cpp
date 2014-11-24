@@ -7,6 +7,7 @@
 #define COMMAND_BUF_SIZE  256
 #define END 1234
 
+
 ClientCommand::ClientCommand( const char *ip, int port )
 {
     struct sockaddr_in addr ;
@@ -206,7 +207,7 @@ error:
 std::set<std::string> ClientCommand::LsCommand( void ) const
 {
     std::set<std::string> returnSet;
-    int retval = 0 ;
+//    int retval = 0 ;
     char filename[RECV_BUF_SIZE] ;
     bzero( filename, sizeof(filename) ) ;
     // send command
@@ -237,7 +238,7 @@ std::set<std::string> ClientCommand::LsCommand( void ) const
 done:
     return returnSet;
 error:
-    retval = - 1;
+//    retval = - 1;
     goto done ;
 }
 
@@ -262,9 +263,8 @@ error:
     goto done ;
 }
 
-
 // register
-int ClientCommand::RegisterCommand( void )
+int ClientCommand::RegisterCommand( std::string username, std::string password )
 {
     int retval = 0 ;
     UserData user ;
@@ -280,10 +280,12 @@ int ClientCommand::RegisterCommand( void )
         goto error ;
     }
 retry:
-    cout << "Please enter your username:" ;
-    cin >> user.username ;
-    cout << "Please enter your password:" ;
-    cin >> user.password ;
+//    cout << "Please enter your username:" ;
+//    cin >> user.username ;
+//    cout << "Please enter your password:" ;
+//    cin >> user.password ;
+    strncpy(user.username, username.c_str(), sizeof(user.username));
+    strncpy(user.password, password.c_str(), sizeof(user.password));
     if ( write( m_sockfd, &user, sizeof(user) ) < 0 )
     {
         perror( "write" ) ;
@@ -315,7 +317,7 @@ error:
 }
 
 // login
-int ClientCommand::LoginCommand( void )
+int ClientCommand::LoginCommand( std::string username, std::string password )
 {
     int retval = 0 ;
     int replay = 0 ;
@@ -331,10 +333,12 @@ int ClientCommand::LoginCommand( void )
         goto error ;
     }
 retry:
-    cout << "Please enter your username:" ;
-    cin >> user.username ;
-    cout << "Please enter password:" ;
-    cin >> user.password ;
+//    cout << "Please enter your username:" ;
+//    cin >> user.username ;
+//    cout << "Please enter password:" ;
+//    cin >> user.password ;
+    strncpy(user.username, username.c_str(), sizeof(user.username));
+    strncpy(user.password, password.c_str(), sizeof(user.password));
     // send username and password to socket
     if ( write( m_sockfd, &user, sizeof(user) ) < 0 )
     {
@@ -425,19 +429,19 @@ retry:
     }
     if ( COMMAND_LOGIN == cmd )
     {
-        if ( -1 == LoginCommand( ) )
-        {
-            cerr << "LoginCommand Error!" << endl ;
-            goto error ;
-        }
+//        if ( -1 == LoginCommand( ) )
+//        {
+//            cerr << "LoginCommand Error!" << endl ;
+//            goto error ;
+//        }
     }
     else if ( COMMAND_REGISTER == cmd )
     {
-        if ( -1 == RegisterCommand( ) )
-        {
-            cerr << "RegisterCommand Error!" << endl ;
-            goto error ;
-        }
+//        if ( -1 == RegisterCommand( ) )
+//        {
+//            cerr << "RegisterCommand Error!" << endl ;
+//            goto error ;
+//        }
     }
     fgets( command, sizeof(command), stdin ) ;
     for ( ; m_bstart; )

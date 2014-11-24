@@ -38,6 +38,12 @@ void MainWindow::on_movefiles_button_clicked()
 //open the signup widget
 void MainWindow::on_signup_button_clicked()
 {
+    if (ClientCommandManager::clientCommand == NULL) {
+        ipWarning = new IPWarning();
+        ipWarning->setModal(true);
+        ipWarning->exec();
+        return;
+    }
     SignUpDialog signup;
     signup.setModal(true);
     signup.exec();
@@ -54,6 +60,12 @@ void MainWindow::on_connect_button_clicked()
 
 void MainWindow::on_cd_button_clicked()
 {
+    if (ClientCommandManager::clientCommand == NULL) {
+        ipWarning = new IPWarning();
+        ipWarning->setModal(true);
+        ipWarning->exec();
+        return;
+    }
     //call this method: int ClientCommand::CdCommand( const char *path )
     // get the path from
     std::string path = ui->cd_textedit->toPlainText().toStdString();

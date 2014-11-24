@@ -13,3 +13,7 @@ SignUpDialog::~SignUpDialog()
     delete ui;
 }
 
+//call this method: int ClientCommand::RegisterCommand( std::string username, std::string password )
+// and signin for the user too: int ClientCommand::LoginCommand( std::string username, std::string password )
+
+
