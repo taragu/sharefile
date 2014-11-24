@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     signupdialog.cpp \
     connectdialog.cpp \
     ipwarning.cpp \
-    signinwarning.cpp
+    signinwarning.cpp \
+    errorpopup.cpp
 
 HEADERS  += mainwindow.h \
     clientcommand.h \
@@ -26,10 +27,12 @@ HEADERS  += mainwindow.h \
     connectdialog.h \
     clientcommandmanager.h \
     ipwarning.h \
-    signinwarning.h
+    signinwarning.h \
+    errorpopup.h
 
 FORMS    += mainwindow.ui \
     signupdialog.ui \
     connectdialog.ui \
     ipwarning.ui \
-    signinwarning.ui
+    signinwarning.ui \
+    errorpopup.ui
