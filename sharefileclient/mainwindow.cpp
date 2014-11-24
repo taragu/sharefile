@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ipWarning = new IPWarning();
 }
 
 MainWindow::~MainWindow()
@@ -39,7 +40,6 @@ void MainWindow::on_movefiles_button_clicked()
 void MainWindow::on_signup_button_clicked()
 {
     if (ClientCommandManager::clientCommand == NULL) {
-        ipWarning = new IPWarning();
         ipWarning->setModal(true);
         ipWarning->exec();
         return;
@@ -61,7 +61,6 @@ void MainWindow::on_connect_button_clicked()
 void MainWindow::on_cd_button_clicked()
 {
     if (ClientCommandManager::clientCommand == NULL) {
-        ipWarning = new IPWarning();
         ipWarning->setModal(true);
         ipWarning->exec();
         return;
