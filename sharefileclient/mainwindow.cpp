@@ -56,7 +56,7 @@ void MainWindow::on_cd_button_clicked()
 {
     //call this method: int ClientCommand::CdCommand( const char *path )
     // get the path from
-    char * path = ui->cd_textedit->toPlainText().toLatin1().data();
+    std::string path = ui->cd_textedit->toPlainText().toStdString();
     ClientCommandManager::clientCommand->CdCommand(path) ;
     //add local files: call the lscommand method in clientcommand, and then add all of them to the list widget
     ClientCommand * clientCommand = ClientCommandManager::clientCommand;

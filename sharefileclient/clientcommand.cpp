@@ -3,6 +3,7 @@
 #include <string>
 #include <set>
 #include <QDebug>
+#include <QDir>
 #define COMMAND_BUF_SIZE  256
 #define END 1234
 
@@ -57,20 +58,26 @@ error:
     goto done ;
 }
 
-// get file
-int ClientCommand::GetCommand( const char *fileName ) const
+// downloading file
+int ClientCommand::GetCommand( string fileName, string localpath ) const
 {
-
     int retval = 0 ;
     char command[COMMAND_BUF_SIZE] ;
     bzero( command, sizeof(command) ) ;
     char buffer[RECV_BUF_SIZE] ;
     bzero( buffer, sizeof(buffer) ) ;
     strcpy( command, COMMAND_GET ) ;
-    strcat( command, fileName ) ;
+    strcat( command, fileName.c_str() ) ;
     ssize_t rbyte = 0 ;
-    // int i = 1 ;
-    int fd = open( fileName, O_WRONLY | O_CREAT | O_TRUNC, 0644 ) ;
+    if ( "" == localpath )
+    {
+        localpath = "./" ;
+        localpath = localpath + m_user.username ;
+    }
+    string path = localpath + "/" + fileName ;
+
+    // open file
+    int fd = open( path.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0644 ) ;
     if ( write( m_sockfd, command, strlen( command ) ) < 0 )
     {
         perror( "write" ) ;
@@ -96,26 +103,40 @@ int ClientCommand::GetCommand( const char *fileName ) const
     }
 done:
     close( fd ) ;
+    cout << "done downloading" << endl ;
     return retval ;
 error:
     retval = - 1 ;
     goto done ;
 }
 
-// upload
-int ClientCommand::PutCommand( const char *fileName ) const
+// uploading file
+int ClientCommand::PutCommand( string fileName ) const
 {
     int retval = 0 ;
     char command[COMMAND_BUF_SIZE] ;
     bzero( command, sizeof(command) ) ;
     char sendbuf[SEND_BUF_SIZE] ;
     bzero( sendbuf, sizeof(sendbuf) ) ;
-    // send command
+    // command
+    string name = fileName ;
+    string::size_type end = name.find_last_of( "/" ) ;
+    if ( string::npos != end )
+    {
+        name = name.substr( end+1, name.length() - end - 1 ) ;
+    }
+
+    else
+    {
+        fileName = string(m_user.username) + "/" + fileName ;
+    }
+    cout << "fileName:" << fileName << endl ;
     strcpy( command, COMMAND_PUT ) ;
-    strcat( command, fileName ) ;
-    int fd = open( fileName, O_RDONLY ) ;
+    strcat( command, name.c_str() ) ;
+    int fd = open( fileName.c_str(), O_RDONLY ) ;
     ssize_t rbyte = 0 ;
-    if ( write( m_sockfd, command, strlen(command) ) < 0 )
+    strcpy( sendbuf, command ) ;
+    if ( write( m_sockfd, sendbuf, sizeof(sendbuf) ) < 0 )
     {
         perror( "write" ) ;
         goto error ;
@@ -139,24 +160,48 @@ int ClientCommand::PutCommand( const char *fileName ) const
     }
 done:
     close( fd ) ;
+    cout << "Done uploading" << endl ;
     return retval ;
 error:
     retval = -1 ;
     goto done ;
 }
 
-// help
+//　helper
 int ClientCommand::HelpCommand( void ) const
 {
-    std::cout << "help               show help" << std::endl ;
-    std::cout << "ls                 show contents under current directory" << std::endl ;
-    std::cout << "get <filename>     download file from server" << std::endl ;
-    std::cout << "put <filename>     upload file to server" << std::endl ;
-    std::cout << "cd  <filename>     enter a directory" << std::endl ;
-    std::cout << "by                 quit" << std::endl;
+    cout << "help                  show help" << endl ;
+    cout << "ls                    show current directory" << endl ;
+    cout << "get filename          download file from server" << endl ;
+    cout << "put filename          upload file to server" << endl ;
+    cout << "cd  director          switch directory" << endl ;
+    cout << "by                    quit" << endl;
+    cout << "share filename user 　share to user" << endl ;
+    cout << "rm    filename        delete file" << endl ;
     return 0 ;
 }
 
+
+int ClientCommand::RmCommand( string filename )
+{
+    int retval = 0 ;
+    char command[COMMAND_BUF_SIZE] ;
+    bzero( command, sizeof(command) ) ;
+    strcpy( command, COMMAND_RM ) ;
+    strcat( command, filename.c_str() ) ;
+    // send command
+    if ( write( m_sockfd, command, sizeof(command) ) < 0 )
+    {
+        perror( "write" ) ;
+        goto error ;
+    }
+done:
+    return retval ;
+error:
+    retval = -1 ;
+    goto done ;
+
+}
 
 std::set<std::string> ClientCommand::LsCommand( void ) const
 {
@@ -197,13 +242,15 @@ error:
 }
 
 
-int ClientCommand::CdCommand( const char *path )
+// change direcotry
+int ClientCommand::CdCommand( string path )
 {
     int retval = 0 ;
     char command[COMMAND_BUF_SIZE] ;
     bzero( command, sizeof(command) ) ;
+    // change directory
     strcpy( command, COMMAND_CD ) ;
-    strcat( command, path ) ;
+    strcat( command, path.c_str() ) ;
     if ( write( m_sockfd, command, strlen(command) ) < 0 )
     {
         perror( "write" ) ;
@@ -215,44 +262,227 @@ error:
     goto done ;
 }
 
+
+// register
+int ClientCommand::RegisterCommand( void )
+{
+    int retval = 0 ;
+    UserData user ;
+    int replay = 0 ;
+    int trycount = 3 ;
+    // send command
+    char command[COMMAND_BUF_SIZE] ;
+    bzero( command, sizeof(command) ) ;
+    strcpy( command, COMMAND_REGISTER ) ;
+    if ( write( m_sockfd, command, strlen(command) ) < 0 )
+    {
+        perror( "write" ) ;
+        goto error ;
+    }
+retry:
+    cout << "Please enter your username:" ;
+    cin >> user.username ;
+    cout << "Please enter your password:" ;
+    cin >> user.password ;
+    if ( write( m_sockfd, &user, sizeof(user) ) < 0 )
+    {
+        perror( "write" ) ;
+        goto error ;
+    }
+    // read verification result
+    read( m_sockfd, &replay, sizeof(replay) ) ;
+    if ( -1 == replay && trycount )
+    {
+        cout << "user already exists" << endl;
+        --trycount ;
+        goto retry ;
+    }
+    if ( -1 == replay )
+    {
+        goto error ;
+    }
+    if ( -1 == QDir().mkdir( user.username ) ) //FIXED COMPILER ERROR; ORIGINALLY mkdir( user.username, 0755 )
+    {
+        perror( "mkdir" ) ;
+        goto error ;
+    }
+    strcpy( m_user.username, user.username ) ;
+done:
+    return retval ;
+error:
+    retval = -1 ;
+    goto done ;
+}
+
+// login
+int ClientCommand::LoginCommand( void )
+{
+    int retval = 0 ;
+    int replay = 0 ;
+    UserData user ;
+    int trycount = 3 ;
+    // send command
+    char command[COMMAND_BUF_SIZE] ;
+    bzero( command, sizeof(command) ) ;
+    strcpy( command, COMMAND_LOGIN ) ;
+    if ( write( m_sockfd, command, strlen(command) ) < 0 )
+    {
+        perror( "write" ) ;
+        goto error ;
+    }
+retry:
+    cout << "Please enter your username:" ;
+    cin >> user.username ;
+    cout << "Please enter password:" ;
+    cin >> user.password ;
+    // send username and password to socket
+    if ( write( m_sockfd, &user, sizeof(user) ) < 0 )
+    {
+        perror( "write" ) ;
+        goto error ;
+    }
+    // receiving verificaion result
+    if ( read( m_sockfd, &replay, sizeof(replay) ) < 0 )
+    {
+        perror( "read" ) ;
+        goto error ;
+    }
+    if ( -1 == replay && trycount )
+    {
+        cout << "incorrect username or password" << endl ;
+        goto retry ;
+    }
+    strcpy( m_user.username, user.username ) ;
+done:
+    return retval ;
+error:
+    retval = -1;
+    goto done ;
+}
+
+// share
+int ClientCommand::ShareCommand( string file, string user )
+{
+    int retval = 0 ;
+    // send command
+    char command[COMMAND_BUF_SIZE] ;
+    bzero( command, sizeof(command) ) ;
+    strcpy( command, COMMAND_SHARE ) ;
+    char szfile[256] ;
+    bzero( szfile, sizeof(szfile) ) ;
+    char szuser[256] ;
+    bzero( szuser, sizeof(szuser) ) ;
+    strcpy( szfile, file.c_str() ) ;
+    strcpy( szuser, user.c_str() ) ;
+    if ( write( m_sockfd, command, strlen(command) ) < 0 )
+    {
+        perror( "write" ) ;
+        goto error ;
+    }
+    // sending file and username
+    if ( write( m_sockfd, szfile, sizeof(szfile) ) < 0 )
+    {
+        perror( "write filename" ) ;
+        goto error ;
+    }
+    if ( write( m_sockfd, szuser, sizeof(szuser) ) < 0 )
+    {
+        perror( "write username" ) ;
+        goto error ;
+    }
+done:
+    return retval ;
+error:
+    retval = -1 ;
+    goto done ;
+}
+
+// command manager
 int ClientCommand::manager( void )
 {
+    int retval = 0 ;
     char command[COMMAND_BUF_SIZE] ;
+    string cmd ;
+    string file ;
+    string user ;
+retry:
+    cout << "Please select:" << endl ;
+    cout << "1. Sign in" << endl ;
+    cout << "2. Register" << endl ;
+    int choice = 0 ;
+    cin >> choice ;
+    switch ( choice )
+    {
+    case 1 :
+        cmd = COMMAND_LOGIN ;
+        break ;
+    case 2 :
+        cmd = COMMAND_REGISTER ;
+        break ;
+    default:
+        cout << "Wrong selection" << endl ;
+        goto retry ;
+    }
+    if ( COMMAND_LOGIN == cmd )
+    {
+        if ( -1 == LoginCommand( ) )
+        {
+            cerr << "LoginCommand Error!" << endl ;
+            goto error ;
+        }
+    }
+    else if ( COMMAND_REGISTER == cmd )
+    {
+        if ( -1 == RegisterCommand( ) )
+        {
+            cerr << "RegisterCommand Error!" << endl ;
+            goto error ;
+        }
+    }
+    fgets( command, sizeof(command), stdin ) ;
     for ( ; m_bstart; )
     {
         bzero( command, sizeof(command) ) ;
-        std::cout << "shareFile>" ;
+        cmd = "" ;
+        file = "" ;
+        user = "" ;
+        cout << "shareFile>" ;
         fgets( command, sizeof(command), stdin ) ;
-        std::string str = command ;
-
-        std::string cmd ;
-        std::string file ;
-        std::string::size_type start = str.find_first_not_of( ' ', 0 ) ;
-        std::string::size_type end = str.find_first_of( ' ', start ) ;
-        // printf( "%lu:%lu\n", start, end ) ;
-        if ( std::string::npos != end )
+        string str = command ;
+        string file ;
+        string::size_type start = str.find_first_not_of( ' ', 0 ) ;
+        string::size_type end = str.find_first_of( ' ', start ) ;
+        if ( string::npos != end )
         {
             cmd = str.substr( start, end - start ) ;
             start = str.find_first_not_of( ' ', end ) ;
-            end = str.find_first_of( '\n', start ) ;
-            file = str.substr( start, str.length()-start-1 ) ;
+            end = str.find_first_of( ' ', start ) ;
+            if ( string::npos != end )
+            {
+                file = str.substr( start, end-start ) ;
+                start = str.find_first_not_of( ' ', end ) ;
+                user = str.substr( start, str.length() - start - 1 ) ;
+            }
+            else
+            {
+                file = str.substr( start, str.length() - start - 1 ) ;
+            }
         }
         else
         {
             cmd = str.substr( start, str.length()-1 ) ;
         }
-
         if ( COMMAND_LS == cmd )
         {
             LsCommand() ;
         }
         else if ( COMMAND_PUT == cmd )
         {
-            PutCommand( file.c_str() ) ;
+            PutCommand( file ) ;
         }
         else if ( COMMAND_GET == cmd )
         {
-            GetCommand( file.c_str() ) ;
+            GetCommand( file, user ) ;
         }
         else if ( COMMAND_QUIT == cmd )
         {
@@ -262,11 +492,22 @@ int ClientCommand::manager( void )
         {
             CdCommand( file.c_str() ) ;
         }
-        else if (COMMAND_HELP == cmd )
+        else if ( COMMAND_HELP == cmd )
         {
             HelpCommand( ) ;
         }
+        else if ( COMMAND_SHARE == cmd )
+        {
+            ShareCommand( file, user ) ;
+        }
+        else if ( COMMAND_RM == cmd )
+        {
+            RmCommand( file ) ;
+        }
     }
-    return 0 ;
+done:
+    return retval ;
+error:
+    retval = -1 ;
+    goto done ;
 }
-
