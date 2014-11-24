@@ -28,7 +28,8 @@ HEADERS += \
     ../UserDbEditor.h \
     ../sqlite-amalgamation-3080702/sqlite3.h \
     ../sqlite-amalgamation-3080702/sqlite3ext.h \
-    user_db_editor.h
+    user_db_editor.h \
+    sqlite3.h
 
 #INCLUDEPATH += $$quote(D:/libs/libsqlite3x-2007.10.18) $$quote(D:/libs/sqlite-amalgamation-3071502)
 #INCLUDEPATH += $$quote(E:/551/sqlite-amalgamation-3080702) $$quote(E:/551/)

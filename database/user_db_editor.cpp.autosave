@@ -97,11 +97,8 @@ int user_db_editor::DbGetSize(sqlite3 * db_user){
 
      std::string sql="SELECT max(id) From UsersTable;";
      std::string::size_type sz;   // alias of size_t
-
-
      std::string Ans=UserDbEditorAnswer(sql,1, db_user);
      int size = std::stoi (Ans,&sz);
-
      return size;
 }
 
