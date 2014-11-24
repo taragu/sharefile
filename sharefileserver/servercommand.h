@@ -28,7 +28,7 @@ using namespace std ;
 #define COMMAND_LS        "ls"
 #define COMMAND_CD        "cd"
 #define COMMAND_LOGIN     "login"
-#define COMMAND_LOGON     "logon"
+#define COMMAND_REGISTER  "register"
 #define COMMAND_SHARE     "share"
 #define COMMAND_RM        "rm"
 
@@ -48,7 +48,7 @@ public:
     int CdCommand( const char *path ) ;
     int HelpCommand( void ) const ;
     int LoginCommand( void ) ;   // login on
-    int LogonCommand( void ) ;   // register
+    int RegisterCommand( void ) ;   // register
     int ShareCommand( void ) ;  // share
     int RmCommand( string filename ) ; // delete
 private:

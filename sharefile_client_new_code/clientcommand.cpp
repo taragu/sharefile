@@ -254,7 +254,7 @@ error:
 }
 
 // register
-int ClientCommand::LogonCommand( void )
+int ClientCommand::RegisterCommand( void )
 {
 	int retval = 0 ;
 	UserData user ;
@@ -263,7 +263,7 @@ int ClientCommand::LogonCommand( void )
 	// send command
 	char command[COMMAND_BUF_SIZE] ;
 	bzero( command, sizeof(command) ) ;
-	strcpy( command, COMMAND_LOGON ) ;
+	strcpy( command, COMMAND_REGISTER ) ;
 	if ( write( m_sockfd, command, strlen(command) ) < 0 )
 	{
 		perror( "write" ) ;
@@ -407,7 +407,7 @@ retry:
 		cmd = COMMAND_LOGIN ;
 		break ;
 	case 2 :
-		cmd = COMMAND_LOGON ;
+		cmd = COMMAND_REGISTER ;
 		break ;
 	default:
 		cout << "Wrong selection" << endl ;
@@ -421,11 +421,11 @@ retry:
 			goto error ;
 		}
 	}
-	else if ( COMMAND_LOGON == cmd )
+	else if ( COMMAND_REGISTER == cmd )
 	{
-		if ( -1 == LogonCommand( ) )
+		if ( -1 == RegisterCommand( ) )
 		{
-			cerr << "LogonCommand Error!" << endl ;
+			cerr << "RegisterCommand Error!" << endl ;
 			goto error ;
 		}
 	}

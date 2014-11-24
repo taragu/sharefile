@@ -229,7 +229,7 @@ error:
 }
 
 // register
-int ServerCommand::LogonCommand( void )
+int ServerCommand::RegisterCommand( void )
 {
     int retval = 0 ;
     UserData user ;

@@ -30,7 +30,7 @@ typedef struct sockaddr SA ;
 #define COMMAND_QUIT          "by"
 #define COMMAND_HELP          "help"
 #define COMMAND_LOGIN         "login"
-#define COMMAND_LOGON         "logon"
+#define COMMAND_REGISTER      "register"
 #define COMMAND_SHARE         "share"
 #define COMMAND_RM            "rm"
 
@@ -46,7 +46,7 @@ public:
 	int LsCommand( void ) const ;
 	int CdCommand( string path ) ;
 	int LoginCommand( void ) ;
-	int LogonCommand( void ) ;
+	int RegisterCommand( void ) ;
 	int ShareCommand( string file, string user ) ;
 	int RmCommand( string strfilename ) ;
 	int manager( void ) ;
