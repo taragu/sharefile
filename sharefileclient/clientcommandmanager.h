@@ -23,6 +23,12 @@ public:
 //  static ClientCommand * getClientCommand() {
 //      return clientCommand;
 //  }
+
+  ~ClientCommandManager( void )
+  {
+      delete clientCommand;
+  }
+
 };
 
 #endif

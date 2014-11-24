@@ -2,6 +2,7 @@
 #include "ui_connectdialog.h"
 #include "clientcommand.h"
 #include "clientcommandmanager.h"
+#include "mainwindow.h"
 #include <iostream>
 #include <string>
 #include <QDebug>
@@ -27,6 +28,11 @@ void ConnectDialog::on_buttonBox_accepted()
     char * ip = ui->ip_textedit->toPlainText().toLatin1().data();
     ClientCommand * clientCommandPointer = new ClientCommand(ip, ui->portnumber_textedit->toPlainText().toInt());
     ClientCommandManager::setClientCommand(clientCommandPointer);
-    ClientCommandManager::clientCommand->manager() ;
+//    ClientCommandManager::clientCommand->manager() ;
+}
+
+
+void ConnectDialog::on_buttonBox_rejected()
+{
 
 }
