@@ -1,4 +1,3 @@
-
 #include "servercommand.h"
 
 #define END 1234
@@ -229,9 +228,6 @@ error:
     goto done ;
 }
 
-
-
-
 // register
 int ServerCommand::LogonCommand( void )
 {
@@ -343,4 +339,3 @@ bool ServerCommand::FindUser( const string &username ) const
     UserData user( username ) ;
     return m_Datas.end() != m_Datas.find( user ) ;
 }
-

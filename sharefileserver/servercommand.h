@@ -34,15 +34,11 @@ using namespace std ;
 
 #define RECV_BUF_SIZE     4096
 #define SEND_BUF_SIZE     4096
-
-
-//int m_port;
-
+#define COMMAND_BUF      256
 
 class ServerCommand
 {
 public:
-    static int m_port;
     ServerCommand( int sockfd ) ;
     ~ServerCommand( void ) ;
     int QuitCommand( void ) const ;
@@ -55,7 +51,6 @@ public:
     int LogonCommand( void ) ;   // register
     int ShareCommand( void ) ;  // share
     int RmCommand( string filename ) ; // delete
-
 private:
     struct UserData
     {
@@ -84,6 +79,10 @@ private:
     //user not found
     bool FindUser( const string &name ) const ;
 } ;
+
+
+
+
 
 
 #endif

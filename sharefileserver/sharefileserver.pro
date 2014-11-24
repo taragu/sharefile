@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    servercommand.cpp
+    servercommand.cpp \
+    task.cpp
 
 HEADERS  += mainwindow.h \
-    servercommand.h
+    servercommand.h \
+    task.h
 
 FORMS    += mainwindow.ui

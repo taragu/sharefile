@@ -27,16 +27,6 @@
      <string>Click to Start</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="inputport">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>40</y>
-      <width>104</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

@@ -1,6 +1,7 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
 #include "servercommand.h"
+#include "ui_mainwindow.h"
+#include "task.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,7 +15,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_toserver_clicked(bool checked)
+
+void MainWindow::on_toserver_clicked()
 {
-    ServerCommand::m_port = int(Ui_MainWindow::inputport->);
+    Task starter;
+        starter.start();
+
 }

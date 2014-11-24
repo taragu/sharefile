@@ -16,9 +16,8 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_inputport_textChanged();
 
-    void on_toserver_clicked(bool checked);
+    void on_toserver_clicked();
 
 private:
     Ui::MainWindow *ui;
