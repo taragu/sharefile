@@ -84,8 +84,6 @@ void MainWindow::on_cd_button_clicked()
         signinWarning->exec();
         return;
     } else {
-        //call this method: int ClientCommand::CdCommand( const char *path )
-        // get the path from
         std::string path = ui->cd_textedit->toPlainText().toStdString();
         ClientCommandManager::clientCommand->CdCommand(path) ;
         //add local files: call the lscommand method in clientcommand, and then add all of them to the list widget
@@ -100,4 +98,10 @@ void MainWindow::on_cd_button_clicked()
             ui->localfiles_list->addItem(qstr);
         }
     }
+}
+
+void MainWindow::on_signin_button_clicked()
+{
+    //TODO user log in
+    //TODO new an instance of SignInDialog
 }
