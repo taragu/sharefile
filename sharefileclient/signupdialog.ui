@@ -81,33 +81,33 @@
     <string>Password Confirmation</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="signup_username_textedit">
+  <widget class="QLineEdit" name="signup_username_textedit">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>170</x>
      <y>90</y>
-     <width>161</width>
-     <height>31</height>
+     <width>113</width>
+     <height>27</height>
     </rect>
    </property>
   </widget>
-  <widget class="QTextEdit" name="signup_password_textedit">
+  <widget class="QLineEdit" name="signup_password_textedit">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>170</x>
      <y>130</y>
-     <width>191</width>
-     <height>31</height>
+     <width>113</width>
+     <height>27</height>
     </rect>
    </property>
   </widget>
-  <widget class="QTextEdit" name="signup_passwordconf_textedit">
+  <widget class="QLineEdit" name="signup_passwordconf_textedit">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>190</x>
      <y>170</y>
-     <width>181</width>
-     <height>31</height>
+     <width>113</width>
+     <height>27</height>
     </rect>
    </property>
   </widget>

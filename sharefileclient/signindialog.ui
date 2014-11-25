@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ConnectDialog</class>
- <widget class="QDialog" name="ConnectDialog">
+ <class>SignInDialog</class>
+ <widget class="QDialog" name="SignInDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>529</width>
+    <height>453</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>240</y>
+     <x>150</x>
+     <y>400</y>
      <width>341</width>
      <height>32</height>
     </rect>
@@ -32,44 +32,57 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>80</y>
-     <width>67</width>
-     <height>17</height>
+     <x>210</x>
+     <y>100</y>
+     <width>131</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>IP</string>
+    <string>Signin Form</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>56</x>
-     <y>140</y>
+     <x>110</x>
+     <y>160</y>
      <width>91</width>
-     <height>20</height>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Port Number</string>
+    <string>Username</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="ip_textedit">
+  <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>70</y>
-     <width>191</width>
-     <height>31</height>
+     <x>110</x>
+     <y>190</y>
+     <width>67</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Password</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="signin_username_textedit">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>150</y>
+     <width>113</width>
+     <height>27</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="portnumber_textedit">
+  <widget class="QLineEdit" name="signin_password_textedit">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>140</y>
+     <x>200</x>
+     <y>180</y>
      <width>113</width>
      <height>27</height>
     </rect>
@@ -81,7 +94,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>ConnectDialog</receiver>
+   <receiver>SignInDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -97,7 +110,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>ConnectDialog</receiver>
+   <receiver>SignInDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

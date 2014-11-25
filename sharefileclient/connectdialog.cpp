@@ -24,9 +24,9 @@ ConnectDialog::~ConnectDialog()
 void ConnectDialog::on_buttonBox_accepted()
 {
     //store the ip address, create an instance of client command
-    qDebug() << "ip plain text to latin data is " <<  ui->ip_textedit->toPlainText().toLatin1().data()<< "\n";
-    char * ip = ui->ip_textedit->toPlainText().toLatin1().data();
-    ClientCommand * clientCommandPointer = new ClientCommand(ip, ui->portnumber_textedit->toPlainText().toInt());
+    qDebug() << "ip plain text to latin data is " <<  ui->ip_textedit->text().toLatin1().data()<< "\n";
+    char * ip = ui->ip_textedit->text().toLatin1().data();
+    ClientCommand * clientCommandPointer = new ClientCommand(ip, ui->portnumber_textedit->text().toInt());
     ClientCommandManager::setClientCommand(clientCommandPointer);
 //    ClientCommandManager::clientCommand->manager() ;
 }
