@@ -1,6 +1,7 @@
 #include "signupdialog.h"
 #include "ui_signupdialog.h"
 #include "clientcommandmanager.h"
+#include "QDebug"
 
 SignUpDialog::SignUpDialog(QWidget *parent) :
     QDialog(parent),
@@ -23,15 +24,18 @@ void SignUpDialog::on_signup_submit_accepted()
     std::string username = ui->signup_username_textedit->toPlainText().toStdString();
     std::string password = ui->signup_password_textedit->toPlainText().toStdString();
     std::string password_conf = ui->signup_passwordconf_textedit->toPlainText().toStdString();
-    if (password!=password_conf) {
+//    qDebug << "password compare result is " << password.compare(password_conf) << "\n";
+    if (password.compare(password_conf)!=0) {
         //TODO error popup (ONLY ONE INSTANCE FOR THIS CLASS, instantiate it with a message
-        //use this ui->errormsg_label->setText(test);
-        Ui::ErrorPopup * errorUI = errorPopup->getUI();
-        errorUI->errormsg_label->setText("password and password confirmation don't match");
-
+        errorPopup->setError("password and password confirmation don't match");
+        errorPopup->setModal(true);
+        errorPopup->exec(); //TODO still not working
     } else {
         if (ClientCommandManager::clientCommand->LoginCommand(username, password) != 0) {//not successful
             //TODO error popup again
+            errorPopup->setError("Login not successful");
+            errorPopup->setModal(true);
+            errorPopup->exec(); //TODO still not working
         }
     }
 }

@@ -8,8 +8,8 @@ ErrorPopup::ErrorPopup(QWidget *parent) :
     ui->setupUi(this);
 }
 
-Ui::ErrorPopup * getUI() {
-    return ui;
+void ErrorPopup::setError(std::string errorMsg) {
+    ui->errormsg_label->setText(QString::fromUtf8(errorMsg.c_str()));
 }
 
 ErrorPopup::~ErrorPopup()

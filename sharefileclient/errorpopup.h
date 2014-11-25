@@ -13,7 +13,7 @@ class ErrorPopup : public QDialog
 
 public:
     explicit ErrorPopup(QWidget *parent = 0);
-    Ui::ErrorPopup * getUI();
+    void setError(std::string);
     ~ErrorPopup();
 
 private:
