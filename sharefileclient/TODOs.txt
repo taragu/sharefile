@@ -1,0 +1,6 @@
+TODO:
+- implement the observer pattern for mainwindow_notification
+http://www.codeproject.com/Articles/328365/Understanding-and-Implementing-Observer-Pattern
+
+
+DONE:
