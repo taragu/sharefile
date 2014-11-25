@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ipWarning = new IPWarning();
     signinWarning = new SigninWarning();
+    message = "";
 }
 
 MainWindow::~MainWindow()
@@ -104,4 +105,13 @@ void MainWindow::on_signin_button_clicked()
 {
     //TODO user log in
     //TODO new an instance of SignInDialog
+}
+
+void MainWindow::changeMessage(std::string _message) {
+    message = _message;
+    notify(message);
+}
+
+std::string MainWindow::getMessage() {
+    return message;
 }

@@ -6,12 +6,13 @@
 #include <signinwarning.h>
 #include <signupdialog.h>
 #include <signindialog.h>
+#include <messagesubject.h>
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public MessageSubject
 {
     Q_OBJECT
 
@@ -30,12 +31,19 @@ private slots:
 
     void on_cd_button_clicked();
 
+    void on_signin_button_clicked();
+
+    void changeMessage(std::string string);
+
+    std::string getMessage();
+
 private:
     IPWarning * ipWarning;
     SigninWarning * signinWarning;
     Ui::MainWindow *ui;
     SignUpDialog * signupDialog;
     SignInDialog * signinDialog;
+    std::string message;
 
 };
 

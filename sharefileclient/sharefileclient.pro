@@ -30,7 +30,9 @@ HEADERS  += mainwindow.h \
     ipwarning.h \
     signinwarning.h \
     errorpopup.h \
-    signindialog.h
+    signindialog.h \
+    messagesubject.h \
+    IObserver.h
 
 FORMS    += mainwindow.ui \
     signupdialog.ui \

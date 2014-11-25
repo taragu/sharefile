@@ -9,6 +9,8 @@ SignUpDialog::SignUpDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     errorPopup = new ErrorPopup();
+    message = "";
+    attach(errorPopup);
 }
 
 SignUpDialog::~SignUpDialog()
@@ -26,14 +28,23 @@ void SignUpDialog::on_signup_submit_accepted()
     std::string password = ui->signup_password_textedit->text().toStdString();
     std::string password_conf = ui->signup_passwordconf_textedit->text().toStdString();
     if (password.compare(password_conf)!=0) {
-        errorPopup->setError("password and password confirmation don't match");
-        errorPopup->setModal(true);
-        errorPopup->exec();
+        changeMessage("password and password confirmation don't match");
+//        errorPopup->setModal(true);
+//        errorPopup->exec();
     } else {
         if (ClientCommandManager::clientCommand->LoginCommand(username, password) != 0) {//login not successful
-            errorPopup->setError("Login not successful");
-            errorPopup->setModal(true);
-            errorPopup->exec();
+            changeMessage("Login not successful");
+//            errorPopup->setModal(true);
+//            errorPopup->exec();
         }
     }
+}
+
+void SignUpDialog::changeMessage(std::string _message) {
+    message = _message;
+    notify(message);
+}
+
+std::string SignUpDialog::getMessage() {
+    return message;
 }

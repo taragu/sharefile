@@ -2,21 +2,26 @@
 #define SIGNINDIALOG_H
 
 #include <QDialog>
+#include <string>
+#include <messagesubject.h>
 
 namespace Ui {
 class SignInDialog;
 }
 
-class SignInDialog : public QDialog
+class SignInDialog : public QDialog, MessageSubject
 {
     Q_OBJECT
 
 public:
     explicit SignInDialog(QWidget *parent = 0);
     ~SignInDialog();
+    void changeMessage(std::string message);
+    std::string getMessage();
 
 private:
     Ui::SignInDialog *ui;
+    std::string message;
 };
 
 #endif // SIGNINDIALOG_H

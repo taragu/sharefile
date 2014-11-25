@@ -30,8 +30,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>180</y>
+      <x>30</x>
+      <y>80</y>
       <width>231</width>
       <height>41</height>
      </rect>
@@ -43,8 +43,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>440</y>
+      <x>280</x>
+      <y>340</y>
       <width>131</width>
       <height>21</height>
      </rect>
@@ -56,8 +56,8 @@
    <widget class="QListWidget" name="localfiles_list">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>230</y>
+      <x>140</x>
+      <y>130</y>
       <width>381</width>
       <height>161</height>
      </rect>
@@ -66,8 +66,8 @@
    <widget class="QListWidget" name="serverfiles_list">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>470</y>
+      <x>140</x>
+      <y>370</y>
       <width>381</width>
       <height>131</height>
      </rect>
@@ -76,8 +76,8 @@
    <widget class="QPushButton" name="movefiles_button">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>400</y>
+      <x>250</x>
+      <y>300</y>
       <width>81</width>
       <height>31</height>
      </rect>
@@ -125,24 +125,11 @@
      <string>Sign in</string>
     </property>
    </widget>
-   <widget class="QLabel" name="mainwindow_notification">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>70</y>
-      <width>391</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PLEASE ENTER IP ADDRESS BEFORE DOING ANYTHING</string>
-    </property>
-   </widget>
    <widget class="QTextEdit" name="cd_textedit">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>180</y>
+      <x>190</x>
+      <y>80</y>
       <width>271</width>
       <height>31</height>
      </rect>
@@ -151,8 +138,8 @@
    <widget class="QPushButton" name="cd_button">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>180</y>
+      <x>490</x>
+      <y>80</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -190,8 +177,8 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>400</y>
+      <x>350</x>
+      <y>300</y>
       <width>71</width>
       <height>31</height>
      </rect>
