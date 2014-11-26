@@ -115,7 +115,7 @@
      <string>Share Selected Files with a Friend</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="browse_path_lineedit">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -125,7 +125,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="browse_button">
     <property name="geometry">
      <rect>
       <x>30</x>

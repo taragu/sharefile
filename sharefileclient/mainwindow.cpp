@@ -130,3 +130,11 @@ void MainWindow::on_add_a_friend_button_clicked()
     addAFriendDialog->setModal(true);
     addAFriendDialog->exec();
 }
+
+void MainWindow::on_browse_button_clicked()
+{
+    //TODO open up a file selection dialog
+    //when the user selects a file, the path of that file goes into the browse_path_lineedit
+}
+
+

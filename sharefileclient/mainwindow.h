@@ -39,6 +39,8 @@ private slots:
 
     void on_add_a_friend_button_clicked();
 
+    void on_browse_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     AddAFriendDialog * addAFriendDialog;
