@@ -22,6 +22,7 @@ public:
 private:
     Ui::SignInDialog *ui;
     std::string message;
+    ErrorPopup * errorPopup;
 };
 
 #endif // SIGNINDIALOG_H

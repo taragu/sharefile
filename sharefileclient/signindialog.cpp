@@ -7,10 +7,13 @@ SignInDialog::SignInDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     message = "";
+    errorPopup = new ErrorPopup();
+    attach(errorPopup);
 }
 
 SignInDialog::~SignInDialog()
 {
+    delete errorPopup;
     delete ui;
 }
 
