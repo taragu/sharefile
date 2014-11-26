@@ -19,9 +19,6 @@ SignUpDialog::~SignUpDialog()
     delete ui;
 }
 
-
-
-
 void SignUpDialog::on_signup_submit_accepted()
 {
     std::string username = ui->signup_username_textedit->text().toStdString();
@@ -30,8 +27,20 @@ void SignUpDialog::on_signup_submit_accepted()
     if (password.compare(password_conf)!=0) {
         changeMessage("password and password confirmation don't match");
     } else {
-        if (ClientCommandManager::clientCommand->LoginCommand(username, password) != 0) {//login not successful
-            changeMessage("Login not successful");
+        //signup
+        qDebug("before registration\n");
+        int signup_ret = ClientCommandManager::clientCommand->RegisterCommand(username, password);
+        qDebug("after registration\n");
+        if (signup_ret!=0) {
+            changeMessage("Signup error: username already exists");
+        } else {
+            int login_ret = ClientCommandManager::clientCommand->LoginCommand(username, password) != 0;
+            //then login
+            if (login_ret) {
+                changeMessage("Login not successful");
+            } else {
+                changeMessage("login success!");
+            }
         }
     }
 }

@@ -2,8 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <ipwarning.h>
-#include <signinwarning.h>
 #include <signupdialog.h>
 #include <signindialog.h>
 #include <messagesubject.h>
