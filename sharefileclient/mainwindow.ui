@@ -44,7 +44,7 @@
     <property name="geometry">
      <rect>
       <x>280</x>
-      <y>340</y>
+      <y>430</y>
       <width>131</width>
       <height>21</height>
      </rect>
@@ -57,7 +57,7 @@
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>130</y>
+      <y>160</y>
       <width>381</width>
       <height>161</height>
      </rect>
@@ -66,8 +66,8 @@
    <widget class="QListWidget" name="serverfiles_list">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>370</y>
+      <x>150</x>
+      <y>460</y>
       <width>381</width>
       <height>131</height>
      </rect>
@@ -77,7 +77,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>300</y>
+      <y>390</y>
       <width>81</width>
       <height>31</height>
      </rect>
@@ -178,7 +178,7 @@
     <property name="geometry">
      <rect>
       <x>350</x>
-      <y>300</y>
+      <y>390</y>
       <width>71</width>
       <height>31</height>
      </rect>

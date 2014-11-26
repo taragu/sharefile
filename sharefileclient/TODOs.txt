@@ -1,9 +1,18 @@
 TODO:
 - keep track of whether the user is signed in --> global variable boolean?
 
+- cd and ls: how to display files in Qt GUI?
+https://www.google.com/search?client=ubuntu&channel=fs&q=qt+cpp+display+files&ie=utf-8&oe=utf-8#channel=fs&q=qt+cpp+%22display+files%22
+QFilesystemModel:
+http://stackoverflow.com/questions/18528516/qfilesystemmodel-to-display-files-only
+this is nice: 
+http://www.bogotobogo.com/Qt/Qt5_QTreeView_QFileSystemModel_ModelView_MVC.php
+
+
+
+
 
 DONE:
-
 - implement the observer pattern for mainwindow_notification
 http://www.codeproject.com/Articles/328365/Understanding-and-Implementing-Observer-Pattern
 - we want: when the message changes (in mainwindow, signup dialog, signin dialog, etc), we want to update the message in errorpopup, and popup the error popup (NO LONGER USE MAINWINDOW_NOTIFICATION)
