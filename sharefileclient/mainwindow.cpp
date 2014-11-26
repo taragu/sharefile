@@ -19,6 +19,9 @@ MainWindow::MainWindow(QWidget *parent) :
     usersController = new UsersController();
     errorPopup = new ErrorPopup();
     friendRequest = new FriendRequestPopup();
+    addAFriendDialog = new AddAFriendDialog();
+    signupDialog = new SignUpDialog();
+    signinDialog = new SignInDialog();
     attach(errorPopup); //IMPORTANT!!! observer pattern
     attach(friendRequest);
     //TESTING IMAGE/FRIEND POPUP
@@ -28,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::destroyAll(){
     delete ui;
+    delete signupDialog;
+    delete signinDialog;
     delete errorPopup;
     delete friendRequest;
     delete usersController;
@@ -60,7 +65,6 @@ void MainWindow::on_signup_button_clicked()
         changeMessage("please enter ip first!");
         return;
     } else {
-       signupDialog = new SignUpDialog();
        signupDialog->setUsersController(usersController);
        signupDialog->setModal(true);
        signupDialog->exec();
@@ -119,4 +123,10 @@ std::string MainWindow::getMessage() {
 void MainWindow::on_exit_button_clicked()
 {
     this->close();
+}
+
+void MainWindow::on_add_a_friend_button_clicked()
+{
+    addAFriendDialog->setModal(true);
+    addAFriendDialog->exec();
 }

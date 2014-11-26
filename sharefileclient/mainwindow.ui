@@ -89,7 +89,7 @@
      <string>Sign in</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="add_a_friend_button">
     <property name="geometry">
      <rect>
       <x>470</x>

@@ -7,6 +7,7 @@
 #include "messagesubject.h"
 #include "userscontroller.h"
 #include "friendrequestpopup.h"
+#include "addafrienddialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -36,8 +37,11 @@ private slots:
 
     void on_exit_button_clicked();
 
+    void on_add_a_friend_button_clicked();
+
 private:
     Ui::MainWindow *ui;
+    AddAFriendDialog * addAFriendDialog;
     SignUpDialog * signupDialog;
     SignInDialog * signinDialog;
     std::string message;

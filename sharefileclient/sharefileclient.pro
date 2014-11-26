@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     errorpopup.cpp \
     signindialog.cpp \
     friendrequestpopup.cpp \
-    frienddialog.cpp
+    frienddialog.cpp \
+    addafrienddialog.cpp
 
 HEADERS  += mainwindow.h \
     clientcommand.h \
@@ -33,7 +34,8 @@ HEADERS  += mainwindow.h \
     IObserver.h \
     userscontroller.h \
     friendrequestpopup.h \
-    frienddialog.h
+    frienddialog.h \
+    addafrienddialog.h
 
 FORMS    += mainwindow.ui \
     signupdialog.ui \
@@ -41,4 +43,5 @@ FORMS    += mainwindow.ui \
     errorpopup.ui \
     signindialog.ui \
     friendrequestpopup.ui \
-    frienddialog.ui
+    frienddialog.ui \
+    addafrienddialog.ui
