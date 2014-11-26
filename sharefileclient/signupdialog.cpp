@@ -29,13 +29,9 @@ void SignUpDialog::on_signup_submit_accepted()
     std::string password_conf = ui->signup_passwordconf_textedit->text().toStdString();
     if (password.compare(password_conf)!=0) {
         changeMessage("password and password confirmation don't match");
-//        errorPopup->setModal(true);
-//        errorPopup->exec();
     } else {
         if (ClientCommandManager::clientCommand->LoginCommand(username, password) != 0) {//login not successful
             changeMessage("Login not successful");
-//            errorPopup->setModal(true);
-//            errorPopup->exec();
         }
     }
 }

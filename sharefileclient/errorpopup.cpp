@@ -1,6 +1,7 @@
 #include "errorpopup.h"
 #include "ui_errorpopup.h"
 #include <IObserver.h>
+#include <QDebug>
 
 ErrorPopup::ErrorPopup(QWidget *parent) :
     QDialog(parent),

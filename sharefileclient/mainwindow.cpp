@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <set>
+#include <QDebug>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -14,15 +15,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ipWarning = new IPWarning();
-    signinWarning = new SigninWarning();
     message = "";
+    errorPopup = new ErrorPopup();
+    attach(errorPopup); //IMPORTANT!!! observer pattern
 }
 
 MainWindow::~MainWindow()
 {
-    delete ipWarning;
-    delete signinWarning;
     delete ui;
 }
 
@@ -30,17 +29,16 @@ MainWindow::~MainWindow()
 void MainWindow::on_movefiles_button_clicked()
 {
     if (ClientCommandManager::clientCommand == NULL) {
-        ipWarning->setModal(true);
-        ipWarning->exec();
+        changeMessage("please enter IP first!");
         return;
-    } else if (signupDialog == NULL) {
-        signinWarning->setModal(true);
-        signinWarning->exec();
-        return;
-    } else {
-    //TODO
-
     }
+//    else if (signinDialog == NULL) { //TODO keep track of whether the user is signed in
+//        changeMessage("please sign in first");
+//        return;
+//    } else {
+//    //TODO
+
+//    }
 }
 
 //example of adding an item to list widget
@@ -54,14 +52,15 @@ void MainWindow::on_movefiles_button_clicked()
 //open the signup widget
 void MainWindow::on_signup_button_clicked()
 {
+    qDebug("signup botton clicked\n");
     if (ClientCommandManager::clientCommand == NULL) {
-        ipWarning->setModal(true);
-        ipWarning->exec();
+        changeMessage("please enter ip first!");
         return;
     } else {
        signupDialog = new SignUpDialog();
        signupDialog->setModal(true);
        signupDialog->exec();
+//       return;
     }
 }
 
@@ -77,14 +76,13 @@ void MainWindow::on_connect_button_clicked()
 void MainWindow::on_cd_button_clicked()
 {
     if (ClientCommandManager::clientCommand == NULL) {
-        ipWarning->setModal(true);
-        ipWarning->exec();
+        changeMessage("please enter ip first!");
         return;
-    } else if (signupDialog == NULL) {
-        signinWarning->setModal(true);
-        signinWarning->exec();
-        return;
-    } else {
+    }
+//    else if (signupDialog == NULL) {
+//        changeMessage("please enter ip first!");
+//        return;
+//    } else {
         std::string path = ui->cd_textedit->toPlainText().toStdString();
         ClientCommandManager::clientCommand->CdCommand(path) ;
         //add local files: call the lscommand method in clientcommand, and then add all of them to the list widget
@@ -98,7 +96,7 @@ void MainWindow::on_cd_button_clicked()
             QString qstr = QString::fromStdString(thisFile);
             ui->localfiles_list->addItem(qstr);
         }
-    }
+//    }
 }
 
 void MainWindow::on_signin_button_clicked()

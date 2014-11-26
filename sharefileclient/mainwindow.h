@@ -38,12 +38,11 @@ private slots:
     std::string getMessage();
 
 private:
-    IPWarning * ipWarning;
-    SigninWarning * signinWarning;
     Ui::MainWindow *ui;
     SignUpDialog * signupDialog;
     SignInDialog * signinDialog;
     std::string message;
+    ErrorPopup * errorPopup;
 
 };
 

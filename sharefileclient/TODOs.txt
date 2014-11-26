@@ -1,8 +1,11 @@
 TODO:
+- keep track of whether the user is signed in --> global variable boolean?
+
+
+DONE:
+
 - implement the observer pattern for mainwindow_notification
 http://www.codeproject.com/Articles/328365/Understanding-and-Implementing-Observer-Pattern
 - we want: when the message changes (in mainwindow, signup dialog, signin dialog, etc), we want to update the message in errorpopup, and popup the error popup (NO LONGER USE MAINWINDOW_NOTIFICATION)
 - in MessageSubject: the objects in the list should be type ErrorPopup because we're updating errorpopup
 - attach errorpopup in mainwindow, signup dialog, signin dialog, or wherever (right after errorpopup is newed)
-
-DONE:
