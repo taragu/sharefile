@@ -1,0 +1,9 @@
+void acceptFriendRequest(std::string friendName)
+void declineFriendRequest(std::string friendName)
+
+void messageFriend(std::string friendName, std::string message)
+
+void sendFriendRequest(std::string friendName)
+void removeFriend(std::string friendName)
+
+std::vector<std::string> getFriends(std::string username)

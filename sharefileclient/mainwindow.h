@@ -6,6 +6,7 @@
 #include "signindialog.h"
 #include "messagesubject.h"
 #include "userscontroller.h"
+#include "friendrequestpopup.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,15 +21,11 @@ public:
     ~MainWindow();
 
 private slots:
-//    void on_pushButton_clicked();
-
-    void on_movefiles_button_clicked();
+    void on_upload_button_clicked();
 
     void on_signup_button_clicked();
 
     void on_connect_button_clicked();
-
-    void on_cd_button_clicked();
 
     void on_signin_button_clicked();
 
@@ -42,6 +39,7 @@ private:
     SignInDialog * signinDialog;
     std::string message;
     ErrorPopup * errorPopup;
+    FriendRequestPopup * friendRequest;
     UsersController * usersController;
 };
 

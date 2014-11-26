@@ -8,7 +8,7 @@ namespace Ui {
 class ErrorPopup;
 }
 
-class ErrorPopup : public QDialog, IObserver
+class ErrorPopup : public virtual QDialog, IObserver
 {
     Q_OBJECT
 

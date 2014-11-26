@@ -1,7 +1,8 @@
 TODO:
-- keep track of whether the user is signed in --> userscontroller
-NO:create an instance of users controller when the user signs in/registers --> pass the object pointer back to mainwindow, and keep an instance of UsersController* in the main window
-YES: pass an instance of userscontroller with signin = false to signin controller or signup controller because we only want to maintain one usercontroller for the program
+- friend list: onclick: new dialog: new message area, unfriend, and cancel
+- make a notification class extending the errorpopup class (friend request: accept or decline; no cancel button)
+--> class FriendRequestPopup; class FriendDialog
+
 
 - before the program exits: destroy all --> make an exit button in mainwindow
 
@@ -16,9 +17,19 @@ http://www.bogotobogo.com/Qt/Qt5_QTreeView_QFileSystemModel_ModelView_MVC.php
 - ClientCommand: server push when there's a new message or friend request
 
 
+
+
+
+
 DONE:
+OBSERVER PATTERN:
 - implement the observer pattern for mainwindow_notification
 http://www.codeproject.com/Articles/328365/Understanding-and-Implementing-Observer-Pattern
 - we want: when the message changes (in mainwindow, signup dialog, signin dialog, etc), we want to update the message in errorpopup, and popup the error popup (NO LONGER USE MAINWINDOW_NOTIFICATION)
 - in MessageSubject: the objects in the list should be type ErrorPopup because we're updating errorpopup
 - attach errorpopup in mainwindow, signup dialog, signin dialog, or wherever (right after errorpopup is newed)
+
+USERS CONTROLLER:
+- keep track of whether the user is signed in --> userscontroller
+NO:create an instance of users controller when the user signs in/registers --> pass the object pointer back to mainwindow, and keep an instance of UsersController* in the main window
+YES: pass an instance of userscontroller with signin = false to signin controller or signup controller because we only want to maintain one usercontroller for the program

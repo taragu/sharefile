@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     signupdialog.cpp \
     connectdialog.cpp \
     errorpopup.cpp \
-    signindialog.cpp
+    signindialog.cpp \
+    friendrequestpopup.cpp
 
 HEADERS  += mainwindow.h \
     clientcommand.h \
@@ -29,10 +30,12 @@ HEADERS  += mainwindow.h \
     signindialog.h \
     messagesubject.h \
     IObserver.h \
-    userscontroller.h
+    userscontroller.h \
+    friendrequestpopup.h
 
 FORMS    += mainwindow.ui \
     signupdialog.ui \
     connectdialog.ui \
     errorpopup.ui \
-    signindialog.ui
+    signindialog.ui \
+    friendrequestpopup.ui
