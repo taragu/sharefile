@@ -1,8 +1,7 @@
 TODO:
 - friend list: onclick: new dialog: new message area, unfriend, and cancel
-- make a notification class extending the errorpopup class (friend request: accept or decline; no cancel button)
---> class FriendRequestPopup; class FriendDialog
-
+this is nice: http://codeprogress.com/cpp/libraries/qt/showQtExample.php?key=QListWidgetItemClicked&index=425
+google search: https://www.google.com/search?client=ubuntu&channel=fs&q=qt+list+widget+item+on+click&ie=utf-8&oe=utf-8
 
 - before the program exits: destroy all --> make an exit button in mainwindow
 
@@ -13,10 +12,7 @@ http://stackoverflow.com/questions/18528516/qfilesystemmodel-to-display-files-on
 this is nice: 
 http://www.bogotobogo.com/Qt/Qt5_QTreeView_QFileSystemModel_ModelView_MVC.php
 
-
-- ClientCommand: server push when there's a new message or friend request
-
-
+- ClientCommand: server push when there's a new message or a friend request
 
 
 
@@ -33,3 +29,8 @@ USERS CONTROLLER:
 - keep track of whether the user is signed in --> userscontroller
 NO:create an instance of users controller when the user signs in/registers --> pass the object pointer back to mainwindow, and keep an instance of UsersController* in the main window
 YES: pass an instance of userscontroller with signin = false to signin controller or signup controller because we only want to maintain one usercontroller for the program
+
+
+HALF DONE:
+- make a notification class extending the errorpopup class (friend request: accept or decline; no cancel button)
+--> class FriendRequestPopup; class FriendDialog (messaging/unfriend)

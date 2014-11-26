@@ -8,7 +8,7 @@ namespace Ui {
 class FriendRequestPopup;
 }
 
-class FriendRequestPopup : public virtual QDialog, ErrorPopup
+class FriendRequestPopup : public virtual QDialog, public virtual ErrorPopup
 {
     Q_OBJECT
 

@@ -21,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
     friendRequest = new FriendRequestPopup();
     attach(errorPopup); //IMPORTANT!!! observer pattern
     attach(friendRequest);
+    //TESTING IMAGE/FRIEND POPUP
+//    friendRequest->setModal(true);
+//    friendRequest->exec();
 }
 
 MainWindow::~MainWindow()
