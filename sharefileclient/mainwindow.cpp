@@ -26,12 +26,16 @@ MainWindow::MainWindow(QWidget *parent) :
 //    friendRequest->exec();
 }
 
-MainWindow::~MainWindow()
-{
+void MainWindow::destroyAll(){
+    delete ui;
     delete errorPopup;
     delete friendRequest;
     delete usersController;
-    delete ui;
+}
+
+MainWindow::~MainWindow()
+{
+    destroyAll();
 }
 
 void MainWindow::on_upload_button_clicked()
@@ -110,4 +114,9 @@ void MainWindow::changeMessage(std::string _message) {
 
 std::string MainWindow::getMessage() {
     return message;
+}
+
+void MainWindow::on_exit_button_clicked()
+{
+    this->close();
 }

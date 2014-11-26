@@ -18,6 +18,7 @@ class MainWindow : public QMainWindow, public MessageSubject
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    void destroyAll();
     ~MainWindow();
 
 private slots:
@@ -32,6 +33,8 @@ private slots:
     void changeMessage(std::string string);
 
     std::string getMessage();
+
+    void on_exit_button_clicked();
 
 private:
     Ui::MainWindow *ui;
