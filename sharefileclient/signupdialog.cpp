@@ -19,6 +19,10 @@ SignUpDialog::~SignUpDialog()
     delete ui;
 }
 
+void SignUpDialog::setUsersController(UsersController* _usersController) {
+    usersController = _usersController;
+}
+
 void SignUpDialog::on_signup_submit_accepted()
 {
     std::string username = ui->signup_username_textedit->text().toStdString();
@@ -39,6 +43,7 @@ void SignUpDialog::on_signup_submit_accepted()
             if (login_ret) {
                 changeMessage("Login not successful");
             } else {
+                usersController->setSignedIn(true);
                 changeMessage("login success!");
             }
         }

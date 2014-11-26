@@ -3,7 +3,8 @@
 
 #include <QDialog>
 #include <string>
-#include <messagesubject.h>
+#include "messagesubject.h"
+#include "userscontroller.h"
 
 namespace Ui {
 class SignInDialog;

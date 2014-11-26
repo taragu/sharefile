@@ -28,7 +28,8 @@ HEADERS  += mainwindow.h \
     errorpopup.h \
     signindialog.h \
     messagesubject.h \
-    IObserver.h
+    IObserver.h \
+    userscontroller.h
 
 FORMS    += mainwindow.ui \
     signupdialog.ui \

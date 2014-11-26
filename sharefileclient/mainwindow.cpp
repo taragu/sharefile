@@ -16,12 +16,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     message = "";
+    usersController = new UsersController();
     errorPopup = new ErrorPopup();
     attach(errorPopup); //IMPORTANT!!! observer pattern
 }
 
 MainWindow::~MainWindow()
 {
+    delete errorPopup;
+    delete usersController;
     delete ui;
 }
 
@@ -58,6 +61,7 @@ void MainWindow::on_signup_button_clicked()
         return;
     } else {
        signupDialog = new SignUpDialog();
+       signupDialog->setUsersController(usersController);
        signupDialog->setModal(true);
        signupDialog->exec();
 //       return;

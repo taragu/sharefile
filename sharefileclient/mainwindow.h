@@ -2,9 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <signupdialog.h>
-#include <signindialog.h>
-#include <messagesubject.h>
+#include "signupdialog.h"
+#include "signindialog.h"
+#include "messagesubject.h"
+#include "userscontroller.h"
 
 namespace Ui {
 class MainWindow;
@@ -41,7 +42,7 @@ private:
     SignInDialog * signinDialog;
     std::string message;
     ErrorPopup * errorPopup;
-
+    UsersController * usersController;
 };
 
 #endif // MAINWINDOW_H
