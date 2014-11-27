@@ -8,6 +8,7 @@
 #include <string>
 #include <set>
 #include <QDebug>
+#include <QFileDialog>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -107,8 +108,8 @@ void MainWindow::on_connect_button_clicked()
 
 void MainWindow::on_signin_button_clicked()
 {
-    //TODO user log in
-    //TODO new an instance of SignInDialog
+    signinDialog->setModal(true);
+    signinDialog->exec();
 }
 
 void MainWindow::changeMessage(std::string _message) {
@@ -135,6 +136,10 @@ void MainWindow::on_browse_button_clicked()
 {
     //TODO open up a file selection dialog
     //when the user selects a file, the path of that file goes into the browse_path_lineedit
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Select File"), "/", "All files (*.*)");
+    qDebug("on browse button, the selected file is \n");
+    std::cout << fileName.toStdString() << "\n";
+    //TODO WHY EMPTY STRING???
 }
 
 

@@ -28,3 +28,6 @@ std::vector<std::string> getFriends(std::string username)
 
 Server push:
 Also, whenever there's a change in a person's friend list --> push to ClientCommand -->??? --> update friend list in the GUI
+
+
+ALSO, UPLOADING/SENDING BIGGER FILES
