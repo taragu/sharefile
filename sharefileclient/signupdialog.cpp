@@ -2,6 +2,7 @@
 #include "ui_signupdialog.h"
 #include "clientcommandmanager.h"
 #include "QDebug"
+#include <QCryptographicHash>
 
 SignUpDialog::SignUpDialog(QWidget *parent) :
     QDialog(parent),
@@ -33,7 +34,9 @@ void SignUpDialog::on_signup_submit_accepted()
     } else {
         //signup
         qDebug("before registration\n");
-        int signup_ret = ClientCommandManager::clientCommand->LogonCommand(username, password);
+        QCryptographicHash md5Generator(QCryptographicHash::Md5);
+        md5Generator.addData(password.c_str());
+        int signup_ret = ClientCommandManager::clientCommand->LogonCommand(username, (std::string)md5Generator.result().toHex());
         qDebug("after registration\n");
         if (signup_ret!=0) {
             changeMessage("Signup error: username already exists");
