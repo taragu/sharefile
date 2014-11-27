@@ -1,6 +1,7 @@
 #include "signindialog.h"
 #include "ui_signindialog.h"
 #include "clientcommandmanager.h"
+#include <QCryptographicHash>
 
 SignInDialog::SignInDialog(QWidget *parent) :
     QDialog(parent),
@@ -35,7 +36,9 @@ void SignInDialog::on_signin_submit_accepted()
 {
         std::string username = ui->signin_username_textedit->text().toStdString();
         std::string password = ui->signin_password_textedit->text().toStdString();
-        int login_ret = ClientCommandManager::clientCommand->LoginCommand(username, password) != 0;
+        QCryptographicHash md5Generator(QCryptographicHash::Md5);
+        md5Generator.addData(password.c_str());
+        int login_ret = ClientCommandManager::clientCommand->LoginCommand(username, (std::string)md5Generator.result().toHex()) != 0;
         //then login
         if (login_ret) {
                  changeMessage("Login not successful");
