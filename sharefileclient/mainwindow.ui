@@ -105,14 +105,14 @@
    <widget class="QPushButton" name="sharefile_button">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>410</y>
-      <width>261</width>
+      <x>10</x>
+      <y>420</y>
+      <width>211</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>Share Selected Files with a Friend</string>
+     <string>Share Selected Files with...</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="browse_path_lineedit">
@@ -172,6 +172,16 @@
     </property>
     <property name="text">
      <string>EXIT</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="friend_lineedit">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>430</y>
+      <width>113</width>
+      <height>27</height>
+     </rect>
     </property>
    </widget>
   </widget>

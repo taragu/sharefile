@@ -185,5 +185,12 @@ void MainWindow::on_upload_button_clicked()
 
 void MainWindow::on_sharefile_button_clicked()
 {
-    //TODO grab the file name of the clicked item, and then call the share command in clientcommand
+    //TODO check ip and signed in
+
+    for(int i = 0; i < ui->serverfiles_list->count(); i++) {
+        QListWidgetItem* item = serverfiles_list->item(i);
+        if (item->isSelected()) {
+            ClientCommandManager::clientCommand->ShareCommand(item->text(), ui->friend_lineedit->text());
+        }
+    }
 }
