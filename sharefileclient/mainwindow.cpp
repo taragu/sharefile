@@ -179,6 +179,8 @@ void MainWindow::on_sharefile_button_clicked()
         for(int i = 0; i < ui->serverfiles_list->count(); i++) {
             QListWidgetItem* item = ui->serverfiles_list->item(i);
             if (item->isSelected()) {
+                qDebug("sharefile button: item is ");
+                qDebug(item->text().toStdString().c_str());
                 if (-1 == ClientCommandManager::clientCommand->ShareCommand(item->text().toStdString(), ui->friend_lineedit->text().toStdString())) {
                     retVal = -1;
                 }
@@ -186,6 +188,9 @@ void MainWindow::on_sharefile_button_clicked()
         }
         if (retVal == -1) {
             changeMessage("share file error");
+        }
+        if (retVal == 0) {
+            changeMessage("share file success!");
         }
     }
 }

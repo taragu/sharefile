@@ -105,8 +105,8 @@
    <widget class="QPushButton" name="sharefile_button">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>420</y>
+      <x>80</x>
+      <y>440</y>
       <width>211</width>
       <height>41</height>
      </rect>
@@ -164,8 +164,8 @@
    <widget class="QPushButton" name="exit_button">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>470</y>
+      <x>530</x>
+      <y>480</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -177,11 +177,14 @@
    <widget class="QLineEdit" name="friend_lineedit">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>430</y>
-      <width>113</width>
-      <height>27</height>
+      <x>50</x>
+      <y>420</y>
+      <width>271</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Type your friend's user name here</string>
     </property>
    </widget>
   </widget>
