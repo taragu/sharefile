@@ -3,18 +3,6 @@ TODO:
 this is nice: http://codeprogress.com/cpp/libraries/qt/showQtExample.php?key=QListWidgetItemClicked&index=425
 google search: https://www.google.com/search?client=ubuntu&channel=fs&q=qt+list+widget+item+on+click&ie=utf-8&oe=utf-8
 
-- cd and ls: how to display files in Qt GUI?
-https://www.google.com/search?client=ubuntu&channel=fs&q=qt+cpp+display+files&ie=utf-8&oe=utf-8#channel=fs&q=qt+cpp+%22display+files%22
-QFilesystemModel:
-http://stackoverflow.com/questions/18528516/qfilesystemmodel-to-display-files-only
-this is nice: 
-http://www.bogotobogo.com/Qt/Qt5_QTreeView_QFileSystemModel_ModelView_MVC.php
-
-- mainwindow: browse, upload, share, add a friend onclick
-
-- list uploaded files: cd to the user's directory
-
-- CLIENT COMMAND: LOGIN ERROR!!!
 
 STRETCH GOAL:
 --------------------------------------------------------------------------
@@ -40,7 +28,10 @@ YES: pass an instance of userscontroller with signin = false to signin controlle
 
 - before the program exits: destroy all --> make an exit button in mainwindow
 - add a friend dialog: AddAFriendDialog
+- mainwindow: browse, upload, share, add a friend onclick
+
 
 HALF DONE:
 - make a notification class extending the errorpopup class (friend request: accept or decline; no cancel button)
 --> class FriendRequestPopup; class FriendDialog (messaging/unfriend)
+- list uploaded files: cd to the user's directory
