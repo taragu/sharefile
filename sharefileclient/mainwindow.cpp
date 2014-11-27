@@ -148,8 +148,6 @@ void MainWindow::on_upload_button_clicked()
         std::vector<std::string> seglist = split(source_filepath, '/');
         std::string fileName = seglist[seglist.size()-1];
         std::string dest_filepath = dest + "/"+ fileName;
-//        qDebug(source_filepath.c_str());
-//        qDebug(dest_filepath.c_str());
         QFile::copy(QString::fromStdString(source_filepath), QString::fromStdString(dest_filepath));
         //then grab the filename of the file (should be in the user's directory) and use the put command
         ClientCommandManager::clientCommand->PutCommand(fileName);
@@ -160,6 +158,8 @@ void MainWindow::on_upload_button_clicked()
         for (int i=0;i<size;i++){
              std::advance(it, i);
              std::string thisFile = *it;
+             qDebug("iterating through lscommand file list: this item is ");
+             qDebug(thisFile.c_str());
              QString qstr = QString::fromStdString(thisFile);
              ui->serverfiles_list->addItem(qstr);
         }

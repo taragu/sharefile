@@ -1,4 +1,5 @@
 #include "clientcommand.h"
+#include <QDebug>
 #define COMMAND_BUF_SIZE  256
 #define END 1234
 using namespace std ;
@@ -196,42 +197,47 @@ error:
 
 }
 
+
 std::set<std::string> ClientCommand::LsCommand( void ) const
 {
-    std::set<std::string> returnSet;
-//    int retval = 0 ;
-    char filename[RECV_BUF_SIZE] ;
-    bzero( filename, sizeof(filename) ) ;
-    // send command
-    if ( write( m_sockfd, COMMAND_LS, strlen(COMMAND_LS) ) < 0 )
-    {
-        perror( "write" ) ;
-        goto error ;
-    }
-    while( read( m_sockfd, filename, sizeof(filename) ) > 0  )
-    {
-        if ( END == *(int*)filename )
-        {
-            //printf( "\n" ) ;
-            goto done ;
-        }
-        else if ( DT_DIR == *(int*)filename )
-        {
-            //printf( "\033[0;34m%s\033[0m \t", filename+sizeof(int) ) ;
-        }
-        else
-        {
-            //printf( "%s \t", filename+sizeof(int) ) ;
-            returnSet.insert(std::string(filename));
-        }
-        fflush( stdout ) ;
+        std::set<std::string> returnSet;
+        char filename[RECV_BUF_SIZE] ;
         bzero( filename, sizeof(filename) ) ;
-    }
+        //　send command
+        if ( write( m_sockfd, COMMAND_LS, strlen(COMMAND_LS) ) < 0 )
+        {
+            perror( "write" ) ;
+                goto error ;
+        }
+        while( read( m_sockfd, filename, sizeof(filename) ) > 0  )
+        {
+                if ( END == *(int*)filename )
+                {
+//                        printf( "\n" ) ;
+                        goto done ;
+                }
+                else if ( DT_DIR == *(int*)filename )
+                {
+//                        printf( "\033[0;34m%s\033[0m \t", filename+sizeof(int) ) ; TODO WHAT TO DO WITH THIS???
+//                    qDebug("adding to returnSet: ");
+//                    qDebug(filename+sizeof(int));
+//                        returnSet.insert(std::string(filename+sizeof(int)));
+                }
+                else
+                {
+//                        printf( "%s \t", filename+sizeof(int) ) ;
+//                    qDebug("adding to returnSet: ");
+//                    qDebug(filename+sizeof(int));
+                        returnSet.insert(std::string(filename+sizeof(int)));
+                }
+                fflush( stdout ) ;
+                bzero( filename, sizeof(filename) ) ;
+        }
 done:
-    return returnSet;
+        return returnSet ;
 error:
-//    retval = - 1;
-    goto done ;
+//        retval = - 1;
+        goto done ;
 }
 
 
@@ -393,117 +399,3 @@ error:
     goto done ;
 }
 
-// command manager
-int ClientCommand::manager( void )
-{
-    int retval = 0 ;
-    char command[COMMAND_BUF_SIZE] ;
-    string cmd ;
-    string file ;
-    string user ;
-retry:
-    cout << "Please select:" << endl ;
-    cout << "1. Sign in" << endl ;
-    cout << "2. Register" << endl ;
-    int choice = 0 ;
-    cin >> choice ;
-    switch ( choice )
-    {
-    case 1 :
-        cmd = COMMAND_LOGIN ;
-        break ;
-    case 2 :
-        cmd = COMMAND_LOGON ;
-        break ;
-    default:
-        cout << "Wrong selection" << endl ;
-        goto retry ;
-    }
-    if ( COMMAND_LOGIN == cmd )
-    {
-//        if ( -1 == LoginCommand( ) )
-//        {
-//            cerr << "LoginCommand Error!" << endl ;
-//            goto error ;
-//        }
-    }
-    else if ( COMMAND_LOGON == cmd )
-    {
-//        if ( -1 == LogonCommand( ) )
-//        {
-//            cerr << "LogonCommand Error!" << endl ;
-//            goto error ;
-//        }
-    }
-    fgets( command, sizeof(command), stdin ) ;
-    for ( ; m_bstart; )
-    {
-        bzero( command, sizeof(command) ) ;
-        cmd = "" ;
-        file = "" ;
-        user = "" ;
-        cout << "shareFile>" ;
-        fgets( command, sizeof(command), stdin ) ;
-        string str = command ;
-        string file ;
-        string::size_type start = str.find_first_not_of( ' ', 0 ) ;
-        string::size_type end = str.find_first_of( ' ', start ) ;
-        if ( string::npos != end )
-        {
-            cmd = str.substr( start, end - start ) ;
-            start = str.find_first_not_of( ' ', end ) ;
-            end = str.find_first_of( ' ', start ) ;
-            if ( string::npos != end )
-            {
-                file = str.substr( start, end-start ) ;
-                start = str.find_first_not_of( ' ', end ) ;
-                user = str.substr( start, str.length() - start - 1 ) ;
-            }
-            else
-            {
-                file = str.substr( start, str.length() - start - 1 ) ;
-            }
-        }
-        else
-        {
-            cmd = str.substr( start, str.length()-1 ) ;
-        }
-        if ( COMMAND_LS == cmd )
-        {
-            LsCommand() ;
-        }
-        else if ( COMMAND_PUT == cmd )
-        {
-            PutCommand( file ) ;
-        }
-        else if ( COMMAND_GET == cmd )
-        {
-            GetCommand( file, user ) ;
-        }
-        else if ( COMMAND_QUIT == cmd )
-        {
-            QuitCommand( ) ;
-        }
-        else if ( COMMAND_CD == cmd )
-        {
-            CdCommand( file.c_str() ) ;
-        }
-        else if ( COMMAND_HELP == cmd )
-        {
-            HelpCommand( ) ;
-        }
-        else if ( COMMAND_SHARE == cmd )
-        {
-            ShareCommand( file, user ) ;
-        }
-        else if ( COMMAND_RM == cmd )
-        {
-            RmCommand( file ) ;
-        }
-    }
-done:
-    return retval ;
-error:
-    retval = -1 ;
-    goto done ;
-}

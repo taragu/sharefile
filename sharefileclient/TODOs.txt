@@ -5,6 +5,7 @@ google search: https://www.google.com/search?client=ubuntu&channel=fs&q=qt+list+
 
 - ls
 
+- upload bigger files (clientcommand)
 
 STRETCH GOAL:
 --------------------------------------------------------------------------
