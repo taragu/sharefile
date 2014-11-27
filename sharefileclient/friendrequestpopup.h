@@ -2,13 +2,12 @@
 #define FRIENDREQUESTPOPUP_H
 
 #include <QDialog>
-#include "errorpopup.h"
 
 namespace Ui {
 class FriendRequestPopup;
 }
 
-class FriendRequestPopup : public virtual QDialog, public virtual ErrorPopup
+class FriendRequestPopup : public virtual QDialog
 {
     Q_OBJECT
 

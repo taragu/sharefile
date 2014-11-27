@@ -39,7 +39,6 @@ void SignInDialog::on_signin_submit_accepted()
         QCryptographicHash md5Generator(QCryptographicHash::Md5);
         md5Generator.addData(password.c_str());
         int login_ret = ClientCommandManager::clientCommand->LoginCommand(username, (std::string)md5Generator.result().toHex()) != 0;
-        //then login
         if (login_ret) {
                  changeMessage("Login not successful");
         } else {

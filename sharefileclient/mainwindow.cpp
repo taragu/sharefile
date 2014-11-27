@@ -27,7 +27,6 @@ MainWindow::MainWindow(QWidget *parent) :
     signupDialog = new SignUpDialog();
     signinDialog = new SignInDialog();
     attach(errorPopup); //IMPORTANT!!! observer pattern
-    attach(friendRequest);
 }
 
 void MainWindow::destroyAll(){
