@@ -1,12 +1,7 @@
 #include "clientcommand.h"
-#include <iostream>
-#include <string>
-#include <set>
-#include <QDebug>
-#include <QDir>
 #define COMMAND_BUF_SIZE  256
 #define END 1234
-
+using namespace std ;
 
 ClientCommand::ClientCommand( const char *ip, int port )
 {
@@ -37,11 +32,9 @@ ClientCommand::~ClientCommand( void )
     }
 }
 
-
 int ClientCommand::QuitCommand( void )
 {
     int retval = 0 ;
-    // send command
     if ( write( m_sockfd, COMMAND_QUIT, strlen(COMMAND_QUIT) ) < 0 )
     {
         perror( "write" ) ;
@@ -182,7 +175,6 @@ int ClientCommand::HelpCommand( void ) const
     return 0 ;
 }
 
-
 int ClientCommand::RmCommand( string filename )
 {
     int retval = 0 ;
@@ -264,7 +256,7 @@ error:
 }
 
 // register
-int ClientCommand::RegisterCommand( std::string username, std::string password )
+int ClientCommand::LogonCommand( std::string username, std::string password )
 {
     int retval = 0 ;
     UserData user ;
@@ -273,7 +265,7 @@ int ClientCommand::RegisterCommand( std::string username, std::string password )
     // send command
     char command[COMMAND_BUF_SIZE] ;
     bzero( command, sizeof(command) ) ;
-    strcpy( command, COMMAND_REGISTER ) ;
+    strcpy( command, COMMAND_LOGON ) ;
     if ( write( m_sockfd, command, strlen(command) ) < 0 )
     {
         perror( "write" ) ;
@@ -303,7 +295,7 @@ retry:
     {
         goto error ;
     }
-    if ( -1 == QDir().mkdir( user.username ) ) //FIXED COMPILER ERROR; ORIGINALLY mkdir( user.username, 0755 )
+    if ( -1 == mkdir( user.username, 0755 ) )
     {
         perror( "mkdir" ) ;
         goto error ;
@@ -421,7 +413,7 @@ retry:
         cmd = COMMAND_LOGIN ;
         break ;
     case 2 :
-        cmd = COMMAND_REGISTER ;
+        cmd = COMMAND_LOGON ;
         break ;
     default:
         cout << "Wrong selection" << endl ;
@@ -429,19 +421,19 @@ retry:
     }
     if ( COMMAND_LOGIN == cmd )
     {
-//        if ( -1 == LoginCommand( ) )
-//        {
-//            cerr << "LoginCommand Error!" << endl ;
-//            goto error ;
-//        }
+        if ( -1 == LoginCommand( ) )
+        {
+            cerr << "LoginCommand Error!" << endl ;
+            goto error ;
+        }
     }
-    else if ( COMMAND_REGISTER == cmd )
+    else if ( COMMAND_LOGON == cmd )
     {
-//        if ( -1 == RegisterCommand( ) )
-//        {
-//            cerr << "RegisterCommand Error!" << endl ;
-//            goto error ;
-//        }
+        if ( -1 == LogonCommand( ) )
+        {
+            cerr << "LogonCommand Error!" << endl ;
+            goto error ;
+        }
     }
     fgets( command, sizeof(command), stdin ) ;
     for ( ; m_bstart; )

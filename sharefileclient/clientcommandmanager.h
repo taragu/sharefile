@@ -11,7 +11,6 @@
 
 class ClientCommandManager {
 
-    //ClientCommand * clientCommand;
 public:
 
   static ClientCommand * clientCommand;
@@ -19,10 +18,6 @@ public:
   static void setClientCommand(ClientCommand * _clientCommand) {
     clientCommand = _clientCommand;
   }
-
-//  static ClientCommand * getClientCommand() {
-//      return clientCommand;
-//  }
 
   ~ClientCommandManager( void )
   {
