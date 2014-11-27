@@ -41,6 +41,8 @@ private slots:
 
     void on_browse_button_clicked();
 
+    void on_sharefile_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     AddAFriendDialog * addAFriendDialog;

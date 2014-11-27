@@ -102,7 +102,7 @@
      <string>Add a Friend</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="sharefile_button">
     <property name="geometry">
      <rect>
       <x>50</x>

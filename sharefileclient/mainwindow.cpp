@@ -9,6 +9,7 @@
 #include <set>
 #include <QDebug>
 #include <QFileDialog>
+#include <stdio.h>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -25,9 +26,6 @@ MainWindow::MainWindow(QWidget *parent) :
     signinDialog = new SignInDialog();
     attach(errorPopup); //IMPORTANT!!! observer pattern
     attach(friendRequest);
-    //TESTING IMAGE/FRIEND POPUP
-//    friendRequest->setModal(true);
-//    friendRequest->exec();
 }
 
 void MainWindow::destroyAll(){
@@ -43,21 +41,6 @@ MainWindow::~MainWindow()
 {
     destroyAll();
 }
-
-void MainWindow::on_upload_button_clicked()
-{
-    if (ClientCommandManager::clientCommand == NULL) {
-        changeMessage("please enter IP first!");
-        return;
-    } else if (usersController->isSignedIn() == false) {
-        changeMessage("please sign in first");
-        return;
-    } else {
-        //TODO
-
-    }
-}
-
 
 void MainWindow::on_signup_button_clicked()
 {
@@ -108,8 +91,13 @@ void MainWindow::on_connect_button_clicked()
 
 void MainWindow::on_signin_button_clicked()
 {
-    signinDialog->setModal(true);
-    signinDialog->exec();
+    if (ClientCommandManager::clientCommand == NULL) {
+        changeMessage("please enter ip first!");
+        return;
+    } else {
+        signinDialog->setModal(true);
+        signinDialog->exec();
+    }
 }
 
 void MainWindow::changeMessage(std::string _message) {
@@ -128,18 +116,44 @@ void MainWindow::on_exit_button_clicked()
 
 void MainWindow::on_add_a_friend_button_clicked()
 {
-    addAFriendDialog->setModal(true);
-    addAFriendDialog->exec();
+    if (ClientCommandManager::clientCommand == NULL) {
+        changeMessage("please enter IP first!");
+        return;
+    } else if (usersController->isSignedIn() == false) {
+        changeMessage("please sign in first");
+        return;
+    } else {
+        addAFriendDialog->setModal(true);
+        addAFriendDialog->exec();
+    }
 }
 
 void MainWindow::on_browse_button_clicked()
 {
-    //TODO open up a file selection dialog
+    //TODO ADD IP AND SIGNIN WARNINGS
+
     //when the user selects a file, the path of that file goes into the browse_path_lineedit
     QString fileName = QFileDialog::getOpenFileName(this, tr("Select File"), "/", "All files (*.*)");
-    qDebug("on browse button, the selected file is \n");
-    std::cout << fileName.toStdString() << "\n";
-    //TODO WHY EMPTY STRING???
+    ui->browse_path_lineedit->setText(fileName);
 }
 
+void MainWindow::on_upload_button_clicked()
+{
+    if (ClientCommandManager::clientCommand == NULL) {
+        changeMessage("please enter IP first!");
+        return;
+    } else if (usersController->isSignedIn() == false) {
+        changeMessage("please sign in first");
+        return;
+    } else {
+        //TODO first copy the file on the file path to the user's directory
+        //then grab the filename of the file (should be in the user's directory) and use the put command
+        //then call ls to update the serverfiles_list
 
+    }
+}
+
+void MainWindow::on_sharefile_button_clicked()
+{
+    //TODO grab the file name of the clicked item, and then call the share command in clientcommand
+}
