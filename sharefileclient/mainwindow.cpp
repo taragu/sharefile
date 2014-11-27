@@ -175,11 +175,17 @@ void MainWindow::on_sharefile_button_clicked()
         changeMessage("please sign in first");
         return;
     } else {
+        int retVal = 0;
         for(int i = 0; i < ui->serverfiles_list->count(); i++) {
             QListWidgetItem* item = ui->serverfiles_list->item(i);
             if (item->isSelected()) {
-                ClientCommandManager::clientCommand->ShareCommand(item->text().toStdString(), ui->friend_lineedit->text().toStdString());
+                if (-1 == ClientCommandManager::clientCommand->ShareCommand(item->text().toStdString(), ui->friend_lineedit->text().toStdString())) {
+                    retVal = -1;
+                }
             }
+        }
+        if (retVal == -1) {
+            changeMessage("share file error");
         }
     }
 }
