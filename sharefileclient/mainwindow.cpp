@@ -65,32 +65,6 @@ void MainWindow::on_connect_button_clicked()
     connect.exec();
 }
 
-//void MainWindow::on_cd_button_clicked()
-//{
-//    if (ClientCommandManager::clientCommand == NULL) {
-//        changeMessage("please enter ip first!");
-//        return;
-//    }
-////    else if (signupDialog == NULL) {
-////        changeMessage("please enter ip first!");
-////        return;
-////    } else {
-//        std::string path = ui->cd_textedit->toPlainText().toStdString();
-//        ClientCommandManager::clientCommand->CdCommand(path) ;
-//        //add local files: call the lscommand method in clientcommand, and then add all of them to the list widget
-//        ClientCommand * clientCommand = ClientCommandManager::clientCommand;
-//        std::set<std::string> filesSet = clientCommand->LsCommand();
-//        int size = filesSet.size();
-//        std::set<std::string>::iterator it = filesSet.begin();
-//        for (int i=0;i<size;i++){
-//            std::advance(it, i);
-//            std::string thisFile = *it;
-//            QString qstr = QString::fromStdString(thisFile);
-//            ui->localfiles_list->addItem(qstr);
-//        }
-////    }
-//}
-
 void MainWindow::on_signin_button_clicked()
 {
     if (ClientCommandManager::clientCommand == NULL) {
@@ -133,11 +107,17 @@ void MainWindow::on_add_a_friend_button_clicked()
 
 void MainWindow::on_browse_button_clicked()
 {
-    //TODO ADD IP AND SIGNIN WARNINGS
-
-    //when the user selects a file, the path of that file goes into the browse_path_lineedit
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Select File"), "/", "All files (*.*)");
-    ui->browse_path_lineedit->setText(fileName);
+    if (ClientCommandManager::clientCommand == NULL) {
+        changeMessage("please enter IP first!");
+        return;
+    } else if (usersController->isSignedIn() == false) {
+        changeMessage("please sign in first");
+        return;
+    } else {
+        //when the user selects a file, the path of that file goes into the browse_path_lineedit
+        QString fileName = QFileDialog::getOpenFileName(this, tr("Select File"), "/", "All files (*.*)");
+        ui->browse_path_lineedit->setText(fileName);
+    }
 }
 
 std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
@@ -169,23 +149,38 @@ void MainWindow::on_upload_button_clicked()
         std::vector<std::string> seglist = split(source_filepath, '/');
         std::string fileName = seglist[seglist.size()-1];
         std::string dest_filepath = dest + "/"+ fileName;
-        qDebug(source_filepath.c_str());
-        qDebug(dest_filepath.c_str());
+//        qDebug(source_filepath.c_str());
+//        qDebug(dest_filepath.c_str());
         QFile::copy(QString::fromStdString(source_filepath), QString::fromStdString(dest_filepath));
         //then grab the filename of the file (should be in the user's directory) and use the put command
-        //then call ls to update the serverfiles_list
-
+        ClientCommandManager::clientCommand->PutCommand(fileName);
+        //then call ls to update the serverfiles_list: TODO PICK UP HERE TOMORROW
+        std::set<std::string> filesSet = ClientCommandManager::clientCommand->LsCommand();
+        int size = filesSet.size();
+        std::set<std::string>::iterator it = filesSet.begin();
+        for (int i=0;i<size;i++){
+             std::advance(it, i);
+             std::string thisFile = *it;
+             QString qstr = QString::fromStdString(thisFile);
+             ui->serverfiles_list->addItem(qstr);
+        }
     }
 }
 
 void MainWindow::on_sharefile_button_clicked()
 {
-    //TODO check ip and signed in
-
-    for(int i = 0; i < ui->serverfiles_list->count(); i++) {
-        QListWidgetItem* item = ui->serverfiles_list->item(i);
-        if (item->isSelected()) {
-            ClientCommandManager::clientCommand->ShareCommand(item->text().toStdString(), ui->friend_lineedit->text().toStdString());
+    if (ClientCommandManager::clientCommand == NULL) {
+        changeMessage("please enter IP first!");
+        return;
+    } else if (usersController->isSignedIn() == false) {
+        changeMessage("please sign in first");
+        return;
+    } else {
+        for(int i = 0; i < ui->serverfiles_list->count(); i++) {
+            QListWidgetItem* item = ui->serverfiles_list->item(i);
+            if (item->isSelected()) {
+                ClientCommandManager::clientCommand->ShareCommand(item->text().toStdString(), ui->friend_lineedit->text().toStdString());
+            }
         }
     }
 }
