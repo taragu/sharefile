@@ -5,5 +5,11 @@
 ###Ubuntu
     sudo apt-get install qt4-qmake
     sudo apt-get install libqt4-dev
-
-    qmake -project && qmake hello.pro && make && ./hello
+    
+####Start the Server
+    cd sharefile/sharefile/Server
+    make
+    ./Server <port number>
+    
+####Start the Client
+    qmake -project && qmake sharefileclient.pro && make && ./sharefileclient
