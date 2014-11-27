@@ -10,7 +10,8 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <stdio.h>
-
+#include <unistd.h>
+#include <fstream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -95,6 +96,7 @@ void MainWindow::on_signin_button_clicked()
         changeMessage("please enter ip first!");
         return;
     } else {
+        signinDialog->setUsersController(usersController);
         signinDialog->setModal(true);
         signinDialog->exec();
     }
@@ -137,20 +139,48 @@ void MainWindow::on_browse_button_clicked()
     ui->browse_path_lineedit->setText(fileName);
 }
 
+bool copyFile(const char *SRC, const char* DEST)
+{
+    std::ifstream src(SRC, std::ios::binary);
+    std::ofstream dest(DEST, std::ios::binary);
+    dest << src.rdbuf();
+    return src && dest;
+}
+
+//std::string get_selfpath() {
+//    char buff[1024];
+//    ssize_t len = ::readlink("/proc/self/exe", buff, sizeof(buff)-1);
+//    if (len != -1) {
+//      buff[len] = '\0';
+//      return std::string(buff);
+//    } else {
+//      std::string empty = "";
+//      return empty;
+//    }
+//}
+
 void MainWindow::on_upload_button_clicked()
 {
-    if (ClientCommandManager::clientCommand == NULL) {
-        changeMessage("please enter IP first!");
-        return;
-    } else if (usersController->isSignedIn() == false) {
-        changeMessage("please sign in first");
-        return;
-    } else {
+//    if (ClientCommandManager::clientCommand == NULL) {
+//        changeMessage("please enter IP first!");
+//        return;
+//    } else if (usersController->isSignedIn() == false) {
+//        changeMessage("please sign in first");
+//        return;
+//    } else {
+
         //TODO first copy the file on the file path to the user's directory
+        std::string dest = usersController->getUsername();
+        copyFile(ui->browse_path_lineedit->text().toStdString().c_str(), dest.c_str()); //DON'T KNOW IF THIS IS WORKING
+        //WHERE IS the user's directory: IT SEEMS IT'S NOT POSSSIBLE TO GET THE PATH
+//        std::string path = get_selfpath();
+//        perror("the path is \n");
+//        perror(path.c_str());
+
         //then grab the filename of the file (should be in the user's directory) and use the put command
         //then call ls to update the serverfiles_list
 
-    }
+//    }
 }
 
 void MainWindow::on_sharefile_button_clicked()

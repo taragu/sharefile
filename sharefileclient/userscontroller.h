@@ -6,6 +6,7 @@
 class UsersController {
 private:
     bool signedIn;
+    std::string username;
 public:
     UsersController(): signedIn(false) {}
     UsersController(bool _signedIn) : signedIn(_signedIn) {}
@@ -23,6 +24,13 @@ public:
     void addFriend(std::string friendName);
     void acceptFriendRequest(std::string friendName);
     std::vector<std::string> getFriends();
+    std::string getUsername() {
+        return username;
+    }
+
+    void setUsername(std::string _username){
+        username = _username;
+    }
 };
 //bool UsersController::isSignedIn(){
 //    return signedIn;

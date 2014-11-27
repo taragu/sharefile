@@ -38,7 +38,10 @@ void SignUpDialog::on_signup_submit_accepted()
         if (signup_ret!=0) {
             changeMessage("Signup error: username already exists");
         } else {
+            usersController->setSignedIn(true);
+            usersController->setUsername(username);
             changeMessage("login success!");
+
         }
     }
 }

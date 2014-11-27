@@ -41,6 +41,7 @@ void SignInDialog::on_signin_submit_accepted()
                  changeMessage("Login not successful");
         } else {
              usersController->setSignedIn(true);
+             usersController->setUsername(username);
                 changeMessage("login success!");
         }
 }
