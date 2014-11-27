@@ -421,19 +421,19 @@ retry:
     }
     if ( COMMAND_LOGIN == cmd )
     {
-        if ( -1 == LoginCommand( ) )
-        {
-            cerr << "LoginCommand Error!" << endl ;
-            goto error ;
-        }
+//        if ( -1 == LoginCommand( ) )
+//        {
+//            cerr << "LoginCommand Error!" << endl ;
+//            goto error ;
+//        }
     }
     else if ( COMMAND_LOGON == cmd )
     {
-        if ( -1 == LogonCommand( ) )
-        {
-            cerr << "LogonCommand Error!" << endl ;
-            goto error ;
-        }
+//        if ( -1 == LogonCommand( ) )
+//        {
+//            cerr << "LogonCommand Error!" << endl ;
+//            goto error ;
+//        }
     }
     fgets( command, sizeof(command), stdin ) ;
     for ( ; m_bstart; )

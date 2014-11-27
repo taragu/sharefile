@@ -33,19 +33,12 @@ void SignUpDialog::on_signup_submit_accepted()
     } else {
         //signup
         qDebug("before registration\n");
-        int signup_ret = ClientCommandManager::clientCommand->RegisterCommand(username, password);
+        int signup_ret = ClientCommandManager::clientCommand->LogonCommand(username, password);
         qDebug("after registration\n");
         if (signup_ret!=0) {
             changeMessage("Signup error: username already exists");
         } else {
-            int login_ret = ClientCommandManager::clientCommand->LoginCommand(username, password) != 0;
-            //then login
-            if (login_ret) {
-                changeMessage("Login not successful");
-            } else {
-                usersController->setSignedIn(true);
-                changeMessage("login success!");
-            }
+            changeMessage("login success!");
         }
     }
 }
