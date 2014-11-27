@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <fstream>
+#include <sstream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -139,48 +140,42 @@ void MainWindow::on_browse_button_clicked()
     ui->browse_path_lineedit->setText(fileName);
 }
 
-bool copyFile(const char *SRC, const char* DEST)
-{
-    std::ifstream src(SRC, std::ios::binary);
-    std::ofstream dest(DEST, std::ios::binary);
-    dest << src.rdbuf();
-    return src && dest;
+std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
+    std::stringstream ss(s);
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+    return elems;
 }
-
-//std::string get_selfpath() {
-//    char buff[1024];
-//    ssize_t len = ::readlink("/proc/self/exe", buff, sizeof(buff)-1);
-//    if (len != -1) {
-//      buff[len] = '\0';
-//      return std::string(buff);
-//    } else {
-//      std::string empty = "";
-//      return empty;
-//    }
-//}
-
+std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    split(s, delim, elems);
+    return elems;
+}
 void MainWindow::on_upload_button_clicked()
 {
-//    if (ClientCommandManager::clientCommand == NULL) {
-//        changeMessage("please enter IP first!");
-//        return;
-//    } else if (usersController->isSignedIn() == false) {
-//        changeMessage("please sign in first");
-//        return;
-//    } else {
-
-        //TODO first copy the file on the file path to the user's directory
-        std::string dest = usersController->getUsername();
-        copyFile(ui->browse_path_lineedit->text().toStdString().c_str(), dest.c_str()); //DON'T KNOW IF THIS IS WORKING
-        //WHERE IS the user's directory: IT SEEMS IT'S NOT POSSSIBLE TO GET THE PATH
-//        std::string path = get_selfpath();
-//        perror("the path is \n");
-//        perror(path.c_str());
-
+    if (ClientCommandManager::clientCommand == NULL) {
+        changeMessage("please enter IP first!");
+        return;
+    } else if (usersController->isSignedIn() == false) {
+        changeMessage("please sign in first");
+        return;
+    } else {
+        //first copy the file on the file path to the user's directory
+        std::string currentPath = QDir::currentPath().toStdString();
+        std::string dest = currentPath + "/" + usersController->getUsername();
+        std::string source_filepath = ui->browse_path_lineedit->text().toStdString();
+        std::vector<std::string> seglist = split(source_filepath, '/');
+        std::string fileName = seglist[seglist.size()-1];
+        std::string dest_filepath = dest + "/"+ fileName;
+        qDebug(source_filepath.c_str());
+        qDebug(dest_filepath.c_str());
+        QFile::copy(QString::fromStdString(source_filepath), QString::fromStdString(dest_filepath));
         //then grab the filename of the file (should be in the user's directory) and use the put command
         //then call ls to update the serverfiles_list
 
-//    }
+    }
 }
 
 void MainWindow::on_sharefile_button_clicked()
@@ -188,9 +183,9 @@ void MainWindow::on_sharefile_button_clicked()
     //TODO check ip and signed in
 
     for(int i = 0; i < ui->serverfiles_list->count(); i++) {
-        QListWidgetItem* item = serverfiles_list->item(i);
+        QListWidgetItem* item = ui->serverfiles_list->item(i);
         if (item->isSelected()) {
-            ClientCommandManager::clientCommand->ShareCommand(item->text(), ui->friend_lineedit->text());
+            ClientCommandManager::clientCommand->ShareCommand(item->text().toStdString(), ui->friend_lineedit->text().toStdString());
         }
     }
 }
