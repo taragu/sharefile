@@ -40,10 +40,12 @@ void SignInDialog::on_signin_submit_accepted()
         md5Generator.addData(password.c_str());
         int login_ret = ClientCommandManager::clientCommand->LoginCommand(username, (std::string)md5Generator.result().toHex()) != 0;
         if (login_ret) {
-                 changeMessage("Login not successful");
+            char message[] = "Login not successful\0";
+            changeMessage((std::string) message);
         } else {
              usersController->setSignedIn(true);
              usersController->setUsername(username);
-                changeMessage("login success!");
+             char message[] = "Login success!\0";
+             changeMessage((std::string) message);
         }
 }

@@ -3,6 +3,7 @@
 #include "clientcommandmanager.h"
 #include "QDebug"
 #include <QCryptographicHash>
+#include <string>
 
 SignUpDialog::SignUpDialog(QWidget *parent) :
     QDialog(parent),
@@ -26,25 +27,28 @@ void SignUpDialog::setUsersController(UsersController* _usersController) {
 
 void SignUpDialog::on_signup_submit_accepted()
 {
-    std::string username = ui->signup_username_textedit->text().toStdString();
-    std::string password = ui->signup_password_textedit->text().toStdString();
-    std::string password_conf = ui->signup_passwordconf_textedit->text().toStdString();
-    if (password.compare(password_conf)!=0) {
-        changeMessage("password and password confirmation don't match");
+    QByteArray userByteArray = ui->signup_username_textedit->text().toUtf8();
+    const char* username = userByteArray.constData();
+    QByteArray passwordByteArray = ui->signup_password_textedit->text().toUtf8();
+    const char* password = passwordByteArray.constData();
+    QByteArray passwordConfByteArray = ui->signup_passwordconf_textedit->text().toUtf8();
+    const char* password_conf = passwordConfByteArray.constData();
+    if (strcmp(password, password_conf)!=0) {
+        char message[] = "password and password confirmation don't match\0";
+        changeMessage((std::string)message);
     } else {
         //signup
-        qDebug("before registration\n");
         QCryptographicHash md5Generator(QCryptographicHash::Md5);
-        md5Generator.addData(password.c_str());
-        int signup_ret = ClientCommandManager::clientCommand->LogonCommand(username, (std::string)md5Generator.result().toHex());
-        qDebug("after registration\n");
+        md5Generator.addData(password);
+        int signup_ret = ClientCommandManager::clientCommand->LogonCommand((std::string)username, (std::string)md5Generator.result().toHex());
         if (signup_ret!=0) {
-            changeMessage("Signup error: username already exists");
+            char message[] = "Signup error: username already exists\0";
+            changeMessage((std::string)message);
         } else {
             usersController->setSignedIn(true);
-            usersController->setUsername(username);
-            changeMessage("login success!");
-
+            usersController->setUsername((std::string)username);
+            char message[] = "login success!\0";
+            changeMessage((std::string)message);
         }
     }
 }

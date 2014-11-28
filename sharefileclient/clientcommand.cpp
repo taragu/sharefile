@@ -219,16 +219,14 @@ std::set<std::string> ClientCommand::LsCommand( void ) const
                 else if ( DT_DIR == *(int*)filename )
                 {
 //                        printf( "\033[0;34m%s\033[0m \t", filename+sizeof(int) ) ; TODO WHAT TO DO WITH THIS???
-		  qDebug("adding to returnSet: ");
-		  qDebug(filename+sizeof(int));
-                        returnSet.insert(std::string(filename+sizeof(int)));
+//                        returnSet.insert((std::string) filename+sizeof(int));
                 }
                 else
                 {
 //                        printf( "%s \t", filename+sizeof(int) ) ;
-                    qDebug("adding to returnSet: ");
-                    qDebug(filename+sizeof(int));
-                        returnSet.insert(std::string(filename+sizeof(int)));
+//                    qDebug("adding to returnSet: ");
+//                    qDebug(filename+sizeof(int));
+                        returnSet.insert((std::string) (filename+sizeof(int)));
                 }
                 fflush( stdout ) ;
                 bzero( filename, sizeof(filename) ) ;

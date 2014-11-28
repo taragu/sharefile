@@ -36,6 +36,7 @@ void MainWindow::destroyAll(){
     delete errorPopup;
     delete friendRequest;
     delete usersController;
+    delete addAFriendDialog;
 }
 
 MainWindow::~MainWindow()
@@ -47,7 +48,8 @@ void MainWindow::on_signup_button_clicked()
 {
     qDebug("signup botton clicked\n");
     if (ClientCommandManager::clientCommand == NULL) {
-        changeMessage("please enter ip first!");
+        char message[] = "please enter IP first!\0";
+        changeMessage((std::string) message);
         return;
     } else {
        signupDialog->setUsersController(usersController);
@@ -67,7 +69,8 @@ void MainWindow::on_connect_button_clicked()
 void MainWindow::on_signin_button_clicked()
 {
     if (ClientCommandManager::clientCommand == NULL) {
-        changeMessage("please enter ip first!");
+        char message[] = "please enter IP first!\0";
+        changeMessage((std::string) message);
         return;
     } else {
         signinDialog->setUsersController(usersController);
@@ -93,10 +96,12 @@ void MainWindow::on_exit_button_clicked()
 void MainWindow::on_add_a_friend_button_clicked()
 {
     if (ClientCommandManager::clientCommand == NULL) {
-        changeMessage("please enter IP first!");
+        char message[] = "please enter IP first!\0";
+        changeMessage((std::string) message);
         return;
     } else if (usersController->isSignedIn() == false) {
-        changeMessage("please sign in first");
+        char message[] = "please sign in first!\0";
+        changeMessage((std::string) message);
         return;
     } else {
         addAFriendDialog->setModal(true);
@@ -107,10 +112,12 @@ void MainWindow::on_add_a_friend_button_clicked()
 void MainWindow::on_browse_button_clicked()
 {
     if (ClientCommandManager::clientCommand == NULL) {
-        changeMessage("please enter IP first!");
+        char message[] = "please enter IP first!\0";
+        changeMessage((std::string) message);
         return;
     } else if (usersController->isSignedIn() == false) {
-        changeMessage("please sign in first");
+        char message[] = "please sign in first\0";
+        changeMessage((std::string) message);
         return;
     } else {
         //when the user selects a file, the path of that file goes into the browse_path_lineedit
@@ -135,10 +142,12 @@ std::vector<std::string> split(const std::string &s, char delim) {
 void MainWindow::on_upload_button_clicked()
 {
     if (ClientCommandManager::clientCommand == NULL) {
-        changeMessage("please enter IP first!");
+        char message[] = "please enter IP first!\0";
+        changeMessage((std::string) message);
         return;
     } else if (usersController->isSignedIn() == false) {
-        changeMessage("please sign in first");
+        char message[] = "please sign in first!\0";
+        changeMessage((std::string) message);
         return;
     } else {
         //first copy the file on the file path to the user's directory
@@ -157,10 +166,12 @@ void MainWindow::on_upload_button_clicked()
 void MainWindow::on_sharefile_button_clicked()
 {
     if (ClientCommandManager::clientCommand == NULL) {
-        changeMessage("please enter IP first!");
+        char message[] = "please enter IP first!\0";
+        changeMessage((std::string) message);
         return;
     } else if (usersController->isSignedIn() == false) {
-        changeMessage("please sign in first");
+        char message[] = "please sign in first!\0";
+        changeMessage((std::string) message);
         return;
     } else {
         int retVal = 0;
@@ -175,10 +186,12 @@ void MainWindow::on_sharefile_button_clicked()
             }
         }
         if (retVal == -1) {
-            changeMessage("share file error");
+            char message[] = "share file error\0";
+            changeMessage((std::string) message);
         }
         if (retVal == 0) {
-            changeMessage("share file success!");
+            char message[] = "share file success!\0";
+            changeMessage((std::string) message);
         }
     }
 }
