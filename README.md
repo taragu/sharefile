@@ -12,6 +12,9 @@
     	./Server <port number>
     
 ####Start the Client
-Open the Makefile (sharefile/sharefileclient/Makefile), and edit line 20, 21, and 24 with the path of your qmake binary  
-	qmake -project && qmake sharefileclient.pro && make && ./sharefileclient
+- Open the Makefile (sharefile/sharefileclient/Makefile), and edit line 20, 21, and 24 with the path of your qmake binary - cd into the directory sharefile/sharefileclient
+	qmake -project 
+	qmake sharefileclient.pro 
+	make 
+	./sharefileclient
     
