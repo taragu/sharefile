@@ -1,4 +1,0 @@
-void acceptFriendRequest(std::string friendName)
-void declineFriendRequest(std::string friendName)
-
-void messageFriend(std::string friendName, std::string message)

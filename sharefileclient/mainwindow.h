@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "ui_mainwindow.h"
 #include "signupdialog.h"
 #include "signindialog.h"
 #include "messagesubject.h"
@@ -42,6 +43,8 @@ private slots:
     void on_browse_button_clicked();
 
     void on_sharefile_button_clicked();
+
+    void on_refresh_button_clicked();
 
 private:
     Ui::MainWindow *ui;

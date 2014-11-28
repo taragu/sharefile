@@ -151,18 +151,6 @@ void MainWindow::on_upload_button_clicked()
         QFile::copy(QString::fromStdString(source_filepath), QString::fromStdString(dest_filepath));
         //then grab the filename of the file (should be in the user's directory) and use the put command
         ClientCommandManager::clientCommand->PutCommand(fileName);
-        //then call ls to update the serverfiles_list: TODO PICK UP HERE TOMORROW
-        std::set<std::string> filesSet = ClientCommandManager::clientCommand->LsCommand();
-        int size = filesSet.size();
-        std::set<std::string>::iterator it = filesSet.begin();
-        for (int i=0;i<size;i++){
-             std::advance(it, i);
-             std::string thisFile = *it;
-             qDebug("iterating through lscommand file list: this item is ");
-             qDebug(thisFile.c_str());
-             QString qstr = QString::fromStdString(thisFile);
-             ui->serverfiles_list->addItem(qstr);
-        }
     }
 }
 
@@ -192,5 +180,22 @@ void MainWindow::on_sharefile_button_clicked()
         if (retVal == 0) {
             changeMessage("share file success!");
         }
+    }
+}
+
+void MainWindow::on_refresh_button_clicked()
+{
+    //then call ls to update the serverfiles_list
+    std::set<std::string> filesSet = ClientCommandManager::clientCommand->LsCommand();
+    int size = filesSet.size();
+    std::set<std::string>::iterator it = filesSet.begin();
+    ui->serverfiles_list->clear();
+    for (int i=0;i<size;i++){
+         std::advance(it, i);
+         std::string thisFile = *it;
+         qDebug("iterating through lscommand file list: this item is ");
+         qDebug(thisFile.c_str());
+         QString qstr = QString::fromStdString(thisFile);
+         ui->serverfiles_list->addItem(qstr);
     }
 }
