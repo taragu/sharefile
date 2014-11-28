@@ -46,6 +46,8 @@ private slots:
 
     void on_refresh_button_clicked();
 
+    void on_download_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     AddAFriendDialog * addAFriendDialog;

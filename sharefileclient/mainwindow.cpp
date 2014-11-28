@@ -178,8 +178,8 @@ void MainWindow::on_sharefile_button_clicked()
         for(int i = 0; i < ui->serverfiles_list->count(); i++) {
             QListWidgetItem* item = ui->serverfiles_list->item(i);
             if (item->isSelected()) {
-                qDebug("sharefile button: item is ");
-                qDebug(item->text().toStdString().c_str());
+//                qDebug("sharefile button: item is ");
+//                qDebug(item->text().toStdString().c_str());
                 if (-1 == ClientCommandManager::clientCommand->ShareCommand(item->text().toStdString(), ui->friend_lineedit->text().toStdString())) {
                     retVal = -1;
                 }
@@ -208,9 +208,40 @@ void MainWindow::on_refresh_button_clicked()
     for (int i=0;i<size;i++){
          std::advance(it, i);
          std::string thisFile = *it;
-         qDebug("iterating through lscommand file list: this item is ");
-         qDebug(thisFile.c_str());
+//         qDebug("iterating through lscommand file list: this item is ");
+//         qDebug(thisFile.c_str());
          QString qstr = QString::fromStdString(thisFile);
          ui->serverfiles_list->addItem(qstr);
+    }
+}
+
+void MainWindow::on_download_button_clicked()
+{
+    if (ClientCommandManager::clientCommand == NULL) {
+        char message[] = "please enter IP first!\0";
+        changeMessage((std::string) message);
+        return;
+    } else if (usersController->isSignedIn() == false) {
+        char message[] = "please sign in first!\0";
+        changeMessage((std::string) message);
+        return;
+    } else {
+        int retVal = 0;
+        for(int i = 0; i < ui->serverfiles_list->count(); i++) {
+            QListWidgetItem* item = ui->serverfiles_list->item(i);
+            if (item->isSelected()) {
+                if (-1 == ClientCommandManager::clientCommand->GetCommand(item->text().toStdString(), "")) {
+                    retVal = -1;
+                }
+            }
+        }
+        if (retVal == -1) {
+            char message[] = "download file error\0";
+            changeMessage((std::string) message);
+        }
+        if (retVal == 0) {
+            char message[] = "download success! you can find them in this_program_s_directory/your_username \0";
+            changeMessage((std::string) message);
+        }
     }
 }

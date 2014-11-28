@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>714</width>
-    <height>556</height>
+    <width>872</width>
+    <height>552</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>110</y>
+      <x>150</x>
+      <y>120</y>
       <width>131</width>
       <height>21</height>
      </rect>
@@ -30,7 +30,7 @@
    <widget class="QListWidget" name="serverfiles_list">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>110</x>
       <y>150</y>
       <width>301</width>
       <height>251</height>
@@ -40,7 +40,7 @@
    <widget class="QPushButton" name="upload_button">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>590</x>
       <y>60</y>
       <width>81</width>
       <height>31</height>
@@ -105,9 +105,9 @@
    <widget class="QPushButton" name="sharefile_button">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>10</x>
       <y>440</y>
-      <width>211</width>
+      <width>231</width>
       <height>41</height>
      </rect>
     </property>
@@ -118,7 +118,7 @@
    <widget class="QLineEdit" name="browse_path_lineedit">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>290</x>
       <y>60</y>
       <width>281</width>
       <height>31</height>
@@ -128,7 +128,7 @@
    <widget class="QPushButton" name="browse_button">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>170</x>
       <y>60</y>
       <width>99</width>
       <height>27</height>
@@ -141,8 +141,8 @@
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>150</y>
+      <x>530</x>
+      <y>140</y>
       <width>281</width>
       <height>261</height>
      </rect>
@@ -151,8 +151,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>120</y>
+      <x>620</x>
+      <y>110</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -164,8 +164,8 @@
    <widget class="QPushButton" name="exit_button">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>480</y>
+      <x>660</x>
+      <y>470</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -177,9 +177,9 @@
    <widget class="QLineEdit" name="friend_lineedit">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>10</x>
       <y>420</y>
-      <width>271</width>
+      <width>241</width>
       <height>21</height>
      </rect>
     </property>
@@ -190,14 +190,27 @@
    <widget class="QPushButton" name="refresh_button">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>110</y>
+      <x>280</x>
+      <y>120</y>
       <width>99</width>
       <height>27</height>
      </rect>
     </property>
     <property name="text">
      <string>Refresh</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="download_button">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>440</y>
+      <width>211</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Download Selected Files</string>
     </property>
    </widget>
   </widget>

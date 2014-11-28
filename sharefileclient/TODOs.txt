@@ -3,8 +3,6 @@ TODO:
 this is nice: http://codeprogress.com/cpp/libraries/qt/showQtExample.php?key=QListWidgetItemClicked&index=425
 google search: https://www.google.com/search?client=ubuntu&channel=fs&q=qt+list+widget+item+on+click&ie=utf-8&oe=utf-8
 
-- upload bigger files (clientcommand)
-
 STRETCH GOAL:
 --------------------------------------------------------------------------
 - ClientCommand: server push when there's a new message or a friend request, or a change in friend list
@@ -31,7 +29,8 @@ YES: pass an instance of userscontroller with signin = false to signin controlle
 - add a friend dialog: AddAFriendDialog
 - mainwindow: browse, upload, share, add a friend onclick
 - fix friend request popup
-- ls
+- ls (fixed by fixing the valgrind errors on std::string)
+- upload bigger files (clientcommand)
 
 HALF DONE:
 - make a notification class extending the errorpopup class (friend request: accept or decline; no cancel button)

@@ -34,12 +34,15 @@
     <rect>
      <x>50</x>
      <y>80</y>
-     <width>481</width>
-     <height>241</height>
+     <width>461</width>
+     <height>221</height>
     </rect>
    </property>
    <property name="text">
     <string>(Display error message in this label)</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>
