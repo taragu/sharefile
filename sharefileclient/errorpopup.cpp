@@ -1,5 +1,7 @@
 #include "errorpopup.h"
 #include "ui_errorpopup.h"
+#include <IObserver.h>
+#include <QDebug>
 
 ErrorPopup::ErrorPopup(QWidget *parent) :
     QDialog(parent),
@@ -8,8 +10,10 @@ ErrorPopup::ErrorPopup(QWidget *parent) :
     ui->setupUi(this);
 }
 
-void ErrorPopup::setError(std::string errorMsg) {
+void ErrorPopup::update(std::string errorMsg) {
     ui->errormsg_label->setText(QString::fromUtf8(errorMsg.c_str()));
+    this->setModal(true);
+    this->exec();
 }
 
 ErrorPopup::~ErrorPopup()

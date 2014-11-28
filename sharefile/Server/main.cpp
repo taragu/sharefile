@@ -6,22 +6,23 @@
 
 typedef struct sockaddr SA ;
 
-// client thread
+// Client thread
 void *clientthread( void *arg )
 {
 	long int retval = 0 ;
 	int clientfd = *(int*)arg ;
 	ServerCommand command( clientfd ) ;
 	char commandbuf[COMMAND_BUF] ;
-	while ( 1 )
+	while ( 1)
 	{
 		bzero( commandbuf, COMMAND_BUF ) ;
-		// take command
+		// receive command
 		if ( read( clientfd, commandbuf, COMMAND_BUF) <= 0 )
 		{
 			goto error ;
 		}
 		std::cout << "command:" << commandbuf << std::endl ;
+        // do command
 		if ( !strncmp( COMMAND_LS, commandbuf, strlen(COMMAND_LS) ) )
 		{
 			if ( -1 == command.LsCommand( ) )
@@ -29,42 +30,65 @@ void *clientthread( void *arg )
 				goto error ;
 			}
 		}
-
-		if ( !strncmp( COMMAND_GET, commandbuf, strlen(COMMAND_GET) ) )
+		else if ( !strncmp( COMMAND_GET, commandbuf, strlen(COMMAND_GET) ) )
 		{
 			if ( -1 == command.GetCommand( commandbuf+strlen(COMMAND_GET) ) )
 			{
 				goto error ;
 			}
 		}
-	
-		if ( !strncmp( COMMAND_PUT, commandbuf, strlen(COMMAND_PUT) ) )
+		else if ( !strncmp( COMMAND_PUT, commandbuf, strlen(COMMAND_PUT) ) )
 		{
 			if ( -1 == command.PutCommand( commandbuf+strlen(COMMAND_PUT) ) )
 			{
 				goto error ;
 			}
 		}
-
-		if ( !strncmp( COMMAND_HELP, commandbuf, strlen(COMMAND_HELP) ) )
+		else if ( !strncmp( COMMAND_HELP, commandbuf, strlen(COMMAND_HELP) ) )
 		{
 			if ( -1 == command.HelpCommand( ) )
 			{
 				goto error ;
 			}
 		}
-
-		if ( !strncmp( COMMAND_QUIT, commandbuf, strlen(COMMAND_QUIT) ) )
+		else if ( !strncmp( COMMAND_QUIT, commandbuf, strlen(COMMAND_QUIT) ) )
 		{
 			if ( -1 == command.QuitCommand( ) )
 			{
 				goto error ;
 			}
 		}
-
-		if ( !strncmp( COMMAND_CD, commandbuf, strlen(COMMAND_CD) ) )
+		else if ( !strncmp( COMMAND_CD, commandbuf, strlen(COMMAND_CD) ) )
 		{
 			if ( -1 == command.CdCommand( commandbuf+strlen(COMMAND_CD) ) )
+			{
+				goto error ;
+			}
+		}
+		else if ( !strncmp( COMMAND_LOGIN, commandbuf, strlen(COMMAND_LOGIN) ) )
+		{
+			if ( -1 == command.LoginCommand( ) )
+			{
+				goto error ;
+			}
+		}
+		else if ( !strncmp( COMMAND_LOGON, commandbuf, strlen(COMMAND_LOGON) ) )
+		{
+			if ( -1 == command.LogonCommand( ) )
+			{
+				goto error ;
+			}
+		}
+		else if ( !strncmp( COMMAND_SHARE, commandbuf, strlen(COMMAND_SHARE) ) )
+		{
+			if ( -1 == command.ShareCommand( ) )
+			{
+				goto error ;
+			}
+		}
+		else if ( !strncmp( COMMAND_RM, commandbuf, strlen(COMMAND_RM) ) )
+		{
+			if ( -1 == command.RmCommand( commandbuf+strlen(COMMAND_RM) ) )
 			{
 				goto error ;
 			}
@@ -82,10 +106,10 @@ int main( int argc, char **argv )
 {
 	if ( argc < 2 )
 	{
-		std::cerr << "Guide:" << argv[0] << "<Port Number>" << std::endl ;
+		std::cerr << "Enter:" << argv[0] << "<Port>" << std::endl ;
 		return - 1;
 	}
-	// prepare to listen socket
+	// prepare to listen
 	int listenfd = socket( AF_INET, SOCK_STREAM, 0 ) ;
 	if ( - 1 == listenfd )
 	{
@@ -97,8 +121,9 @@ int main( int argc, char **argv )
 	bzero( &addrserver, sizeof(addrserver) ) ;
 	addrserver.sin_family = AF_INET ;
 	addrserver.sin_port = htons( atoi( argv[1] ) );
-	// listen
-	if ( -1 == bind( listenfd, (SA*)&addrserver, sizeof(addrserver) ) )
+	socklen_t len = sizeof(addrserver) ;
+	// start binding
+	if ( -1 == bind( listenfd, (SA*)&addrserver, len ) )
 	{
 		perror( "bind" ) ;
 		return -1 ;
@@ -122,7 +147,6 @@ int main( int argc, char **argv )
 			perror( "accept" ) ;
 			return -1 ;
 		}
-		// create thread，size 4096 * 10
 		pthread_t tid ;
 		pthread_attr_t attr ;
 		pthread_attr_init( &attr ) ;

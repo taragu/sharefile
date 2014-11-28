@@ -30,46 +30,46 @@ typedef struct sockaddr SA ;
 #define COMMAND_QUIT          "by"
 #define COMMAND_HELP          "help"
 #define COMMAND_LOGIN         "login"
-#define COMMAND_REGISTER      "register"
+#define COMMAND_LOGON         "logon"
 #define COMMAND_SHARE         "share"
 #define COMMAND_RM            "rm"
 
 class ClientCommand
 {
-public:
-	ClientCommand( const char *ip, int port ) ;
-	~ClientCommand( void ) ;
-	int QuitCommand( void ) ;
-	int GetCommand( string file, string localpath = "" ) const ;
-	int PutCommand( string fileName ) const ;
-	int HelpCommand( void ) const ;
-	int LsCommand( void ) const ;
-	int CdCommand( string path ) ;
-	int LoginCommand( void ) ;
-	int RegisterCommand( void ) ;
-	int ShareCommand( string file, string user ) ;
-	int RmCommand( string strfilename ) ;
-	int manager( void ) ;
+ public:
+  ClientCommand( const char *ip, int port ) ;
+  ~ClientCommand( void ) ;
+  int QuitCommand( void ) ;
+  int GetCommand( string file, string localpath = "" ) const ;
+  int PutCommand( string fileName ) const ;
+  int HelpCommand( void ) const ;
+  int LsCommand( void ) const ;
+  int CdCommand( string path ) ;
+  int LoginCommand( void ) ;
+  int LogonCommand( void ) ;
+  int ShareCommand( string file, string user ) ;
+  int RmCommand( string strfilename ) ;
+  int manager( void ) ;
 
-private:
-	struct UserData
-	{
-		char username[256] ;
-		char password[256] ;
-		UserData( const std::string &name = "",
-				  const std::string &passwd = "" )
-		{
-			strcpy( username, name.c_str() ) ;
-			strcpy( password, passwd.c_str() ) ;
-		}
-		bool operator<( const UserData &that ) const
-		{
-			return strcmp( username, that.username ) < 0 ;
-		}
-	} ;
-	int  m_sockfd ;   // socket
-	bool m_bstart ;   // server status
-	UserData m_user ; // user info
+ private:
+  struct UserData
+  {
+    char username[256] ;
+    char password[256] ;
+    UserData( const std::string &name = "",
+	      const std::string &passwd = "" )
+    {
+      strcpy( username, name.c_str() ) ;
+      strcpy( password, passwd.c_str() ) ;
+    }
+    bool operator<( const UserData &that ) const
+    {
+      return strcmp( username, that.username ) < 0 ;
+    }
+  } ;
+  int  m_sockfd ;   // socket
+  bool m_bstart ;   // server status
+  UserData m_user ; // user info
 } ;
 
 #endif // 

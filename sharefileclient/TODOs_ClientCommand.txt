@@ -1,0 +1,33 @@
+void acceptFriendRequest(std::string senderName, std::string receiverName)
+--> then the server will call the database method to make person A and B friends
+(yuzhou)
+
+
+void declineFriendRequest(std::string senderName, std::string receiverName)
+--> nothing happens on the server side when it gets it
+
+
+void messageFriend(std::string senderName, std::string receiverName, std::string message)
+--> server get the message from Person A, the push the message to Person B
+
+
+void sendFriendRequest(std::string senderName, std::string receiverName)
+--> server get the request from Person A, then push the request to Person B
+
+
+void removeFriend(std::string senderName, std::string receiverName)
+--> the server call the database method to unfriend person A and B
+(yuzhou)
+
+
+std::vector<std::string> getFriends(std::string username)
+--> server calls the database method to get all friends' usernames in a string --> then put them into a vector
+(yuzhou)
+
+
+
+Server push:
+Also, whenever there's a change in a person's friend list --> push to ClientCommand -->??? --> update friend list in the GUI
+
+
+ALSO, UPLOADING/SENDING BIGGER FILES

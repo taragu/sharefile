@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SigninWarning</class>
- <widget class="QDialog" name="SigninWarning">
+ <class>AddAFriendDialog</class>
+ <widget class="QDialog" name="AddAFriendDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -32,14 +32,24 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>60</x>
      <y>100</y>
      <width>161</width>
      <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>Please sign in!</string>
+    <string>Friend's username</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="receivername_lineedit">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>110</y>
+     <width>181</width>
+     <height>31</height>
+    </rect>
    </property>
   </widget>
  </widget>
@@ -48,7 +58,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>SigninWarning</receiver>
+   <receiver>AddAFriendDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -64,7 +74,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>SigninWarning</receiver>
+   <receiver>AddAFriendDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

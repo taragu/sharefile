@@ -100,6 +100,9 @@
      <height>27</height>
     </rect>
    </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
   </widget>
   <widget class="QLineEdit" name="signup_passwordconf_textedit">
    <property name="geometry">
@@ -109,6 +112,9 @@
      <width>113</width>
      <height>27</height>
     </rect>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
    </property>
   </widget>
  </widget>

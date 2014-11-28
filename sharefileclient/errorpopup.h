@@ -2,22 +2,24 @@
 #define ERRORPOPUP_H
 
 #include <QDialog>
+#include <IObserver.h>
 
 namespace Ui {
 class ErrorPopup;
 }
 
-class ErrorPopup : public QDialog
+class ErrorPopup : public virtual QDialog, IObserver
 {
     Q_OBJECT
 
 public:
     explicit ErrorPopup(QWidget *parent = 0);
-    void setError(std::string);
+    virtual void update(std::string message);
     ~ErrorPopup();
 
 private:
     Ui::ErrorPopup *ui;
+    std::string message;
 };
 
 #endif // ERRORPOPUP_H

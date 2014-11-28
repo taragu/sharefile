@@ -2,6 +2,7 @@
 #include "ui_signupdialog.h"
 #include "clientcommandmanager.h"
 #include "QDebug"
+#include <QCryptographicHash>
 
 SignUpDialog::SignUpDialog(QWidget *parent) :
     QDialog(parent),
@@ -9,6 +10,8 @@ SignUpDialog::SignUpDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     errorPopup = new ErrorPopup();
+    message = "";
+    attach(errorPopup);
 }
 
 SignUpDialog::~SignUpDialog()
@@ -17,8 +20,9 @@ SignUpDialog::~SignUpDialog()
     delete ui;
 }
 
-
-
+void SignUpDialog::setUsersController(UsersController* _usersController) {
+    usersController = _usersController;
+}
 
 void SignUpDialog::on_signup_submit_accepted()
 {
@@ -26,14 +30,30 @@ void SignUpDialog::on_signup_submit_accepted()
     std::string password = ui->signup_password_textedit->text().toStdString();
     std::string password_conf = ui->signup_passwordconf_textedit->text().toStdString();
     if (password.compare(password_conf)!=0) {
-        errorPopup->setError("password and password confirmation don't match");
-        errorPopup->setModal(true);
-        errorPopup->exec();
+        changeMessage("password and password confirmation don't match");
     } else {
-        if (ClientCommandManager::clientCommand->LoginCommand(username, password) != 0) {//login not successful
-            errorPopup->setError("Login not successful");
-            errorPopup->setModal(true);
-            errorPopup->exec();
+        //signup
+        qDebug("before registration\n");
+        QCryptographicHash md5Generator(QCryptographicHash::Md5);
+        md5Generator.addData(password.c_str());
+        int signup_ret = ClientCommandManager::clientCommand->LogonCommand(username, (std::string)md5Generator.result().toHex());
+        qDebug("after registration\n");
+        if (signup_ret!=0) {
+            changeMessage("Signup error: username already exists");
+        } else {
+            usersController->setSignedIn(true);
+            usersController->setUsername(username);
+            changeMessage("login success!");
+
         }
     }
+}
+
+void SignUpDialog::changeMessage(std::string _message) {
+    message = _message;
+    notify(message);
+}
+
+std::string SignUpDialog::getMessage() {
+    return message;
 }
