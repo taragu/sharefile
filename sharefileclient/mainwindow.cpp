@@ -245,3 +245,8 @@ void MainWindow::on_download_button_clicked()
         }
     }
 }
+
+void MainWindow::on_refresh_messages_button_clicked()
+{
+    //TODO: similar to refresh button onclick: clear and then load the list of messages/requests
+}

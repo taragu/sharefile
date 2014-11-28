@@ -10,6 +10,13 @@ STRETCH GOAL:
 - messaging between friends
 
 
+CLIENT POLLING:
+- 
+
+
+
+
+
 DONE
 ----------------------------------------------------------------------------
 OBSERVER PATTERN:
