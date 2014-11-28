@@ -186,7 +186,9 @@ void MainWindow::on_sharefile_button_clicked()
 void MainWindow::on_refresh_button_clicked()
 {
     //then call ls to update the serverfiles_list
+  qDebug("before calling lscommand");
     std::set<std::string> filesSet = ClientCommandManager::clientCommand->LsCommand();
+    qDebug("after calling lscommand");
     int size = filesSet.size();
     std::set<std::string>::iterator it = filesSet.begin();
     ui->serverfiles_list->clear();
