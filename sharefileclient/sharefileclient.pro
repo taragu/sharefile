@@ -13,8 +13,6 @@ HEADERS += addafrienddialog.h \
            clientcommandmanager.h \
            connectdialog.h \
            errorpopup.h \
-           frienddialog.h \
-           friendrequestpopup.h \
            IObserver.h \
            mainwindow.h \
            messagesubject.h \
@@ -28,22 +26,24 @@ HEADERS += addafrienddialog.h \
            ui_mainwindow.h \
            ui_signindialog.h \
            ui_signupdialog.h \
-           userscontroller.h
+           userscontroller.h \
+    sendmessagedialog.h \
+    readmessagedialog.h
 FORMS += addafrienddialog.ui \
          connectdialog.ui \
          errorpopup.ui \
-         frienddialog.ui \
-         friendrequestpopup.ui \
          mainwindow.ui \
          signindialog.ui \
-         signupdialog.ui
+         signupdialog.ui \
+    sendmessagedialog.ui \
+    readmessagedialog.ui
 SOURCES += addafrienddialog.cpp \
            clientcommand.cpp \
            connectdialog.cpp \
            errorpopup.cpp \
-           frienddialog.cpp \
-           friendrequestpopup.cpp \
            main.cpp \
            mainwindow.cpp \
            signindialog.cpp \
-           signupdialog.cpp
+           signupdialog.cpp \
+    sendmessagedialog.cpp \
+    readmessagedialog.cpp

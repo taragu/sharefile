@@ -22,10 +22,11 @@ MainWindow::MainWindow(QWidget *parent) :
     message = "";
     usersController = new UsersController();
     errorPopup = new ErrorPopup();
-    friendRequest = new FriendRequestPopup();
     addAFriendDialog = new AddAFriendDialog();
     signupDialog = new SignUpDialog();
     signinDialog = new SignInDialog();
+    sendMessageDialog = new SendMessageDialog();
+    readMessageDialog = new ReadMessageDialog();
     attach(errorPopup); //IMPORTANT!!! observer pattern
 }
 
@@ -34,9 +35,10 @@ void MainWindow::destroyAll(){
     delete signupDialog;
     delete signinDialog;
     delete errorPopup;
-    delete friendRequest;
     delete usersController;
     delete addAFriendDialog;
+    delete sendMessageDialog;
+    delete readMessageDialog;
 }
 
 MainWindow::~MainWindow()

@@ -7,8 +7,9 @@
 #include "signindialog.h"
 #include "messagesubject.h"
 #include "userscontroller.h"
-#include "friendrequestpopup.h"
 #include "addafrienddialog.h"
+#include "sendmessagedialog.h"
+#include "readmessagedialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -59,9 +60,10 @@ private:
     AddAFriendDialog * addAFriendDialog;
     SignUpDialog * signupDialog;
     SignInDialog * signinDialog;
+    SendMessageDialog * sendMessageDialog;
+    ReadMessageDialog * readMessageDialog;
     std::string message;
     ErrorPopup * errorPopup;
-    FriendRequestPopup * friendRequest;
     UsersController * usersController;
 };
 
