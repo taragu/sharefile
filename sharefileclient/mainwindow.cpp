@@ -173,13 +173,15 @@ void MainWindow::on_sharefile_button_clicked()
         char message[] = "please sign in first!\0";
         changeMessage((std::string) message);
         return;
+    } else if (ui->friend_lineedit->text().isEmpty()){
+        char message[] = "please enter your friend's name!\0";
+        changeMessage((std::string) message);
+        return;
     } else {
         int retVal = 0;
         for(int i = 0; i < ui->serverfiles_list->count(); i++) {
             QListWidgetItem* item = ui->serverfiles_list->item(i);
             if (item->isSelected()) {
-//                qDebug("sharefile button: item is ");
-//                qDebug(item->text().toStdString().c_str());
                 if (-1 == ClientCommandManager::clientCommand->ShareCommand(item->text().toStdString(), ui->friend_lineedit->text().toStdString())) {
                     retVal = -1;
                 }
@@ -196,22 +198,41 @@ void MainWindow::on_sharefile_button_clicked()
     }
 }
 
-void MainWindow::on_refresh_button_clicked()
-{
-    //then call ls to update the serverfiles_list
-  qDebug("before calling lscommand");
+void MainWindow::refresh_serverfiles_list() {
     std::set<std::string> filesSet = ClientCommandManager::clientCommand->LsCommand();
-    qDebug("after calling lscommand");
     int size = filesSet.size();
     std::set<std::string>::iterator it = filesSet.begin();
     ui->serverfiles_list->clear();
     for (int i=0;i<size;i++){
          std::advance(it, i);
          std::string thisFile = *it;
-//         qDebug("iterating through lscommand file list: this item is ");
-//         qDebug(thisFile.c_str());
          QString qstr = QString::fromStdString(thisFile);
          ui->serverfiles_list->addItem(qstr);
+    }
+}
+
+void MainWindow::refresh_messages_list() {
+    //TODO CALL LISTMESSAGES METHOD FROM CLIENTCOMMAND
+}
+
+void MainWindow::refresh_friends_list() {
+    //TODO CALL LISTFRIENDS METHOD FROM CLIENTCOMMAND
+}
+
+void MainWindow::on_refresh_button_clicked()
+{
+    if (ClientCommandManager::clientCommand == NULL) {
+        char message[] = "please enter IP first!\0";
+        changeMessage((std::string) message);
+        return;
+    } else if (usersController->isSignedIn() == false) {
+        char message[] = "please sign in first!\0";
+        changeMessage((std::string) message);
+        return;
+    } else {
+        refresh_serverfiles_list();
+        refresh_messages_list();
+        refresh_friends_list();
     }
 }
 
@@ -244,9 +265,4 @@ void MainWindow::on_download_button_clicked()
             changeMessage((std::string) message);
         }
     }
-}
-
-void MainWindow::on_refresh_messages_button_clicked()
-{
-    //TODO: similar to refresh button onclick: clear and then load the list of messages/requests
 }
