@@ -19,6 +19,11 @@
 #include <string>
 #include <set>
 #include <fstream>
+
+#include "user_db_editor.h"
+#include <sqlite3.h>
+
+
 using namespace std ;
 
 #define COMMAND_QUIT      "by"
@@ -51,6 +56,9 @@ public:
     int RegisterCommand( void ) ;   // register
     int ShareCommand( void ) ;  // share
     int RmCommand( string filename ) ; // delete
+    //database
+    sqlite3 * db_user;
+     user_db_editor ude;
 private:
     struct UserData
     {

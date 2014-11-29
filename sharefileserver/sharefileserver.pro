@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     servercommand.cpp \
-    task.cpp
+    task.cpp \
+    user_db_editor.cpp
 
 HEADERS  += mainwindow.h \
     servercommand.h \
-    task.h
+    task.h\
+    user_db_editor.h
 
 FORMS    += mainwindow.ui
