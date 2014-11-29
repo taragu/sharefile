@@ -1,4 +1,6 @@
 #include "servercommand.h"
+#include "user_db_editor.h"
+#include <sqlite3.h>
 
 #define END 1234
 using namespace std ;
@@ -19,6 +21,9 @@ ServerCommand::ServerCommand( int sockfd ) :
     {
       m_Datas.insert( data ) ;
     }
+
+  ude.user_db_editor::DbInitialize();
+  sqlite3_open("UsersTable.db", &db_user);
 }
 
 ServerCommand::~ServerCommand( void )
@@ -29,6 +34,7 @@ ServerCommand::~ServerCommand( void )
     }
   close( m_fd ) ;
   close( m_sockfd ) ;
+  sqlite3_close(db_user);
 }
 
 // content of client directory
@@ -189,7 +195,7 @@ int ServerCommand::LoginCommand( void )
   cout << user.username << endl ;
   cout << user.password << endl ;
   it = m_Datas.find( user ) ;
-  if ( m_Datas.end() != it )
+  /*if ( m_Datas.end() != it )
     {
       cout << it->username << endl ;
       cout << it->password << endl ;
@@ -206,6 +212,9 @@ int ServerCommand::LoginCommand( void )
     {
       replay = -1 ;
     }
+  */
+  if( ude.user_db_editor::UserDbLogin(user.username , user.password ,  db_user)) {replay=0;}
+  else {replay=-1;}
   // result of verification
   cout << "replay:" << replay << endl ;
   write( m_sockfd, &replay, sizeof(replay) ) ;
@@ -245,7 +254,7 @@ int ServerCommand::LogonCommand( void )
   cout << user.username << endl ;
   cout << user.password << endl ;
   it = m_Datas.find( user ) ;
-  if ( m_Datas.end() == it )
+  /*if ( m_Datas.end() == it )
     {
       m_Datas.insert( user ) ;
       replay = 0 ;
@@ -254,6 +263,10 @@ int ServerCommand::LogonCommand( void )
     {
       replay = -1 ;
     }
+
+    */
+  if (ude.user_db_editor::DbAddUser(user.username , user.password ,  db_user)){replay=0;}
+  else {replay=-1;}
   // sending result
   cout << "replay:" << replay << endl ;
   write( m_sockfd, &replay, sizeof(replay) ) ;
