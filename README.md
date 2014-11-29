@@ -21,3 +21,6 @@ Open the Makefile (sharefile/sharefileclient/Makefile), and edit line 20, 21, an
 	make 
 	./sharefileclient
     
+###Installing sqlite packages
+~$ sudo apt-get install sqlite3
+~$ sudo apt-get install libsqlite3-dev
