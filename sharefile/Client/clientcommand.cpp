@@ -170,7 +170,7 @@ int ClientCommand::HelpCommand( void ) const
 	cout << "put filename          upload file to server" << endl ;
 	cout << "cd  director          switch directory" << endl ;
 	cout << "by                    quit" << endl; 
-	cout << "share filename user ¡¡share to user" << endl ;
+	cout << "share filename user   share to user" << endl ;
 	cout << "rm    filename        delete file" << endl ;
 	return 0 ;
 }
