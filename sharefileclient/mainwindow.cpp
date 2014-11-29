@@ -268,3 +268,35 @@ void MainWindow::on_download_button_clicked()
         }
     }
 }
+
+void MainWindow::on_delete_button_clicked()
+{
+    //delete selected files
+    if (ClientCommandManager::clientCommand == NULL) {
+        char message[] = "please enter IP first!\0";
+        changeMessage((std::string) message);
+        return;
+    } else if (usersController->isSignedIn() == false) {
+        char message[] = "please sign in first!\0";
+        changeMessage((std::string) message);
+        return;
+    } else {
+        int retVal = 0;
+        for(int i = 0; i < ui->serverfiles_list->count(); i++) {
+            QListWidgetItem* item = ui->serverfiles_list->item(i);
+            if (item->isSelected()) {
+                if (-1 == ClientCommandManager::clientCommand->RmCommand(item->text().toStdString())) {
+                    retVal = -1;
+                }
+            }
+        }
+        if (retVal == -1) {
+            char message[] = "remove file error\0";
+            changeMessage((std::string) message);
+        }
+        if (retVal == 0) {
+            char message[] = "remove success!\0";
+            changeMessage((std::string) message);
+        }
+    }
+}

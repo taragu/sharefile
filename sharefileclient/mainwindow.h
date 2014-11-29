@@ -55,6 +55,8 @@ private slots:
 
     void refresh_friends_list();
 
+    void on_delete_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     AddAFriendDialog * addAFriendDialog;

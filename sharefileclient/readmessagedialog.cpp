@@ -22,5 +22,5 @@ void ReadMessageDialog::setIsARequest(bool _isARequest) {
 }
 
 //TODO
-//ok onclick
-//decline button onclick
+//ok onclick: different for isARequest and is not
+//decline button onclick: decline friend request
