@@ -19,17 +19,18 @@ static int callback(void * NotUsed, int argc, char **argv, char **azColName){
   printf("\n");
   return 0;
 }
-
+/*
 static int callbackAns(void * NotUsed, int argc, char **argv, char **azColName){
   int i;
   for(i=0; i<argc; i++){
+    //std::string NoUse=azColName[i];
     printf("%s\n",  argv[i] ? argv[i] : "NULL");
     //return argv[i] ? argv[i] : "NULL";
   }
   printf("\n");
   return 0;
 }
-
+*/
 bool user_db_editor::DbEditor(std::string s, sqlite3 * db)
 {
   //sqlite3 *db_user;
@@ -142,7 +143,7 @@ int user_db_editor::DbUGetSize(sqlite3 * db_user){
      std::string::size_type sz;   // alias of size_t
      std::string Ans=DbGetAnswer(sql,1, db_user);
 
-     int size = std::stoi (Ans,&sz);
+     int size = atoi (Ans.c_str());
      return size;
 }
 
@@ -152,7 +153,7 @@ int user_db_editor::DbFGetSize(sqlite3 * db_file, std::string DbName){
      sql.append(";");
      std::string::size_type sz;   // alias of size_t
      std::string Ans=DbGetAnswer(sql,1, db_file);
-     int size = std::stoi (Ans,&sz);
+     int size = atoi (Ans.c_str());
      return size;
 }
 
@@ -167,7 +168,8 @@ int user_db_editor::DbUGetID(std::string username, sqlite3 * db_user)
     // sql.append(",'");
     std::string ids=DbGetAnswer(sql,1, db_user);
     //DbGetAnswer(sql,1,db_user);
-    int id = std::stoi (ids,&sz);
+    //int id = std::stoi (ids,&sz);
+    int id = atoi(ids.c_str());
     return id;
 }
 
