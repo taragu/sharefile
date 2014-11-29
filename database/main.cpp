@@ -46,6 +46,9 @@ int main(int argc, char *argv[])
     ude.user_db_editor::DbAddFileS( "Ah", "path1","File1", "Bee", db_user);
     ude.user_db_editor::DbAddFile( "Bee", "pathB", "FileB", db_user);
     ude.user_db_editor::DbAddFile( "Bee", "pathB", "FileB", db_user);
+    std::cout<<"File1's path"<<ude.user_db_editor::DbGetPath("Ah",  "File1", db_user)<<std::endl;
+    std::cout<<"File1's path"<<ude.user_db_editor::DbGetPathS("Bee",  "File1", db_user)<<std::endl;
+
     sqlite3_close(db_user);
     //sqlite3_close(db_file);
     ude.user_db_editor::DbPrint("UsersTable");

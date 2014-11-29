@@ -7,6 +7,7 @@
 #include <string>
 #include <sstream>
 #include <cstring>
+#include <queue>
 user_db_editor::user_db_editor()
 {
 
@@ -69,7 +70,7 @@ std::string user_db_editor::DbGetAnswer(std::string s,int c, sqlite3 * db)
         int nRow;
         int nCol;
         int nResult = sqlite3_get_table(db,s.c_str(),&pResult,&nRow,&nCol,&errmsg);
-        //std::cout<<"getTable finished\n";
+        //std::cout<<"getTable finished\n"<<s.c_str();
           if (nResult != SQLITE_OK)
         {
             std::cout<<errmsg<<std::endl;
@@ -78,7 +79,7 @@ std::string user_db_editor::DbGetAnswer(std::string s,int c, sqlite3 * db)
             return "-1";
         }
        //std::cout<<"R"<<nRow<<"C"<<nCol<<"NotOK\n";
-  /*      int nIndex = nCol;
+/*        int nIndex = nCol;
         std::string strOut;
         for(int i=0;i<nRow;i++)
         {
@@ -102,6 +103,13 @@ std::string user_db_editor::DbGetAnswer(std::string s,int c, sqlite3 * db)
         return Answer;
 
         //return "10";
+}
+
+std::string user_db_editor::DbGetAnswerThenCloseDb(std::string s,int c, sqlite3 * db)
+{
+    std::string answer=DbGetAnswer(s,c, db);
+    sqlite3_close(db);
+    return answer;
 }
 
 bool user_db_editor::DbContain(std::string tablename, std::string col, std::string target, sqlite3 * db ){
@@ -149,7 +157,7 @@ int user_db_editor::DbFGetSize(sqlite3 * db_file, std::string DbName){
      return size;
 }
 
-int user_db_editor::UserDbSelectName(std::string username, sqlite3 * db_user)
+int user_db_editor::DbUGetID(std::string username, sqlite3 * db_user)
 {
     std::stringstream idss;
     std::string::size_type sz;   // alias of size_t
@@ -167,13 +175,55 @@ int user_db_editor::UserDbSelectName(std::string username, sqlite3 * db_user)
 std::string user_db_editor::UserDbGetAt(std::string username, sqlite3 * db_user)
 {
     std::stringstream idss;
-    std::string::size_type sz;   // alias of size_t
+    //std::string::size_type sz=0;   // alias of size_t
     // Create SQL statement
     std::string sql = "SELECT auth_token from UsersTable WHERE username Like '";
     idss<<username<<"';";
     sql.append(idss.str());
     // sql.append(",'");
     return DbGetAnswer(sql,1, db_user);
+}
+
+std::string user_db_editor::DbGetPath( std::string username,  std::string FileName, sqlite3 * db_user)
+{
+  int user_id=DbUGetID(username, db_user);
+  std::string path;
+  if(user_id==-1) return 0;
+  sqlite3 * db_file;
+  std::stringstream DbNamess;
+  DbNamess<<"user"<<user_id<<"FilesTable";
+  std::string DbNamedb = DbNamess.str();
+  DbNamedb.append(".db");
+  sqlite3_open(DbNamedb.c_str(), &db_file);
+  if(!DbContain(DbNamess.str(), "name", FileName, db_file )){return "not exist";}//not exist
+  std::stringstream idss;
+  std::string sql;
+  idss<< "SELECT path from "<<DbNamess.str()<<" WHERE name Like '"<<FileName<<"';";
+  sql.append(idss.str());
+  // sql.append(",'");
+  return DbGetAnswerThenCloseDb(sql,1, db_file);
+
+}
+
+std::string user_db_editor::DbGetPathS( std::string username,  std::string FileName, sqlite3 * db_user)
+{
+  int user_id=DbUGetID(username, db_user);
+  std::string path;
+  if(user_id==-1) return 0;
+  sqlite3 * db_file;
+  std::stringstream DbNamess;
+  DbNamess<<"user"<<user_id<<"FilesTableS";
+  std::string DbNamedb = DbNamess.str();
+  DbNamedb.append(".db");
+  sqlite3_open(DbNamedb.c_str(), &db_file);
+  if(!DbContain(DbNamess.str(), "name", FileName, db_file )){return "not exist";}//not exist
+  std::stringstream idss;
+  std::string sql;
+  idss<< "SELECT path from "<<DbNamess.str()<<" WHERE name Like '"<<FileName<<"';";
+  sql.append(idss.str());
+  // sql.append(",'");
+  return DbGetAnswerThenCloseDb(sql,1, db_file);
+
 }
 
 /*bool user_db_editor::DbAddUser(int id, std::string username,std::string auth_token,std::string email, sqlite3 * db_user)
@@ -194,7 +244,7 @@ std::string user_db_editor::UserDbGetAt(std::string username, sqlite3 * db_user)
 
 bool user_db_editor::DbAddUser( std::string username,std::string auth_token, sqlite3 * db_user)
 {
-  if(UserDbSelectName(username, db_user)!=-1) return 0;
+  if(DbUGetID(username, db_user)!=-1) return 0;
   int id = user_db_editor::DbUGetSize(db_user)+1;
   std::stringstream idss;
   idss<<id;
@@ -218,7 +268,7 @@ bool user_db_editor::DbAddUser( std::string username,std::string auth_token, sql
 
 int user_db_editor::UserDbLogin(std::string username, std::string password, sqlite3 * db_user)
 {
-    int id=UserDbSelectName(username, db_user);
+    int id=DbUGetID(username, db_user);
     if(id==-1){
         std::cout<<id<<"user doss not exist\n";
         return -1;//user doss not exist
@@ -235,7 +285,7 @@ int user_db_editor::UserDbLogin(std::string username, std::string password, sqli
 std::string user_db_editor::UserDbGetF(int id, sqlite3 * db_user)
 {
     std::stringstream idss;
-    std::string::size_type sz;   // alias of size_t
+    //std::string::size_type sz;   // alias of size_t
     // Create SQL statement
     std::string sql = "SELECT friend_id from UsersTable WHERE id Like ";
     idss<<id<<";";
@@ -253,14 +303,15 @@ bool UserDbContF(int id,std::string friend_id )
 
 }
 
-bool user_db_editor::DbContF(int id2, sqlite3 * db_frd ){
+/*bool user_db_editor::DbContF(int id2, sqlite3 * db_frd ){
  return 0;
 }
+*/
 
 int user_db_editor::DbAddFriend(std::string username1, std::string username2, sqlite3 * db_user)
 {
-    int id1=UserDbSelectName(username1,db_user);
-    int id2=UserDbSelectName(username2,db_user);
+    int id1=DbUGetID(username1,db_user);
+    int id2=DbUGetID(username2,db_user);
     /*std::stringstream friend_id;
     friend_id<<UserDbGetF(id1, db_user);
     if(UserDbContF(id2,friend_id.str() )){return 0;}//exist
@@ -316,8 +367,8 @@ bool user_db_editor::DbAddFileSToF( int user_id, int tofriend_id, std::string Fi
 
 bool user_db_editor::DbAddFileS( std::string username, std::string path, std::string FileName, std::string toFriend_name, sqlite3 * db_user)
 {
-  int user_id=UserDbSelectName(username, db_user);
-  int toFriend_id=UserDbSelectName(toFriend_name, db_user);
+  int user_id=DbUGetID(username, db_user);
+  int toFriend_id=DbUGetID(toFriend_name, db_user);
   //if(user_id==-1) return 0;
   sqlite3 * db_file;
   std::stringstream DbNamess;
@@ -343,7 +394,7 @@ bool user_db_editor::DbAddFileS( std::string username, std::string path, std::st
 
 bool user_db_editor::DbAddFile( std::string username, std::string path, std::string FileName, sqlite3 * db_user)
 {
-  int user_id=UserDbSelectName(username, db_user);
+  int user_id=DbUGetID(username, db_user);
 
   if(user_id==-1) return 0;
   sqlite3 * db_file;
@@ -439,7 +490,7 @@ int user_db_editor::DbFInitialize(std::string DbName)
 {
   sqlite3 * db;
 
-  char *zErrMsg = 0;
+  //char *zErrMsg = 0;
   int  rc;
   /* Open database */
   std::string DbNamedb=DbName;
@@ -477,7 +528,7 @@ int user_db_editor::DbFrInitialize(std::string DbName)
 {
   sqlite3 * db;
 
-  char *zErrMsg = 0;
+  //char *zErrMsg = 0;
   int  rc;
   /* Open database */
   std::string DbNamedb=DbName;
@@ -506,7 +557,7 @@ if( rc ){
 int user_db_editor::DbPrint(std::string DbName)
 {
   sqlite3 *db_user;
-  sqlite3 *db_file;
+  //sqlite3 *db_file;
   char *zErrMsg = 0;
   int rc;
   const char* data = "Callback function called";
