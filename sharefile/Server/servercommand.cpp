@@ -361,3 +361,15 @@ bool ServerCommand::FindUser( const string &username ) const
   UserData user( username ) ;
   return m_Datas.end() != m_Datas.find( user ) ;
 }
+
+AddFriendCommand(std::string senderName, std::string receiverName){
+  ude.user_db_editor::DbAddFriend(sendername, receivername, db_user);
+  ude.user_db_editor::DbAddFriend(receivername,sendername, db_user);
+   
+}
+
+RemoveFriendCommand(std::string senderName, std::string receiverName){
+  ude.user_db_editor::DbRmFriend(sendername, receivername, db_user);
+  ude.user_db_editor::DbRmFriend(receivername,sendername, db_user);
+   
+}

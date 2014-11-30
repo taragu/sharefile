@@ -1,8 +1,9 @@
-#include <QCoreApplication>
+
+//#include <QCoreApplication>
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-#include <E:/551/sqlite-amalgamation-3080702/sqlite3.h>
+#include <sqlite3.h>
 //#include "UserDbEditor.h"
 //#include "DbInitialize.h"
 //#include "DbAddUser.h"
@@ -14,7 +15,7 @@
 //#include <QFile>
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+  //QCoreApplication a(argc, argv);
 
     //Initialize and open databases
     sqlite3 * db_user;
@@ -31,11 +32,15 @@ int main(int argc, char *argv[])
     ude.user_db_editor::DbAddUser("Ah", "def",  db_user);
     ude.user_db_editor::DbAddUser("Bee", "abc",  db_user);
     ude.user_db_editor::DbAddUser("Bee", "edc",  db_user);
+    ude.user_db_editor::DbAddUser("Cece", "123",  db_user);
+
     ude.user_db_editor::UserDbLogin("Ah", "def", db_user);
     ude.user_db_editor::UserDbLogin("Bee", "rfv", db_user);
     ude.user_db_editor::UserDbLogin("Ce", "def", db_user);
     ude.DbAddFriend("Ah", "Bee", db_user);
     ude.DbAddFriend("Ah", "Bee", db_user);
+    ude.DbAddFriend("Ah", "Cece", db_user);
+    ude.DbAddMessage("Ah", "Bee", 0,"Hi!",db_user);
 
     //close databases
     //std::cout<<ude.user_db_editor::DbGetSize(db_user);
@@ -48,6 +53,8 @@ int main(int argc, char *argv[])
     ude.user_db_editor::DbAddFile( "Bee", "pathB", "FileB", db_user);
     std::cout<<"File1's path"<<ude.user_db_editor::DbGetPath("Ah",  "File1", db_user)<<std::endl;
     std::cout<<"File1's path"<<ude.user_db_editor::DbGetPathS("Bee",  "File1", db_user)<<std::endl;
+    ude.user_db_editor::DbGetFrQ("Ah",db_user);
+    ude.user_db_editor::DbRmFriend("Ah","CeCe",db_user);
 
     sqlite3_close(db_user);
     //sqlite3_close(db_file);
@@ -58,6 +65,7 @@ int main(int argc, char *argv[])
     ude.user_db_editor::DbPrint("user2F");
     ude.user_db_editor::DbPrint("user2FilesTable");
     ude.user_db_editor::DbPrint("user2FilesTableS");
-
-    return a.exec();
+    ude.user_db_editor::DbPrint("user1FilesTableSMessage");
+    return 1;
+    //return a.exec();
 }
