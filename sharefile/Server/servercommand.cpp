@@ -214,7 +214,7 @@ int ServerCommand::LoginCommand( void )
       replay = -1 ;
     }
   */
-  if( ude.user_db_editor::UserDbLogin(user.username , user.password ,  db_user)) {
+  if( ude.user_db_editor::UserDbLogin(user.username , user.password ,  db_user)>0) {
     replay=0;
   }
   else {
