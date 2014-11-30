@@ -10,7 +10,6 @@ SignInDialog::SignInDialog(QWidget *parent) :
     ui->setupUi(this);
     message = "";
     errorPopup = new ErrorPopup();
-    attach(errorPopup);
 }
 
 SignInDialog::~SignInDialog()
@@ -34,7 +33,7 @@ void SignInDialog::setUsersController(UsersController* _usersController) {
 
 void SignInDialog::on_signin_submit_accepted()
 {
-
+    attach(errorPopup);
     QByteArray userByteArray = ui->signin_username_textedit->text().toUtf8();
     const char* username = userByteArray.constData();
     QByteArray passwordByteArray = ui->signin_password_textedit->text().toUtf8();
@@ -52,4 +51,5 @@ void SignInDialog::on_signin_submit_accepted()
              char message[] = "Login success!\0";
              changeMessage((std::string) message);
         }
+        detach(errorPopup);
 }
