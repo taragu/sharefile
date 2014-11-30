@@ -18,8 +18,8 @@
     	./Server <port number>
     
 ####Start the Client
-Open the Makefile (sharefile/sharefileclient/Makefile), and edit line 20, 21, and 24 with the path of your qmake binary, then cd into the directory sharefile/sharefileclient
-Note: if you're running make in Qt Creator, PLEASE disable "shadow build"! (Go to Projects in the toolbar on the left, then uncheck the "Shadow Build" box).
+Open the Makefile (sharefile/sharefileclient/Makefile), and edit line 20, 21, and 24 with the path of your qmake binary, then cd into the directory sharefile/sharefileclient\n
+Note: if you're running make in Qt Creator, PLEASE disable "shadow build"! (Go to Projects in the toolbar on the left, then uncheck the "Shadow Build" box).\n
 
 	qmake -project 
 	qmake sharefileclient.pro 
