@@ -34,17 +34,21 @@ void SignInDialog::setUsersController(UsersController* _usersController) {
 
 void SignInDialog::on_signin_submit_accepted()
 {
-        std::string username = ui->signin_username_textedit->text().toStdString();
-        std::string password = ui->signin_password_textedit->text().toStdString();
+
+    QByteArray userByteArray = ui->signin_username_textedit->text().toUtf8();
+    const char* username = userByteArray.constData();
+    QByteArray passwordByteArray = ui->signin_password_textedit->text().toUtf8();
+    const char* password = passwordByteArray.constData();
+
         QCryptographicHash md5Generator(QCryptographicHash::Md5);
-        md5Generator.addData(password.c_str());
-        int login_ret = ClientCommandManager::clientCommand->LoginCommand(username, (std::string)md5Generator.result().toHex()) != 0;
-        if (login_ret) {
+        md5Generator.addData(password);
+        int login_ret = ClientCommandManager::clientCommand->LoginCommand((std::string)username, (std::string)md5Generator.result().toHex());
+        if (login_ret!=0) {
             char message[] = "Login not successful\0";
             changeMessage((std::string) message);
         } else {
              usersController->setSignedIn(true);
-             usersController->setUsername(username);
+             usersController->setUsername((std::string)username);
              char message[] = "Login success!\0";
              changeMessage((std::string) message);
         }

@@ -21,6 +21,18 @@ void ReadMessageDialog::setIsARequest(bool _isARequest) {
     ui->decline_button->show();
 }
 
-//TODO
-//ok onclick: different for isARequest and is not
-//decline button onclick: decline friend request
+void ReadMessageDialog::on_buttonBox_accepted()
+{
+    if (isARequest) {
+        //TODO: CALL ACCEPT FRIEND REQUEST METHOD IN CLIENTCOMMAND
+    }
+    //if this is a normal message, nothing will happen when user clicks 'ok'
+}
+
+void ReadMessageDialog::on_decline_button_clicked()
+{
+    if (isARequest) {
+        //TODO: CALL DECLINE FRIEND REQUEST METHOD IN CLIENTCOMMAND
+    }
+    //if this is a normal message, the decline button will be hidden
+}

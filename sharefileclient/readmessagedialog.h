@@ -16,6 +16,11 @@ public:
     ~ReadMessageDialog();
     void setIsARequest(bool _isARequest);
 
+private slots:
+    void on_buttonBox_accepted();
+
+    void on_decline_button_clicked();
+
 private:
     Ui::ReadMessageDialog *ui;
     bool isARequest;
