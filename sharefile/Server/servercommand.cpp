@@ -10,18 +10,19 @@ ServerCommand::ServerCommand( int sockfd ) :
   m_sockfd( sockfd )
 {
   m_serverpath = "." ;
-  m_fd = open( "userdata.dat", O_CREAT | O_RDWR, 0644 ) ;
-  if ( -1 == m_fd )
-    {
-      perror( "open" ) ;
-    }
+  //  m_fd = open( "userdata.dat", O_CREAT | O_RDWR, 0644 ) ;
+  //  if ( -1 == m_fd )
+  // {
+  //   perror( "open" ) ;
+  // }
+  
   UserData data ;
   memset( &data, 0, sizeof(data) ) ;
-  while ( read( m_fd, &data, sizeof(data) ) > 0 )
-    {
-      m_Datas.insert( data ) ;
-    }
-
+  //  while ( read( m_fd, &data, sizeof(data) ) > 0 )
+  // {
+  //   m_Datas.insert( data ) ;
+  // }
+  
   ude.user_db_editor::DbInitialize();
   sqlite3_open("UsersTable.db", &db_user);
 }
@@ -32,7 +33,7 @@ ServerCommand::~ServerCommand( void )
     {
       return ;
     }
-  close( m_fd ) ;
+  //  close( m_fd ) ;
   close( m_sockfd ) ;
   sqlite3_close(db_user);
 }
@@ -186,7 +187,7 @@ int ServerCommand::LoginCommand( void )
   int replay = 0 ;
   int trycount = 3 ;
  retry:
-  set<UserData>::iterator it ;
+  //  set<UserData>::iterator it ;
   if ( read( m_sockfd, &user, sizeof(user) ) < 0 )
     {
       perror( "read" ) ;
@@ -194,7 +195,7 @@ int ServerCommand::LoginCommand( void )
     }
   cout << user.username << endl ;
   cout << user.password << endl ;
-  it = m_Datas.find( user ) ;
+  //  it = m_Datas.find( user ) ;
   /*if ( m_Datas.end() != it )
     {
       cout << it->username << endl ;
@@ -213,8 +214,12 @@ int ServerCommand::LoginCommand( void )
       replay = -1 ;
     }
   */
-  if( ude.user_db_editor::UserDbLogin(user.username , user.password ,  db_user)) {replay=0;}
-  else {replay=-1;}
+  if( ude.user_db_editor::UserDbLogin(user.username , user.password ,  db_user)) {
+    replay=0;
+  }
+  else {
+    replay=-1;
+  }
   // result of verification
   cout << "replay:" << replay << endl ;
   write( m_sockfd, &replay, sizeof(replay) ) ;
@@ -227,9 +232,9 @@ int ServerCommand::LoginCommand( void )
     {
       goto error ;
     }
-  m_username = it->username ;
-  m_password = it->password ;
-  m_userpath = m_serverpath + "/" + it->username ;
+  m_username = user.username ;
+  m_password = user.password ;
+  m_userpath = m_serverpath + "/" + user.username ;
  done:
   return retval ;
  error:
@@ -244,7 +249,7 @@ int ServerCommand::LogonCommand( void )
   UserData user ;
   int replay = 0 ;
   int trycount = 3 ;
-  set<UserData>::iterator it ;
+  //  set<UserData>::iterator it ;
  retry:
   if ( read( m_sockfd, &user, sizeof(user) ) < 0 )
     {
@@ -253,7 +258,7 @@ int ServerCommand::LogonCommand( void )
     }
   cout << user.username << endl ;
   cout << user.password << endl ;
-  it = m_Datas.find( user ) ;
+  //  it = m_Datas.find( user ) ;
   /*if ( m_Datas.end() == it )
     {
       m_Datas.insert( user ) ;
@@ -265,8 +270,12 @@ int ServerCommand::LogonCommand( void )
     }
 
     */
-  if (ude.user_db_editor::DbAddUser(user.username , user.password ,  db_user)){replay=0;}
-  else {replay=-1;}
+  if (ude.user_db_editor::DbAddUser(user.username , user.password ,  db_user)){
+    replay=0;
+  }
+  else {
+    replay=-1;
+  }
   // sending result
   cout << "replay:" << replay << endl ;
   write( m_sockfd, &replay, sizeof(replay) ) ;
@@ -279,8 +288,8 @@ int ServerCommand::LogonCommand( void )
     {
       goto error ;
     }
-  m_username = it->username ;
-  m_password = it->password ;
+  m_username = user.username ;
+  m_password = user.password ;
   m_userpath = m_serverpath + "/" + user.username ;
   cout << "m_userpath" << m_userpath << endl; 
   if ( -1 == mkdir( m_userpath.c_str(), 0775 ) )
@@ -288,12 +297,12 @@ int ServerCommand::LogonCommand( void )
       perror( "mkdir" ) ;
       goto error ;
     }
-  m_Datas.insert( user ) ;
-  if ( write( m_fd, &user, sizeof(user) ) < 0 )
-    {
-      perror( "m_userfile.write" ) ;
-      goto error ;
-    }
+  // m_Datas.insert( user ) ;
+  //  if ( write( m_fd, &user, sizeof(user) ) < 0 )
+  // {
+  //   perror( "m_userfile.write" ) ;
+  //   goto error ;
+  //  }
  done:
   return retval ;
  error:
