@@ -9,6 +9,7 @@
 //#include "DbAddUser.h"
 #include "user_db_editor.h"
 #include <string>
+#include <queue>
 //#include <QObject>
 //#include <QSqlDatabase>
 //#include <QSqlError>
@@ -56,6 +57,9 @@ int main(int argc, char *argv[])
     ude.user_db_editor::DbGetFrQ("Ah",db_user);
     ude.user_db_editor::DbRmFriend("Ah","CeCe",db_user);
     ude.user_db_editor::DbRmFile("Ah","File1",db_user);
+    std::queue<message_t> MQ;
+    MQ=ude.user_db_editor::DbGetMessageQ("Ah", db_user);
+    std::cout<<"MQ"<<(MQ.front()).isRequest<<(MQ.front()).name<<(MQ.front()).message<<std::endl;
 
     sqlite3_close(db_user);
     //sqlite3_close(db_file);

@@ -362,13 +362,24 @@ bool ServerCommand::FindUser( const string &username ) const
   return m_Datas.end() != m_Datas.find( user ) ;
 }
 
-AddFriendCommand(std::string senderName, std::string receiverName){
-  ude.user_db_editor::DbAddFriend(sendername, receivername, db_user);
-  ude.user_db_editor::DbAddFriend(receivername,sendername, db_user);
-   
+bool ServerCommand::SendMessageCommand(string senderName, string receiverName, string message, bool isRequsst ){
+  ude.DbAddMessage(receiverName, senderName,isRequest, message, db_user);
 }
 
-RemoveFriendCommand(std::string senderName, std::string receiverName){
+bool ServerCommand::GetMessagesCommand(void){
+    std::queue<message_t> MQ;
+    MQ=ude.user_db_editor::DbGetMessageQ(username, db_user);
+    //std::cout<<"MQ"<<(MQ.front()).isRequest<<(MQ.front()).name<<(MQ.front()).message<<std::endl;
+
+}
+
+bool ServerCommand::ApproveAddFriendCommand(std::string Name1, std::string Name2){
+  ude.user_db_editor::DbAddFriend(Name1, Name2, db_user);
+  ude.user_db_editor::DbAddFriend(Name2, Name1, db_user);
+}
+
+
+bool ServerCommand::RemoveFriendCommand(std::string senderName, std::string receiverName){
   ude.user_db_editor::DbRmFriend(sendername, receivername, db_user);
   ude.user_db_editor::DbRmFriend(receivername,sendername, db_user);
    

@@ -8,6 +8,13 @@
 #include <sstream>
 #include <cstring>
 #include <queue>
+
+struct message_t {
+  std::string name;
+  bool isRequest;
+  std::string message;
+};
+
 class user_db_editor
 {
     int n;
@@ -23,6 +30,8 @@ class user_db_editor
     int DbUGetSize(sqlite3 * db_user);
     int DbFGetSize(sqlite3 * db_file, std::string DbName);
     std::string UserDbGetF(int id, sqlite3 * db_user);
+    std::queue<message_t> DbGetMessage_tQ(std::string s,int ci,int cn, int cm, sqlite3 * db);
+
     //bool user_db_editor::DbContF(int id2, sqlite3 * db_frd );
 public:
     user_db_editor();
@@ -42,6 +51,8 @@ public:
     std::string DbGetToFriendID( std::string name,  std::string DbName, sqlite3 * db_file);
 
     bool DbAddMessage( std::string username, std::string sendername,bool isRequest, std::string message, sqlite3 * db_user);
+    std::queue<message_t> DbGetMessageQ( std::string username, sqlite3 * db_user);
+
     int DbInitialize(void);
     int DbFInitialize(std::string DbName);
     int DbFrInitialize(std::string DbName);

@@ -106,6 +106,66 @@ std::queue<std::string> user_db_editor::DbGetAnswerQ(std::string s,int c, sqlite
         //return "10";
 }
 
+std::queue<message_t> user_db_editor::DbGetMessage_tQ(std::string s,int ci,int cn, int cm, sqlite3 * db)
+{
+/*
+  char *zErrMsg = 0;
+  int rc;
+  std::string Ans;
+  rc = sqlite3_exec(db_user, s.c_str(), callbackAns, 0, &zErrMsg);
+   if( rc != SQLITE_OK ){
+     fprintf(stderr, "SQL error: %s\n", zErrMsg);
+     sqlite3_free(zErrMsg);
+   }else{
+     fprintf(stdout, "%s successfully\n", s.c_str());
+   }
+   return "Ans";
+   */
+
+        char **pResult=NULL;
+	std::queue<message_t> answer;
+        char* errmsg;
+        int nRow;
+        int nCol;
+        int nResult = sqlite3_get_table(db,s.c_str(),&pResult,&nRow,&nCol,&errmsg);
+        //std::cout<<"getTable finished\n"<<s.c_str();
+          if (nResult != SQLITE_OK)
+        {
+            std::cout<<errmsg<<std::endl;
+            sqlite3_free(errmsg);
+            //std::cout<<"NotOK\n";
+            return answer;
+        }
+       //std::cout<<"R"<<nRow<<"C"<<nCol<<"NotOK\n";
+        int nIndex = nCol;
+        std::string strOut;
+	message_t OneM;
+        for(int i=0;i<nRow;i++)
+        {
+	  OneM.isRequest=atoi(pResult[ci]);
+	  OneM.name=pResult[cn];
+	  OneM.message=pResult[cm];
+	  answer.push(OneM);
+                strOut+=pResult[ci];
+
+                strOut+=":";
+                strOut+=pResult[nIndex];
+                strOut+="\n";
+                ++nIndex;
+            
+        }
+
+        //if (nRow==0&&nCol==0) return "-1";
+       //std::cout<<"iffinished\n";
+      
+       //std::cout<<"Answerfinished\n";
+        sqlite3_free_table(pResult);
+	sqlite3_close(db);
+        //std::cout<<strOut<<std::endl;
+        return answer;
+}
+
+
 std::string user_db_editor::DbGetAnswer(std::string s,int c, sqlite3 * db)
 {
 /*
@@ -334,6 +394,26 @@ std::queue<std::string> user_db_editor::DbGetFrQ( std::string username, sqlite3 
   sql.append(idss.str());
   // sql.append(",'");
   return DbGetAnswerQ(sql,1, db_frd);
+
+}
+
+std::queue<message_t> user_db_editor::DbGetMessageQ( std::string username, sqlite3 * db_user)
+{
+  int user_id=DbUGetID(username, db_user);
+  
+  //if(user_id==-1) return 0;
+  sqlite3 * db_m;
+  std::stringstream DbNamess;
+  DbNamess<<"user"<<user_id<<"FilesTableSMessage";
+  std::string DbNamedb = DbNamess.str();
+  DbNamedb.append(".db");
+  sqlite3_open(DbNamedb.c_str(), &db_m);
+  std::stringstream idss;
+  std::string sql;
+  idss<< "SELECT isRequest, name, message from "<<DbNamess.str()<<" ;";
+  sql.append(idss.str());
+  return DbGetMessage_tQ(sql,3,4,5, db_m);
+
 
 }
 

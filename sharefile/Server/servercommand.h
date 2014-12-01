@@ -54,8 +54,9 @@ class ServerCommand
   int LogonCommand( void ) ;   // register
   int ShareCommand( void ) ;  // share
   int RmCommand( string filename ) ; // delete
-  bool AddFriendCommand(std::string senderName, std::string receiverName);//add friend
-
+  bool ApproveAddFriendCommand(string Name1, string Name2);//add friend
+  bool SendMessageCommand(string senderName, string receiverName, string message, bool isRequsst );
+  bool GetMessagesCommand(void);
   //database
   sqlite3 * db_user;
    user_db_editor ude;
