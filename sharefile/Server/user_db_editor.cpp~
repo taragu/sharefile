@@ -19,17 +19,18 @@ static int callback(void * NotUsed, int argc, char **argv, char **azColName){
   printf("\n");
   return 0;
 }
-
+/*
 static int callbackAns(void * NotUsed, int argc, char **argv, char **azColName){
   int i;
   for(i=0; i<argc; i++){
+    //std::string NoUse=azColName[i];
     printf("%s\n",  argv[i] ? argv[i] : "NULL");
     //return argv[i] ? argv[i] : "NULL";
   }
   printf("\n");
   return 0;
 }
-
+*/
 bool user_db_editor::DbEditor(std::string s, sqlite3 * db)
 {
   //sqlite3 *db_user;
@@ -45,6 +46,64 @@ bool user_db_editor::DbEditor(std::string s, sqlite3 * db)
    }
    //sqlite3_close(db_user);
    return 1;
+}
+
+std::queue<std::string> user_db_editor::DbGetAnswerQ(std::string s,int c, sqlite3 * db)
+{
+/*
+  char *zErrMsg = 0;
+  int rc;
+  std::string Ans;
+  rc = sqlite3_exec(db_user, s.c_str(), callbackAns, 0, &zErrMsg);
+   if( rc != SQLITE_OK ){
+     fprintf(stderr, "SQL error: %s\n", zErrMsg);
+     sqlite3_free(zErrMsg);
+   }else{
+     fprintf(stdout, "%s successfully\n", s.c_str());
+   }
+   return "Ans";
+   */
+
+        char **pResult=NULL;
+	std::queue<std::string> answer;
+
+        char* errmsg;
+        int nRow;
+        int nCol;
+        int nResult = sqlite3_get_table(db,s.c_str(),&pResult,&nRow,&nCol,&errmsg);
+        //std::cout<<"getTable finished\n"<<s.c_str();
+          if (nResult != SQLITE_OK)
+        {
+            std::cout<<errmsg<<std::endl;
+            sqlite3_free(errmsg);
+            //std::cout<<"NotOK\n";
+            return answer;
+        }
+       //std::cout<<"R"<<nRow<<"C"<<nCol<<"NotOK\n";
+        int nIndex = nCol;
+        std::string strOut;
+        for(int i=0;i<nRow;i++)
+        {
+	  answer.push(pResult[c]);
+                strOut+=pResult[c];
+
+                strOut+=":";
+                strOut+=pResult[nIndex];
+                strOut+="\n";
+                ++nIndex;
+            
+        }
+
+        //if (nRow==0&&nCol==0) return "-1";
+       //std::cout<<"iffinished\n";
+      
+       //std::cout<<"Answerfinished\n";
+        sqlite3_free_table(pResult);
+	sqlite3_close(db);
+        //std::cout<<strOut<<std::endl;
+        return answer;
+
+        //return "10";
 }
 
 std::string user_db_editor::DbGetAnswer(std::string s,int c, sqlite3 * db)
@@ -97,12 +156,14 @@ std::string user_db_editor::DbGetAnswer(std::string s,int c, sqlite3 * db)
        std::string Answer=pResult[c];
        //std::cout<<"Answerfinished\n";
         sqlite3_free_table(pResult);
+	
 
         //std::cout<<strOut<<std::endl;
         return Answer;
 
         //return "10";
 }
+
 
 std::string user_db_editor::DbGetAnswerThenCloseDb(std::string s,int c, sqlite3 * db)
 {
@@ -142,7 +203,7 @@ int user_db_editor::DbUGetSize(sqlite3 * db_user){
      std::string::size_type sz;   // alias of size_t
      std::string Ans=DbGetAnswer(sql,1, db_user);
 
-     int size = std::stoi (Ans,&sz);
+     int size = atoi (Ans.c_str());
      return size;
 }
 
@@ -152,7 +213,7 @@ int user_db_editor::DbFGetSize(sqlite3 * db_file, std::string DbName){
      sql.append(";");
      std::string::size_type sz;   // alias of size_t
      std::string Ans=DbGetAnswer(sql,1, db_file);
-     int size = std::stoi (Ans,&sz);
+     int size = atoi (Ans.c_str());
      return size;
 }
 
@@ -167,7 +228,8 @@ int user_db_editor::DbUGetID(std::string username, sqlite3 * db_user)
     // sql.append(",'");
     std::string ids=DbGetAnswer(sql,1, db_user);
     //DbGetAnswer(sql,1,db_user);
-    int id = std::stoi (ids,&sz);
+    //int id = std::stoi (ids,&sz);
+    int id = atoi(ids.c_str());
     return id;
 }
 
@@ -241,6 +303,28 @@ std::string user_db_editor::DbGetPathS( std::string username,  std::string FileN
 }
   */
 
+std::queue<std::string> user_db_editor::DbGetFrQ( std::string username, sqlite3 * db_user)
+{
+  int user_id=DbUGetID(username, db_user);
+  
+  //if(user_id==-1) return 0;
+  sqlite3 * db_frd;
+  std::stringstream DbNamess;
+  DbNamess<<"user"<<user_id<<"F";
+  std::string DbNamedb = DbNamess.str();
+  DbNamedb.append(".db");
+  sqlite3_open(DbNamedb.c_str(), &db_frd);
+  //if(!DbContain(DbNamess.str(), "name", FileName, db_file )){return "not exist";}//not exist
+  std::stringstream idss;
+  std::string sql;
+  idss<< "SELECT name from "<<DbNamess.str()<<" ;";
+  sql.append(idss.str());
+  // sql.append(",'");
+  return DbGetAnswerQ(sql,1, db_frd);
+
+}
+
+
 bool user_db_editor::DbAddUser( std::string username,std::string auth_token, sqlite3 * db_user)
 {
   if(DbUGetID(username, db_user)!=-1) return 0;
@@ -262,6 +346,9 @@ bool user_db_editor::DbAddUser( std::string username,std::string auth_token, sql
   DbFInitialize(DbName.str());
   DbName<<"S";
   DbFInitialize(DbName.str());
+  DbName<<"Message";
+  std::cout<<"adduser"<<DbName.str()<<std::endl;
+  DbMInitialize(DbName.str());
   return 1;
 }
 
@@ -342,6 +429,50 @@ int user_db_editor::DbAddFriend(std::string username1, std::string username2, sq
     return 1;
 }
 
+int user_db_editor::DbRmFriend(std::string username1, std::string username2, sqlite3 * db_user)
+{
+    int id1=DbUGetID(username1,db_user);
+    int id2=DbUGetID(username2,db_user);
+    /*std::stringstream friend_id;
+    friend_id<<UserDbGetF(id1, db_user);
+    if(UserDbContF(id2,friend_id.str() )){return 0;}//exist
+    friend_id<<id2<<",' where id ="<<id1<<";";
+    std::string sql = " UPDATE UsersTable set friend_id = '";
+    sql.append(friend_id.str());
+    DbEditor(sql, db_user);
+    */
+    sqlite3 * db_frd;
+    std::stringstream DbNamess;
+    DbNamess<<"user"<<id1<<"F";
+    std::string DbName=DbNamess.str();
+    std::string DbNamedb = DbNamess.str();
+    DbNamedb.append(".db");
+    sqlite3_open(DbNamedb.c_str(), &db_frd);
+    if(!DbContain(DbName, "name", username2, db_frd )){return 0;}//not friend
+    std::string sql = "DELETE from  ";
+    sql.append(DbName);
+    sql.append(" where id = ");
+    std::stringstream id2ss;
+    id2ss<<id2;
+    sql.append(id2ss.str());
+    user_db_editor::DbEditor(sql, db_frd);
+    sqlite3_close(db_frd);
+    return 1;
+}
+
+
+bool user_db_editor::DbContainFr(int id1, std::string username2){
+    sqlite3 * db_frd;
+    std::stringstream DbNamess;
+    DbNamess<<"user"<<id1<<"F";
+    std::string DbName=DbNamess.str();
+    std::string DbNamedb = DbNamess.str();
+    DbNamedb.append(".db");
+    sqlite3_open(DbNamedb.c_str(), &db_frd);
+    if(DbContain(DbName, "name", username2, db_frd )){return 1;}//exist
+    return 0;
+}
+
 bool user_db_editor::DbAddFileSToF( int user_id, int tofriend_id, std::string FileName, std::string path)
 {
   sqlite3 * db_fileS;
@@ -387,7 +518,9 @@ bool user_db_editor::DbAddFileS( std::string username, std::string path, std::st
   // sql.append(",'");
   DbEditor(sql, db_file);
   sqlite3_close(db_file);
-  DbAddFileSToF( user_id, toFriend_id,FileName,  path);
+  
+  if(DbContainFr(user_id, toFriend_name)){
+    DbAddFileSToF( user_id, toFriend_id,FileName,  path);}
   return 1;
 }
 
@@ -416,6 +549,34 @@ bool user_db_editor::DbAddFile( std::string username, std::string path, std::str
 
   return 1;
 }
+
+bool user_db_editor::DbAddMessage( std::string username, std::string sendername,bool isRequest, std::string message, sqlite3 * db_user)
+{
+  int user_id=DbUGetID(username, db_user);
+
+  if(user_id==-1) return 0;
+  sqlite3 * db_file;
+  std::stringstream DbNamess;
+  DbNamess<<"user"<<user_id<<"FilesTableSMessage";
+  std::cout<<DbNamess.str();
+  std::string DbNamedb = DbNamess.str();
+  DbNamedb.append(".db");
+  sqlite3_open(DbNamedb.c_str(), &db_file);
+  //if(DbContain(DbNamess.str(), "name", FileName, db_file )){return 0;}//exist
+ 
+  std::stringstream sqlss;
+  // Create SQL statement
+  std::string sql;
+  sqlss<<"INSERT INTO "<<DbNamess.str()<<" (isRequest,name, message) " \
+    "VALUES ("<<isRequest<<",'"<<sendername<<"','"<<message<<"');";
+  sql.append(sqlss.str());
+  // sql.append(",'");
+  DbEditor(sql, db_file);
+  sqlite3_close(db_file);
+
+  return 1;
+}
+
 
 int user_db_editor::DbInitialize(void)
 {
@@ -552,6 +713,40 @@ if( rc ){
    sqlite3_close(db);
    return 1;
 }
+
+int user_db_editor::DbMInitialize(std::string DbName)
+{
+  sqlite3 * db;
+
+  //char *zErrMsg = 0;
+  int  rc;
+  /* Open database */
+  std::string DbNamedb=DbName;
+  DbNamedb.append(".db");
+  rc = sqlite3_open(DbNamedb.c_str(), &db);
+
+if( rc ){
+    fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+    exit(0);
+  }
+  //Create SQL statement
+  std::string sql = "CREATE TABLE ";
+  std::cout<<"MINi DbName"<<DbName<<std::endl;
+  sql.append(DbName);
+  sql.append("("  \
+         "isRequst INT  NOT NULL," \
+         "id INT  ," \
+         "name TEXT  NOT NULL," \
+         "message TEXT  );");
+
+
+   /* Execute SQL statement */
+  DbEditor(sql, db);
+
+   sqlite3_close(db);
+   return 1;
+}
+
 
 int user_db_editor::DbPrint(std::string DbName)
 {

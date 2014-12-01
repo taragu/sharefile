@@ -26,7 +26,6 @@ class user_db_editor
     //bool user_db_editor::DbContF(int id2, sqlite3 * db_frd );
 public:
     user_db_editor();
-
     bool DbAddUser(std::string username,std::string auth_token,sqlite3 * db_user);
     std::string UserDbGetAt(std::string username, sqlite3 * db_user);
     int UserDbLogin(std::string username, std::string password, sqlite3 * db_user);
@@ -39,6 +38,8 @@ public:
     bool DbAddFileSToF( int user_id, int tofriend_id,std::string FileName, std::string path);
     bool DbAddFileS( std::string username, std::string path, std::string FileName,std::string toFriend_name, sqlite3 * db_user);
     bool DbAddFile( std::string username, std::string path,std::string FileName, sqlite3 * db_user);
+    bool DbRmFile(std::string username, std::string filename, sqlite3 * db_user);
+
     bool DbAddMessage( std::string username, std::string sendername,bool isRequest, std::string message, sqlite3 * db_user);
     int DbInitialize(void);
     int DbFInitialize(std::string DbName);

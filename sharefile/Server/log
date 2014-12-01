@@ -1,0 +1,124 @@
+Opened database successfully
+Opened database successfully
+Tables created successfully
+INSERT INTO UsersTable (id,username,auth_token) VALUES (0, 'TEST', 'TEST' );  successfully
+INSERT INTO UsersTable (id,username,auth_token, friend_id) VALUES (1,'Ah','def',','); successfully
+CREATE TABLE user1F(id INT  NOT NULL,name             TEXT  NOT NULL ); successfully
+CREATE TABLE user1FilesTable(id INT PRIMARY KEY     NOT NULL,name             TEXT  NOT NULL,path             TEXT  NOT NULL,toFriend_id      INT created_at       DATETIME,updated_at       DATETIME ); successfully
+INSERT INTO user1FilesTable  (id,name, path) VALUES (0, 'TEST' ,'TEST' );  successfully
+CREATE TABLE user1FilesTableS(id INT PRIMARY KEY     NOT NULL,name             TEXT  NOT NULL,path             TEXT  NOT NULL,toFriend_id      INT created_at       DATETIME,updated_at       DATETIME ); successfully
+INSERT INTO user1FilesTableS  (id,name, path) VALUES (0, 'TEST' ,'TEST' );  successfully
+adduseruser1FilesTableSMessage
+MINi DbNameuser1FilesTableSMessage
+CREATE TABLE user1FilesTableSMessage(isRequest INT  NOT NULL,id INT  ,name TEXT  NOT NULL,message TEXT  ); successfully
+INSERT INTO UsersTable (id,username,auth_token, friend_id) VALUES (2,'Bee','abc',','); successfully
+CREATE TABLE user2F(id INT  NOT NULL,name             TEXT  NOT NULL ); successfully
+CREATE TABLE user2FilesTable(id INT PRIMARY KEY     NOT NULL,name             TEXT  NOT NULL,path             TEXT  NOT NULL,toFriend_id      INT created_at       DATETIME,updated_at       DATETIME ); successfully
+INSERT INTO user2FilesTable  (id,name, path) VALUES (0, 'TEST' ,'TEST' );  successfully
+CREATE TABLE user2FilesTableS(id INT PRIMARY KEY     NOT NULL,name             TEXT  NOT NULL,path             TEXT  NOT NULL,toFriend_id      INT created_at       DATETIME,updated_at       DATETIME ); successfully
+INSERT INTO user2FilesTableS  (id,name, path) VALUES (0, 'TEST' ,'TEST' );  successfully
+adduseruser2FilesTableSMessage
+MINi DbNameuser2FilesTableSMessage
+CREATE TABLE user2FilesTableSMessage(isRequest INT  NOT NULL,id INT  ,name TEXT  NOT NULL,message TEXT  ); successfully
+INSERT INTO UsersTable (id,username,auth_token, friend_id) VALUES (3,'Cece','123',','); successfully
+CREATE TABLE user3F(id INT  NOT NULL,name             TEXT  NOT NULL ); successfully
+CREATE TABLE user3FilesTable(id INT PRIMARY KEY     NOT NULL,name             TEXT  NOT NULL,path             TEXT  NOT NULL,toFriend_id      INT created_at       DATETIME,updated_at       DATETIME ); successfully
+INSERT INTO user3FilesTable  (id,name, path) VALUES (0, 'TEST' ,'TEST' );  successfully
+CREATE TABLE user3FilesTableS(id INT PRIMARY KEY     NOT NULL,name             TEXT  NOT NULL,path             TEXT  NOT NULL,toFriend_id      INT created_at       DATETIME,updated_at       DATETIME ); successfully
+INSERT INTO user3FilesTableS  (id,name, path) VALUES (0, 'TEST' ,'TEST' );  successfully
+adduseruser3FilesTableSMessage
+MINi DbNameuser3FilesTableSMessage
+CREATE TABLE user3FilesTableSMessage(isRequest INT  NOT NULL,id INT  ,name TEXT  NOT NULL,message TEXT  ); successfully
+1login
+2wrong password
+-1user doss not exist
+INSERT INTO user1F  (id,name) VALUES (2,'Bee'); successfully
+INSERT INTO user1F  (id,name) VALUES (3,'Cece'); successfully
+user1FilesTableSMessageINSERT INTO user1FilesTableSMessage (isRequest,name, message) VALUES (0,'Bee','Hi!'); successfully
+INSERT INTO user1FilesTable (id,path,name, toFriend_id) VALUES (1,'path1','File1','2'); successfully
+INSERT INTO user2FilesTableS (id,path,name, toFriend_id) VALUES (1,'path1','File1','1'); successfully
+INSERT INTO user2FilesTable (id,path,name) VALUES (1,'pathB','FileB'); successfully
+File1's pathpath1
+File1's pathpath1
+DELETE from  user1F where id = 3 successfully
+DELETE from  user1FilesTable where name = 'File1' ;  successfully
+id = 0
+username = TEST
+auth_token = TEST
+friend_id = NULL
+created_at = NULL
+updated_at = NULL
+
+id = 1
+username = Ah
+auth_token = def
+friend_id = ,
+created_at = NULL
+updated_at = NULL
+
+id = 2
+username = Bee
+auth_token = abc
+friend_id = ,
+created_at = NULL
+updated_at = NULL
+
+id = 3
+username = Cece
+auth_token = 123
+friend_id = ,
+created_at = NULL
+updated_at = NULL
+
+Operation done successfully
+id = 2
+name = Bee
+
+Operation done successfully
+id = 0
+name = TEST
+path = TEST
+toFriend_id = NULL
+updated_at = NULL
+
+Operation done successfully
+id = 0
+name = TEST
+path = TEST
+toFriend_id = NULL
+updated_at = NULL
+
+Operation done successfully
+Operation done successfully
+id = 0
+name = TEST
+path = TEST
+toFriend_id = NULL
+updated_at = NULL
+
+id = 1
+name = FileB
+path = pathB
+toFriend_id = NULL
+updated_at = NULL
+
+Operation done successfully
+id = 0
+name = TEST
+path = TEST
+toFriend_id = NULL
+updated_at = NULL
+
+id = 1
+name = File1
+path = path1
+toFriend_id = 1
+updated_at = NULL
+
+Operation done successfully
+isRequest = 0
+id = NULL
+name = Bee
+message = Hi!
+
+Operation done successfully

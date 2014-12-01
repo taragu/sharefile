@@ -460,6 +460,31 @@ int user_db_editor::DbRmFriend(std::string username1, std::string username2, sql
     return 1;
 }
 
+bool user_db_editor::DbRmFile(std::string username, std::string filename, sqlite3 * db_user)
+{
+    int id1=DbUGetID(username,db_user);
+    
+  
+    sqlite3 * db_file;
+    std::stringstream DbNamess;
+    DbNamess<<"user"<<id1<<"FilesTable";
+    std::string DbName=DbNamess.str();
+    std::string DbNamedb = DbNamess.str();
+    DbNamedb.append(".db");
+    sqlite3_open(DbNamedb.c_str(), &db_file);
+    if(!DbContain(DbName, "name", filename, db_file )){return 0;}//not exist
+    std::string sql = "DELETE from  ";
+    sql.append(DbName);
+    sql.append(" where name = '");
+    //std::stringstream id2ss;
+    //id2ss<<id2;
+    sql.append(filename);
+    sql.append("' ; ");
+    user_db_editor::DbEditor(sql, db_file);
+    sqlite3_close(db_file);
+    return 1;
+}
+
 
 bool user_db_editor::DbContainFr(int id1, std::string username2){
     sqlite3 * db_frd;
@@ -734,7 +759,7 @@ if( rc ){
   std::cout<<"MINi DbName"<<DbName<<std::endl;
   sql.append(DbName);
   sql.append("("  \
-         "isRequst INT  NOT NULL," \
+         "isRequest INT  NOT NULL," \
          "id INT  ," \
          "name TEXT  NOT NULL," \
          "message TEXT  );");

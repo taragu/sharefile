@@ -55,7 +55,6 @@ int main(int argc, char *argv[])
     std::cout<<"File1's path"<<ude.user_db_editor::DbGetPathS("Bee",  "File1", db_user)<<std::endl;
     ude.user_db_editor::DbGetFrQ("Ah",db_user);
     ude.user_db_editor::DbRmFriend("Ah","CeCe",db_user);
-    ude.user_db_editor::DbRmFile("Ah","File1",db_user);
 
     sqlite3_close(db_user);
     //sqlite3_close(db_file);
