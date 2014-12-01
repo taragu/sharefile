@@ -39,6 +39,7 @@ public:
     bool DbAddFileS( std::string username, std::string path, std::string FileName,std::string toFriend_name, sqlite3 * db_user);
     bool DbAddFile( std::string username, std::string path,std::string FileName, sqlite3 * db_user);
     bool DbRmFile(std::string username, std::string filename, sqlite3 * db_user);
+    std::string DbGetToFriendID( std::string name,  std::string DbName, sqlite3 * db_file);
 
     bool DbAddMessage( std::string username, std::string sendername,bool isRequest, std::string message, sqlite3 * db_user);
     int DbInitialize(void);

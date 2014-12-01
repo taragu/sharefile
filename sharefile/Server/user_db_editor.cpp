@@ -266,6 +266,19 @@ std::string user_db_editor::DbGetPath( std::string username,  std::string FileNa
 
 }
 
+std::string user_db_editor::DbGetToFriendID( std::string name,  std::string DbName, sqlite3 * db_file)
+{
+  
+  std::stringstream sqlss;
+  std::string sql;
+  sqlss<< "SELECT toFriend_id from "<<DbName<<" WHERE name = '"<<name<<"';";
+  sql.append(sqlss.str());
+  // sql.append(",'");
+  return DbGetAnswer(sql,1, db_file);
+
+}
+
+
 std::string user_db_editor::DbGetPathS( std::string username,  std::string FileName, sqlite3 * db_user)
 {
   int user_id=DbUGetID(username, db_user);
@@ -473,6 +486,28 @@ bool user_db_editor::DbRmFile(std::string username, std::string filename, sqlite
     DbNamedb.append(".db");
     sqlite3_open(DbNamedb.c_str(), &db_file);
     if(!DbContain(DbName, "name", filename, db_file )){return 0;}//not exist
+    std::string toFriend_ids=DbGetToFriendID(filename,  DbName, db_file);
+    if (strcmp(toFriend_ids.c_str(),"NULL")!=0){
+      int toFriend_id=atoi(toFriend_ids.c_str());
+    sqlite3 * db_fileS;
+    std::stringstream DbNamessS;
+    DbNamessS<<"user"<<toFriend_id<<"FilesTableS";
+    std::string DbNameS=DbNamessS.str();
+    std::string DbNamedbS = DbNamessS.str();
+    DbNamedbS.append(".db");
+    sqlite3_open(DbNamedbS.c_str(), &db_fileS);
+    std::string sql = "DELETE from  ";
+    sql.append(DbNameS);
+    sql.append(" where name = '");
+    sql.append(filename);
+    sql.append("' AND toFriend_id = '");
+    std::stringstream id1ss;
+    id1ss<<id1;
+    sql.append(id1ss.str());
+    sql.append("' ;");
+    user_db_editor::DbEditor(sql, db_fileS);
+    sqlite3_close(db_fileS);
+    }
     std::string sql = "DELETE from  ";
     sql.append(DbName);
     sql.append(" where name = '");
