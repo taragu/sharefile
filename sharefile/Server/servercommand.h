@@ -35,9 +35,11 @@ using namespace std ;
 #define COMMAND_LOGON     "logon"
 #define COMMAND_SHARE     "share"
 #define COMMAND_RM        "rm"
+#define COMMAND_SEND      "send"
 
 #define RECV_BUF_SIZE     4096
 #define SEND_BUF_SIZE     4096
+#define MSG_BUF_SIZE      4096
 
 class ServerCommand
 {
@@ -54,8 +56,8 @@ class ServerCommand
   int LogonCommand( void ) ;   // register
   int ShareCommand( void ) ;  // share
   int RmCommand( string filename ) ; // delete
+  int SendCommand( void ); // send request or message
   bool ApproveAddFriendCommand(string Name1, string Name2);//add friend
-  bool SendMessageCommand(string senderName, string receiverName, string message, bool isRequsst );
   bool GetMessagesCommand(void);
   //database
   sqlite3 * db_user;
@@ -82,7 +84,7 @@ class ServerCommand
   string         m_serverpath ; // server directory
   string         m_username ;   // user
   string         m_password ;   // password
-  int            m_fd ;         // user data file
+  //  int            m_fd ;         // user data file
   set<UserData>  m_Datas ;      // user data
  private:
   //user not found

@@ -214,7 +214,7 @@ int ServerCommand::LoginCommand( void )
       replay = -1 ;
     }
   */
-  if( ude.user_db_editor::UserDbLogin(user.username , user.password ,  db_user)>0) {
+  if( ude.user_db_editor::UserDbLogin(user.username , user.password ,  db_user)) {
     replay=0;
   }
   else {
@@ -349,28 +349,53 @@ int ServerCommand::ShareCommand( void )
   goto done ;
 }
 
-int ServerCommand::RmCommand( string filename )
-{
-  string file = m_userpath + "/" + filename ;
-  cout << "file:" << file << endl ;
-  return unlink( file.c_str() ) ;
-}
 
-bool ServerCommand::FindUser( const string &username ) const
-{
-  UserData user( username ) ;
-  return m_Datas.end() != m_Datas.find( user ) ;
-}
-
-bool ServerCommand::SendMessageCommand(string senderName, string receiverName, string message, bool isRequsst ){
-  ude.DbAddMessage(receiverName, senderName,isRequest, message, db_user);
-}
 
 bool ServerCommand::GetMessagesCommand(void){
     std::queue<message_t> MQ;
-    MQ=ude.user_db_editor::DbGetMessageQ(username, db_user);
+    MQ=ude.user_db_editor::DbGetMessageQ(user.username, db_user);
     //std::cout<<"MQ"<<(MQ.front()).isRequest<<(MQ.front()).name<<(MQ.front()).message<<std::endl;
+}
 
+
+int ServerCommand::SendCommand( void )
+{
+  cout << "COMMAND_SEND" << endl;
+  int retval = 0 ;
+  char touser[256] ;
+  char message[MSG_BUF_SIZE];
+  bzero( touser, sizeof(touser));
+  bzero( message, sizeof(message ) );
+  // get receiver and message
+  if ( read( m_sockfd, user, sizeof(user)) < 0 )
+    {
+      perror("read username" );
+      goto error;
+    }
+    if (read( m_sockfd, message, sizeof(message) ) < 0 )
+      {
+	perror( " read message" );
+	goto error;
+      }
+
+    //
+    // DATABASE TO BE DONE
+    //
+    //
+  string tousers=touser;
+  string messages=message;
+  bool isRequest;
+  if(strcmp(message,"friend_request")==0){isRequest=1;}
+  else{isRequest=0;}
+  ude.DbAddMessage(touser, user.username,isRequest, message, db_user);
+   
+  done:
+    cout << " COMMAND_SEND END" << endl ;
+    return retval;
+  error:
+    retval = -1 ;
+    goto done;
+  
 }
 
 bool ServerCommand::ApproveAddFriendCommand(std::string Name1, std::string Name2){
@@ -382,5 +407,19 @@ bool ServerCommand::ApproveAddFriendCommand(std::string Name1, std::string Name2
 bool ServerCommand::RemoveFriendCommand(std::string senderName, std::string receiverName){
   ude.user_db_editor::DbRmFriend(sendername, receivername, db_user);
   ude.user_db_editor::DbRmFriend(receivername,sendername, db_user);
-   
+
+}
+
+
+int ServerCommand::RmCommand( string filename )
+{
+  string file = m_userpath + "/" + filename ;
+  cout << "file:" << file << endl ;
+  return unlink( file.c_str() ) ;
+}
+
+bool ServerCommand::FindUser( const string &username ) const
+{
+  UserData user( username ) ;
+  return m_Datas.end() != m_Datas.find( user ) ;
 }

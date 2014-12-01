@@ -44,6 +44,13 @@ void *clientthread( void *arg )
 				goto error ;
 			}
 		}
+		else if ( !strncmp( COMMAND_SEND, commandbuf, strlen(COMMAND_SEND) ) )
+		{
+			if ( -1 == command.SendCommand( ) )
+			{
+				goto error ;
+			}
+		}
 		else if ( !strncmp( COMMAND_HELP, commandbuf, strlen(COMMAND_HELP) ) )
 		{
 			if ( -1 == command.HelpCommand( ) )
