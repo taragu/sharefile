@@ -90,12 +90,21 @@ int ServerCommand::LsmCommand ( ) const
   // I guess it's looking into database and get the result
   // this class has fields like m_username that might be useful
   // you can check the header file
+  
+    queue<message_t> MQ;
+    MQ=ude.user_db_editor::DbGetMessageQ(m_username, db_user);
+    //std::cout<<"MQ"<<(MQ.front()).isRequest<<(MQ.front()).name<<(MQ.front()).message<<std::endl;
+
+
   return 0;
 }
 
 int ServerCommand::LsfCommand ( ) const
 {
   // see above
+  queue<string> FQ;
+  FQ=ude.user_db_editor::DbGetFrQ(m_username, db_user);
+  
   return 0;
 }
 
@@ -409,11 +418,6 @@ int ServerCommand::SendCommand( void )
   
 }
 
-bool ServerCommand::GetMessagesCommand(void){
-    std::queue<message_t> MQ;
-    MQ=ude.user_db_editor::DbGetMessageQ(m_username, db_user);
-    //std::cout<<"MQ"<<(MQ.front()).isRequest<<(MQ.front()).name<<(MQ.front()).message<<std::endl;
-}
 
 bool ServerCommand::ApproveAddFriendCommand(std::string Name2){
   ude.user_db_editor::DbAddFriend(m_username, Name2, db_user);
