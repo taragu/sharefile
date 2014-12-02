@@ -197,7 +197,7 @@ error:
 }
 
 //show friend list
-int ClientCommand::LsfCommand( void ) 
+int ClientCommand::LsfCommand( void ) const
 {
   int retval = 0 ;
   char frdname[FRD_BUF_SIZE];
@@ -232,7 +232,7 @@ int ClientCommand::LsmCommand( void )
   if ( write( m_sockfd, COMMAND_LSM, strlen(COMMAND_LSM)) < 0)
     {
       perror( "write command" ) ;
-      //      goto error ;
+      goto error ;
     }
 
   /*
@@ -258,7 +258,7 @@ int ClientCommand::LsmCommand( void )
 
 
 // show content
-int ClientCommand::LsCommand( void ) const
+int ClientCommand::LsCommand( void ) 
 {
 	int retval = 0 ;
 	char filename[RECV_BUF_SIZE] ;
