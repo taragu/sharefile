@@ -387,6 +387,45 @@ error:
 	goto done ;
 }
 
+
+// send command
+int ClientCommand::SendCommand( string user, string msg ) 
+{
+  int retval = 0;
+  char command[COMMAND_BUF_SIZE];
+  bzero( command, sizeof(command) );
+  strcpy( command, COMMAND_SEND) ;
+  char szuser[256];
+  char szmsg[MSG_BUF_SIZE];
+  bzero( szuser, sizeof(szuser ) );
+  bzero( szmsg, sizeof(szmsg) );
+  strcpy( szuser, user.c_str() ) ;
+  strcpy( szmsg, msg.c_str() ) ;
+  if ( write( m_sockfd, command, strlen(command) ) < 0 )
+    {
+      perror( "write send command" ) ;
+      goto error;
+    }
+  if ( write( m_sockfd, szuser, sizeof(szuser) ) < 0 )
+    {
+      perror( " send user " ) ;
+      goto error;
+    }
+  if ( write( m_sockfd, szmsg, sizeof(szmsg) ) < 0 )
+    {
+      perror( " send message" );
+      goto error;
+    }
+ done:
+  return retval ;
+ error:
+  retval = -1 ;
+  goto done;
+}
+
+
+
+
 // command manager
 int ClientCommand::manager( void )
 {
@@ -478,6 +517,10 @@ retry:
 		{
 			QuitCommand( ) ;
 		}
+		else if ( COMMAND_SEND == cmd )
+		  {
+		    SendCommand(file, user) ;
+		  }
 		else if ( COMMAND_CD == cmd )
 		{
 			CdCommand( file.c_str() ) ;
