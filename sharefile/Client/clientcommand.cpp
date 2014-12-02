@@ -478,9 +478,9 @@ int ClientCommand::manager( void )
 {
 	int retval = 0 ;
 	char command[COMMAND_BUF_SIZE] ;
-	string cmd ;
-	string file ;
-	string user ;
+	string cmd ="";
+	string file ="";
+	string user ="";
 retry:
 	cout << "Please select:" << endl ;
 	cout << "1. Sign in" << endl ;
@@ -490,10 +490,10 @@ retry:
 	switch ( choice )
 	{
 	case 1 :
-		cmd == COMMAND_LOGIN ;
+		cmd = COMMAND_LOGIN ;
 		break ;
 	case 2 :
-		cmd == COMMAND_LOGON ;
+		cmd = COMMAND_LOGON ;
 		break ;
 	default:
 		cout << "Wrong selection" << endl ;
