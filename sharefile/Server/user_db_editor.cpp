@@ -79,14 +79,14 @@ std::queue<std::string> user_db_editor::DbGetAnswerQ(std::string s,int c, sqlite
             //std::cout<<"NotOK\n";
             return answer;
         }
-       //std::cout<<"R"<<nRow<<"C"<<nCol<<"NotOK\n";
+       std::cout<<"R"<<nRow<<"C"<<nCol<<"NotOK\n";
         int nIndex = nCol;
         std::string strOut;
         for(int i=0;i<nRow;i++)
         {
 	  answer.push(pResult[c]);
                 strOut+=pResult[c];
-
+		c++;
                 strOut+=":";
                 strOut+=pResult[nIndex];
                 strOut+="\n";
@@ -136,7 +136,7 @@ std::queue<message_t> user_db_editor::DbGetMessage_tQ(std::string s,int ci,int c
             //std::cout<<"NotOK\n";
             return answer;
         }
-       //std::cout<<"R"<<nRow<<"C"<<nCol<<"NotOK\n";
+       std::cout<<"R"<<nRow<<"C"<<nCol<<"NotOK\n";
         int nIndex = nCol;
         std::string strOut;
 	message_t OneM;
@@ -152,7 +152,9 @@ std::queue<message_t> user_db_editor::DbGetMessage_tQ(std::string s,int ci,int c
                 strOut+=pResult[nIndex];
                 strOut+="\n";
                 ++nIndex;
-            
+		ci=ci+3;
+		cn=cn+3;
+		cm=cm+3;            
         }
 
         //if (nRow==0&&nCol==0) return "-1";
@@ -260,7 +262,7 @@ bool user_db_editor::DbContain(std::string tablename, std::string col, std::stri
 int user_db_editor::DbUGetSize(sqlite3 * db_user){
 
      std::string sql="SELECT max(id) From UsersTable;";
-     //     std::string::size_type sz;   // alias of size_t
+     std::string::size_type sz;   // alias of size_t
      std::string Ans=DbGetAnswer(sql,1, db_user);
 
      int size = atoi (Ans.c_str());
@@ -271,7 +273,7 @@ int user_db_editor::DbFGetSize(sqlite3 * db_file, std::string DbName){
      std::string sql="SELECT max(id) From ";
      sql.append( DbName);
      sql.append(";");
-     //     std::string::size_type sz;   // alias of size_t
+     std::string::size_type sz;   // alias of size_t
      std::string Ans=DbGetAnswer(sql,1, db_file);
      int size = atoi (Ans.c_str());
      return size;
@@ -280,7 +282,7 @@ int user_db_editor::DbFGetSize(sqlite3 * db_file, std::string DbName){
 int user_db_editor::DbUGetID(std::string username, sqlite3 * db_user)
 {
     std::stringstream idss;
-    //    std::string::size_type sz;   // alias of size_t
+    std::string::size_type sz;   // alias of size_t
     // Create SQL statement
     std::string sql = "SELECT id from UsersTable WHERE username Like '";
     idss<<username<<"';";
