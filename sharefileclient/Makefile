@@ -459,7 +459,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/sharefileclient1.0.0 || mkdir -p .tmp/sharefileclient1.0.0
-	$(COPY_FILE) --parents $(DIST) .tmp/sharefileclient1.0.0/ && $(COPY_FILE) --parents addafrienddialog.h clientcommand.h clientcommandmanager.h connectdialog.h errorpopup.h IObserver.h mainwindow.h messagesubject.h signindialog.h signupdialog.h ui_addafrienddialog.h ui_connectdialog.h ui_errorpopup.h ui_frienddialog.h ui_friendrequestpopup.h ui_mainwindow.h ui_signindialog.h ui_signupdialog.h userscontroller.h sendmessagedialog.h readmessagedialog.h .tmp/sharefileclient1.0.0/ && $(COPY_FILE) --parents addafrienddialog.cpp clientcommand.cpp connectdialog.cpp errorpopup.cpp main.cpp mainwindow.cpp signindialog.cpp signupdialog.cpp sendmessagedialog.cpp readmessagedialog.cpp .tmp/sharefileclient1.0.0/ && $(COPY_FILE) --parents addafrienddialog.ui connectdialog.ui errorpopup.ui mainwindow.ui signindialog.ui signupdialog.ui sendmessagedialog.ui readmessagedialog.ui .tmp/sharefileclient1.0.0/ && (cd `dirname .tmp/sharefileclient1.0.0` && $(TAR) sharefileclient1.0.0.tar sharefileclient1.0.0 && $(COMPRESS) sharefileclient1.0.0.tar) && $(MOVE) `dirname .tmp/sharefileclient1.0.0`/sharefileclient1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/sharefileclient1.0.0
+	$(COPY_FILE) --parents $(DIST) .tmp/sharefileclient1.0.0/ && $(COPY_FILE) --parents addafrienddialog.h clientcommand.h clientcommandmanager.h connectdialog.h errorpopup.h IObserver.h mainwindow.h messagesubject.h signindialog.h signupdialog.h ui_addafrienddialog.h ui_connectdialog.h ui_errorpopup.h ui_friendrequestpopup.h ui_mainwindow.h ui_signindialog.h ui_signupdialog.h userscontroller.h sendmessagedialog.h readmessagedialog.h .tmp/sharefileclient1.0.0/ && $(COPY_FILE) --parents addafrienddialog.cpp clientcommand.cpp connectdialog.cpp errorpopup.cpp main.cpp mainwindow.cpp signindialog.cpp signupdialog.cpp sendmessagedialog.cpp readmessagedialog.cpp .tmp/sharefileclient1.0.0/ && $(COPY_FILE) --parents addafrienddialog.ui connectdialog.ui errorpopup.ui mainwindow.ui signindialog.ui signupdialog.ui sendmessagedialog.ui readmessagedialog.ui .tmp/sharefileclient1.0.0/ && (cd `dirname .tmp/sharefileclient1.0.0` && $(TAR) sharefileclient1.0.0.tar sharefileclient1.0.0 && $(COMPRESS) sharefileclient1.0.0.tar) && $(MOVE) `dirname .tmp/sharefileclient1.0.0`/sharefileclient1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/sharefileclient1.0.0
 
 
 clean:compiler_clean 
@@ -1294,6 +1294,13 @@ moc_sendmessagedialog.cpp: ../../../Qt/5.3/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt/5.3/gcc_64/include/QtCore/qfiledevice.h \
 		../../../Qt/5.3/gcc_64/include/QtGui/qvector2d.h \
 		../../../Qt/5.3/gcc_64/include/QtGui/qtouchdevice.h \
+		errorpopup.h \
+		IObserver.h \
+		messagesubject.h \
+		../../../Qt/5.3/gcc_64/include/QtCore/QDebug \
+		../../../Qt/5.3/gcc_64/include/QtCore/QDir \
+		../../../Qt/5.3/gcc_64/include/QtCore/qdir.h \
+		../../../Qt/5.3/gcc_64/include/QtCore/qfileinfo.h \
 		sendmessagedialog.h
 	/home/tara/Qt/5.3/gcc_64/bin/moc $(DEFINES) -I/home/tara/Qt/5.3/gcc_64/mkspecs/linux-g++ -I/home/tara/Documents/sharefile/sharefileclient -I/home/tara/Documents/sharefile/sharefileclient -I/home/tara/Qt/5.3/gcc_64/include -I/home/tara/Qt/5.3/gcc_64/include/QtWidgets -I/home/tara/Qt/5.3/gcc_64/include/QtGui -I/home/tara/Qt/5.3/gcc_64/include/QtCore sendmessagedialog.h -o moc_sendmessagedialog.cpp
 
@@ -2744,6 +2751,13 @@ sendmessagedialog.o: sendmessagedialog.cpp sendmessagedialog.h \
 		../../../Qt/5.3/gcc_64/include/QtCore/qfiledevice.h \
 		../../../Qt/5.3/gcc_64/include/QtGui/qvector2d.h \
 		../../../Qt/5.3/gcc_64/include/QtGui/qtouchdevice.h \
+		errorpopup.h \
+		IObserver.h \
+		messagesubject.h \
+		../../../Qt/5.3/gcc_64/include/QtCore/QDebug \
+		../../../Qt/5.3/gcc_64/include/QtCore/QDir \
+		../../../Qt/5.3/gcc_64/include/QtCore/qdir.h \
+		../../../Qt/5.3/gcc_64/include/QtCore/qfileinfo.h \
 		ui_sendmessagedialog.h \
 		../../../Qt/5.3/gcc_64/include/QtCore/QVariant \
 		../../../Qt/5.3/gcc_64/include/QtWidgets/QAction \
@@ -2792,7 +2806,9 @@ sendmessagedialog.o: sendmessagedialog.cpp sendmessagedialog.h \
 		../../../Qt/5.3/gcc_64/include/QtWidgets/qabstractbutton.h \
 		../../../Qt/5.3/gcc_64/include/QtWidgets/QTextEdit \
 		../../../Qt/5.3/gcc_64/include/QtWidgets/qtextedit.h \
-		../../../Qt/5.3/gcc_64/include/QtGui/qtextdocument.h
+		../../../Qt/5.3/gcc_64/include/QtGui/qtextdocument.h \
+		clientcommandmanager.h \
+		clientcommand.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sendmessagedialog.o sendmessagedialog.cpp
 
 readmessagedialog.o: readmessagedialog.cpp readmessagedialog.h \
@@ -2933,7 +2949,12 @@ readmessagedialog.o: readmessagedialog.cpp readmessagedialog.h \
 		../../../Qt/5.3/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../Qt/5.3/gcc_64/include/QtWidgets/qrubberband.h \
 		../../../Qt/5.3/gcc_64/include/QtWidgets/QLabel \
-		../../../Qt/5.3/gcc_64/include/QtWidgets/qlabel.h
+		../../../Qt/5.3/gcc_64/include/QtWidgets/qlabel.h \
+		../../../Qt/5.3/gcc_64/include/QtWidgets/QPushButton \
+		../../../Qt/5.3/gcc_64/include/QtWidgets/qpushbutton.h \
+		../../../Qt/5.3/gcc_64/include/QtWidgets/qabstractbutton.h \
+		clientcommandmanager.h \
+		clientcommand.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o readmessagedialog.o readmessagedialog.cpp
 
 moc_addafrienddialog.o: moc_addafrienddialog.cpp 

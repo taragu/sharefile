@@ -15,11 +15,15 @@ public:
     explicit ReadMessageDialog(QWidget *parent = 0);
     ~ReadMessageDialog();
     void setIsARequest(bool _isARequest);
+    void setSenderName(std::string username);
+    void setMessage(std::string message);
 
 private slots:
     void on_buttonBox_accepted();
 
     void on_decline_button_clicked();
+
+
 
 private:
     Ui::ReadMessageDialog *ui;

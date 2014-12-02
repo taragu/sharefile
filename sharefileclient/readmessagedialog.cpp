@@ -42,3 +42,13 @@ void ReadMessageDialog::on_decline_button_clicked()
     }
     //if this is a normal message, the decline button will be hidden
 }
+
+void ReadMessageDialog::setSenderName(std::string username) {
+    QString qstr = QString::fromStdString(username);
+    ui->sendername_lineedit->setText(qstr);
+}
+
+void ReadMessageDialog::setMessage(std::string message) {
+    QString qstr = QString::fromStdString(message);
+    ui->message_label->setText(qstr);
+}
