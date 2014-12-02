@@ -57,6 +57,10 @@ private slots:
 
     void on_delete_button_clicked();
 
+    void on_messages_list_itemClicked(QListWidgetItem *item);
+
+    void on_friends_list_itemClicked(QListWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
     AddAFriendDialog * addAFriendDialog;

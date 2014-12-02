@@ -214,11 +214,31 @@ void MainWindow::refresh_serverfiles_list() {
 }
 
 void MainWindow::refresh_messages_list() {
-    //TODO CALL LISTMESSAGES METHOD FROM CLIENTCOMMAND
+    // CALL LISTMESSAGES METHOD FROM CLIENTCOMMAND
+    std::set<std::string> messagesSet = ClientCommandManager::clientCommand->LsmCommand();
+    int size = messagesSet.size();
+    std::set<std::string>::iterator it = messagesSet.begin();
+    ui->messages_list->clear();
+    for (int i=0;i<size;i++){
+         std::advance(it, i);
+         std::string thisMessage = *it;
+         QString qstr = QString::fromStdString(thisMessage);
+         ui->messages_list->addItem(qstr);
+    }
 }
 
 void MainWindow::refresh_friends_list() {
-    //TODO CALL LISTFRIENDS METHOD FROM CLIENTCOMMAND
+    // CALL LISTFRIENDS METHOD FROM CLIENTCOMMAND
+    std::set<std::string> friendsSet = ClientCommandManager::clientCommand->LsfCommand();
+    int size = friendsSet.size();
+    std::set<std::string>::iterator it = friendsSet.begin();
+    ui->friends_list->clear();
+    for (int i=0;i<size;i++){
+         std::advance(it, i);
+         std::string thisFriend = *it;
+         QString qstr = QString::fromStdString(thisFriend);
+         ui->friends_list->addItem(qstr);
+    }
 }
 
 void MainWindow::on_refresh_button_clicked()
@@ -299,4 +319,34 @@ void MainWindow::on_delete_button_clicked()
             changeMessage((std::string) message);
         }
     }
+}
+
+void MainWindow::on_messages_list_itemClicked(QListWidgetItem *item)
+{
+    QByteArray itemByteArray = item->text().toUtf8();
+    char* itemArray = itemByteArray.data();
+    char * openParenthesis = strchr(itemArray, '(');
+    int openIndex = openParenthesis - itemArray + 1;
+    char * closeParenthesis = strchr(itemArray, ')');
+    int closeIndex = closeParenthesis - itemArray + 1;
+    //grab the sender's name and the message
+    std::string itemString = (std::string) itemArray;
+    std::string senderName = itemString.substr(openIndex, closeIndex - openIndex - 1);
+    std::string message = itemString.substr(closeIndex+1);
+    //check if the item is a regular message or a request
+    if (message == "friend") {
+        readMessageDialog->setIsARequest(true);
+    }
+    readMessageDialog->setSenderName(senderName);
+    readMessageDialog->setModal(true);
+    readMessageDialog->exec();
+}
+
+void MainWindow::on_friends_list_itemClicked(QListWidgetItem *item)
+{
+    QByteArray friendNameByteArray = item->text().toUtf8();
+    const char* friendName = friendNameByteArray.constData();
+    sendMessageDialog->setReceiver((std::string)friendName);
+    sendMessageDialog->setModal(true);
+    sendMessageDialog->exec();
 }

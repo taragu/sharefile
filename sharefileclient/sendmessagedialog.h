@@ -16,6 +16,7 @@ class SendMessageDialog : public QDialog, public MessageSubject
 public:
     explicit SendMessageDialog(QWidget *parent = 0);
     ~SendMessageDialog();
+    void setReceiver(std::string username);
 
 private slots:
     void on_buttonBox_accepted();
