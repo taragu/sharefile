@@ -21,7 +21,6 @@ HEADERS += addafrienddialog.h \
            ui_addafrienddialog.h \
            ui_connectdialog.h \
            ui_errorpopup.h \
-           ui_frienddialog.h \
            ui_friendrequestpopup.h \
            ui_mainwindow.h \
            ui_signindialog.h \
