@@ -17,7 +17,7 @@ struct message_t {
 
 class user_db_editor
 {
-    int n;
+  //    int n;
     bool DbEditor(std::string s, sqlite3 * db);
     std::string DbGetAnswer(std::string s, int c,sqlite3 * db_user);
     std::string DbGetAnswerThenCloseDb(std::string s,int c, sqlite3 * db);
