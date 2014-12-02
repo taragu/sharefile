@@ -196,6 +196,53 @@ error:
 
 }
 
+//show friend list
+int ClientCommand::LsfCommand( void ) const
+{
+  int retval = 0 ;
+  char frdname[FRD_BUF_SIZE];
+  bzero( frdname, sizeof(frdname) );
+  if ( write( m_sockfd, COMMAND_LSF, strlen(COMMAND_LSF)) < 0)
+    {
+      perror( "write command" ) ;
+      goto error ;
+    }
+  while( read( m_sockfd, frdname, sizeof(frdname) ) > 0 )
+    {
+      printf("%s\n", frdname);
+      bzero( frdname, sizeof(frdname) );
+    }
+ done:
+  return retval ;
+ error:
+  retval = -1;
+  goto done ;
+}
+
+//show message list
+int ClientCommand::LsmCommand( void ) const
+{
+  int retval = 0 ;
+  char msg[MSG_BUF_SIZE];
+  bzero( msg, sizeof(msg) );
+  if ( write( m_sockfd, COMMAND_LSM, strlen(COMMAND_LSM)) < 0)
+    {
+      perror( "write command" ) ;
+      goto error ;
+    }
+  while( read( m_sockfd, msg, sizeof(msg) ) > 0 )
+    {
+      printf("%s\n", msg);
+      bzero( msg, sizeof(msg) );
+    }
+ done:
+  return retval ;
+ error:
+  retval = -1;
+  goto done ;
+}
+
+
 // show content
 int ClientCommand::LsCommand( void ) const
 {
@@ -504,6 +551,14 @@ retry:
 		if ( COMMAND_LS == cmd )
 		{
 			LsCommand() ;
+		}
+		else if ( COMMAND_LSF == cmd )
+		{
+			LsfCommand() ;
+		}
+		else if ( COMMAND_LSM == cmd )
+		{
+			LsmCommand() ;
 		}
 		else if ( COMMAND_PUT == cmd )
 		{
