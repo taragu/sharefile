@@ -91,6 +91,7 @@ std::queue<std::string> user_db_editor::DbGetAnswerQ(std::string s,int c, sqlite
                 strOut+=pResult[nIndex];
                 strOut+="\n";
                 ++nIndex;
+                c=c+nCol+1;
             
         }
 
@@ -146,6 +147,11 @@ std::queue<message_t> user_db_editor::DbGetMessage_tQ(std::string s,int ci,int c
 	  OneM.name=pResult[cn];
 	  OneM.message=pResult[cm];
 	  answer.push(OneM);
+	  
+	 ci+=nCol;
+	 cn+=nCol;
+	 cm+=nCol;
+	  
                 strOut+=pResult[ci];
 
                 strOut+=":";

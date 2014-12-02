@@ -197,7 +197,7 @@ error:
 }
 
 //show friend list
-int ClientCommand::LsfCommand( void ) const
+int ClientCommand::LsfCommand( void ) 
 {
   int retval = 0 ;
   char frdname[FRD_BUF_SIZE];
@@ -220,26 +220,40 @@ int ClientCommand::LsfCommand( void ) const
 }
 
 //show message list
-int ClientCommand::LsmCommand( void ) const
+int ClientCommand::LsmCommand( void ) 
 {
+  
   int retval = 0 ;
-  char msg[MSG_BUF_SIZE];
-  bzero( msg, sizeof(msg) );
+  
+  //  char msg[MSG_BUF_SIZE];
+  //  UserMsg userMsg;
+  //  strcpy(userMsg.sender, m_username.c_str());
+  //  bzero( msg, sizeof(msg) );
   if ( write( m_sockfd, COMMAND_LSM, strlen(COMMAND_LSM)) < 0)
     {
       perror( "write command" ) ;
-      goto error ;
+      //      goto error ;
     }
-  while( read( m_sockfd, msg, sizeof(msg) ) > 0 )
+
+  /*
+  while( read( m_sockfd, &userMsg, sizeof(userMsg) ) > 0 )
     {
-      printf("%s\n", msg);
-      bzero( msg, sizeof(msg) );
+      printf("(%s)", userMsg.sender);
+      printf("%s\n", userMsg.message);
+      //      bzero( msg, sizeof(msg) );
     }
+  
+  //  cout<< " commmand set" << endl;
  done:
   return retval ;
  error:
   retval = -1;
   goto done ;
+  */
+  cout <<" command sent" << endl;
+  return retval;
+
+
 }
 
 
