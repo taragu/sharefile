@@ -490,10 +490,10 @@ retry:
 	switch ( choice )
 	{
 	case 1 :
-		cmd = COMMAND_LOGIN ;
+		cmd == COMMAND_LOGIN ;
 		break ;
 	case 2 :
-		cmd = COMMAND_LOGON ;
+		cmd == COMMAND_LOGON ;
 		break ;
 	default:
 		cout << "Wrong selection" << endl ;
