@@ -493,8 +493,9 @@ int ClientCommand::manager( void )
 	int retval = 0 ;
 	char command[COMMAND_BUF_SIZE] ;
 	string cmd ="";
-	string file ="";
-	string user ="";
+	string file ;
+	string user ;
+	  char cmd_array[7];
 retry:
 	cout << "Please select:" << endl ;
 	cout << "1. Sign in" << endl ;
@@ -505,10 +506,16 @@ retry:
 	{
 
 	case 1 :
-	  cmd == COMMAND_LOGIN ;
+	  memcpy(cmd_array, COMMAND_LOGIN, sizeof(cmd_array));
+	  //	  cmd = COMMAND_LOGIN ;
+	  bzero(cmd_array, sizeof(cmd_array));
+	  cmd = (std::string) cmd_array;
 		break ;
 	case 2 :
-	  cmd == COMMAND_LOGON ;
+	  memcpy(cmd_array, COMMAND_LOGON, sizeof(cmd_array));
+	  bzero(cmd_array, sizeof(cmd_array));
+	  cmd = (std::string) cmd_array;
+	  //		cmd = COMMAND_LOGON ;
 		break ;
 	default:
 		cout << "Wrong selection" << endl ;
@@ -549,7 +556,7 @@ retry:
 		  {
 		    const char * str_array1 = str.c_str();
 		    char * cmd_array1 = (char*) malloc((end-start + 1) * sizeof(*cmd_array1));
-		    strncpy(cmd_array1, str_array1, end-start+1);
+		    memcpy(cmd_array1, str_array1, end-start+1);
 		    cmd = cmd_array1; //.copy( cmd_array1, sizeof(cmd_array1));
 		    //			cmd = str.substr( start, end - start ) ;
 			start = str.find_first_not_of( ' ', end ) ;
@@ -570,7 +577,7 @@ retry:
 		{
 		  const char * str_array2 = str.c_str();
 		  char * cmd_array2 = (char*) malloc((str.length()+1) * sizeof(*cmd_array2));
-		  strncpy(cmd_array2, str_array2, str.length());
+		  memcpy(cmd_array2, str_array2, str.length());
 		  cmd = cmd_array2; //.copy( cmd_array2, sizeof(cmd_array2));
 		    free(cmd_array2);
 		    //			cmd = str.substr( start, str.length()-1 ) ;
