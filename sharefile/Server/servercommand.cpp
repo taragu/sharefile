@@ -94,8 +94,10 @@ int ServerCommand::LsmCommand ( ) const
     queue<message_t> MQ;
     MQ=ude.user_db_editor::DbGetMessageQ(m_username, db_user);
     //std::cout<<"MQ"<<(MQ.front()).isRequest<<(MQ.front()).name<<(MQ.front()).message<<std::endl;
-
-
+    while(!MQ.empty()){
+      cout << (MQ.front()).isRequest<<" "<<(MQ.front()).name<<" "<<(MQ.front()).message << endl;
+      MQ.pop();
+    }
   return 0;
 }
 
@@ -104,7 +106,11 @@ int ServerCommand::LsfCommand ( ) const
   // see above
   queue<string> FQ;
   FQ=ude.user_db_editor::DbGetFrQ(m_username, db_user);
-  
+  while(!FQ.empty()){
+   
+    cout << FQ.front() << endl;
+    FQ.pop();
+  }
   return 0;
 }
 
