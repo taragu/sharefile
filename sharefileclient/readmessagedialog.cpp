@@ -1,5 +1,7 @@
 #include "readmessagedialog.h"
 #include "ui_readmessagedialog.h"
+#include "clientcommandmanager.h"
+#include "clientcommand.h"
 
 ReadMessageDialog::ReadMessageDialog(QWidget *parent) :
     QDialog(parent),
@@ -24,7 +26,11 @@ void ReadMessageDialog::setIsARequest(bool _isARequest) {
 void ReadMessageDialog::on_buttonBox_accepted()
 {
     if (isARequest) {
-        //TODO: CALL ACCEPT FRIEND REQUEST METHOD IN CLIENTCOMMAND
+        // SEND FRIEND REQUEST
+        QByteArray receiverByteArray = ui->sendername_lineedit->text().toUtf8();
+        const char* receiver = receiverByteArray.constData();
+        char message [] = "friend\0";
+        ClientCommandManager::clientCommand->SendCommand((std::string) receiver, (std::string) message);
     }
     //if this is a normal message, nothing will happen when user clicks 'ok'
 }
@@ -32,7 +38,7 @@ void ReadMessageDialog::on_buttonBox_accepted()
 void ReadMessageDialog::on_decline_button_clicked()
 {
     if (isARequest) {
-        //TODO: CALL DECLINE FRIEND REQUEST METHOD IN CLIENTCOMMAND
+        //nothing happens; the request will still preserved in the database so that in the future the user can still accept the friend request
     }
     //if this is a normal message, the decline button will be hidden
 }

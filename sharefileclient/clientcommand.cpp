@@ -2,6 +2,7 @@
 #include <QDebug>
 #define COMMAND_BUF_SIZE  256
 #define END 1234
+
 using namespace std ;
 
 ClientCommand::ClientCommand( const char *ip, int port )
@@ -395,5 +396,94 @@ done:
 error:
     retval = -1 ;
     goto done ;
+}
+
+//show friend list
+std::set<std::string> ClientCommand::LsfCommand( void ) const
+{
+//  int retval = 0 ;
+    std::set<std::string> returnSet;
+  char frdname[FRD_BUF_SIZE];
+  bzero( frdname, sizeof(frdname) );
+  if ( write( m_sockfd, COMMAND_LSF, strlen(COMMAND_LSF)) < 0)
+    {
+      perror( "write command" ) ;
+      goto error ;
+    }
+  while( read( m_sockfd, frdname, sizeof(frdname) ) > 0 )
+    {
+//      printf("%s\n", frdname);
+      returnSet.insert((std::string) (frdname));
+      bzero( frdname, sizeof(frdname) );
+    }
+ done:
+//  return retval ;
+  return returnSet;
+ error:
+//  retval = -1;
+  goto done ;
+}
+
+
+//show message list
+std::set<std::string> ClientCommand::LsmCommand( void ) const
+{
+//  int retval = 0 ;
+    std::set<std::string> returnSet;
+  char msg[MSG_BUF_SIZE];
+  bzero( msg, sizeof(msg) );
+  if ( write( m_sockfd, COMMAND_LSM, strlen(COMMAND_LSM)) < 0)
+    {
+      perror( "write command" ) ;
+      goto error ;
+    }
+  while( read( m_sockfd, msg, sizeof(msg) ) > 0 )
+    {
+//      printf("%s\n", msg);
+      returnSet.insert((std::string) (msg));
+      bzero( msg, sizeof(msg) );
+    }
+ done:
+//  return retval ;
+  return returnSet;
+ error:
+//  retval = -1;
+  goto done ;
+}
+
+
+// send command
+int ClientCommand::SendCommand( string user, string msg )
+{
+  int retval = 0;
+  char command[COMMAND_BUF_SIZE];
+  bzero( command, sizeof(command) );
+  strcpy( command, COMMAND_SEND) ;
+  char szuser[256];
+  char szmsg[MSG_BUF_SIZE];
+  bzero( szuser, sizeof(szuser ) );
+  bzero( szmsg, sizeof(szmsg) );
+  strcpy( szuser, user.c_str() ) ;
+  strcpy( szmsg, msg.c_str() ) ;
+  if ( write( m_sockfd, command, strlen(command) ) < 0 )
+    {
+      perror( "write send command" ) ;
+      goto error;
+    }
+  if ( write( m_sockfd, szuser, sizeof(szuser) ) < 0 )
+    {
+      perror( " send user " ) ;
+      goto error;
+    }
+  if ( write( m_sockfd, szmsg, sizeof(szmsg) ) < 0 )
+    {
+      perror( " send message" );
+      goto error;
+    }
+ done:
+  return retval ;
+ error:
+  retval = -1 ;
+  goto done;
 }
 

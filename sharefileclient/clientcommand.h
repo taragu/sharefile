@@ -21,10 +21,15 @@ using namespace std ;
 
 #define RECV_BUF_SIZE         4096
 #define SEND_BUF_SIZE         4096
+#define MSG_BUF_SIZE          4096
+#define FRD_BUF_SIZE          256
+
 
 typedef struct sockaddr SA ;
 
 #define COMMAND_LS            "ls"
+#define COMMAND_LSF           "lsf"
+#define COMMAND_LSM           "lsm"
 #define COMMAND_CD            "cd"
 #define COMMAND_GET           "get"
 #define COMMAND_PUT           "put"
@@ -34,6 +39,7 @@ typedef struct sockaddr SA ;
 #define COMMAND_LOGON         "logon"
 #define COMMAND_SHARE         "share"
 #define COMMAND_RM            "rm"
+#define COMMAND_SEND          "send"
 
 class ClientCommand
 {
@@ -45,12 +51,17 @@ class ClientCommand
   int PutCommand( string fileName ) const ;
   int HelpCommand( void ) const ;
 //  int LsCommand( void ) const ;
+//  int LsfCommand( void ) const ;
+//  int LsmCommand( void ) const;
+  std::set<std::string> LsfCommand( void ) const ;
+  std::set<std::string> LsmCommand( void ) const;
   std::set<std::string> LsCommand( void ) const ;
   int CdCommand( string path ) ;
   int LoginCommand( std::string username, std::string password ) ;
   int LogonCommand( std::string username, std::string password ) ;
   int ShareCommand( string file, string user ) ;
   int RmCommand( string strfilename ) ;
+  int SendCommand(string user, string msg) ;
   int manager( void ) ;
 
  private:

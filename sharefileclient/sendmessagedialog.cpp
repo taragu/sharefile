@@ -1,5 +1,7 @@
 #include "sendmessagedialog.h"
 #include "ui_sendmessagedialog.h"
+#include "clientcommandmanager.h"
+#include "clientcommand.h"
 
 SendMessageDialog::SendMessageDialog(QWidget *parent) :
     QDialog(parent),
@@ -22,7 +24,8 @@ void SendMessageDialog::on_buttonBox_accepted()
     const char* receiver = receiverByteArray.constData();
     QByteArray messageByteArray = ui->message_textedit->toPlainText().toUtf8();
     const char* message = messageByteArray.constData();
-    //TODO call client command to send a message
+    // call client command to send a message
+    ClientCommandManager::clientCommand->SendCommand(receiver, message);
 }
 
 void SendMessageDialog::on_unfriend_button_clicked()
