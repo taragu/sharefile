@@ -36,8 +36,8 @@ using namespace std ;
 #define COMMAND_SHARE     "share"
 #define COMMAND_RM        "rm"
 #define COMMAND_SEND      "send"
-#define COMMAND_LSM       "lsm"
-#define COMMAND_LSF       "lsf"
+#define COMMAND_LSM       "mls"
+#define COMMAND_LSF       "fls"
 
 #define RECV_BUF_SIZE     4096
 #define SEND_BUF_SIZE     4096
@@ -52,11 +52,11 @@ class ServerCommand
   int GetCommand( const char *fileName ) const ;
   int PutCommand( const char *fileName ) const ;
   int LsCommand( void ) const ;
-  //  int LsmCommand( void ) const ;
-  //  int LsfCommand( void ) const ;
-  
   int LsmCommand( void )  ;
   int LsfCommand( void )  ;
+  
+  // int LsmCommand( void )  ;
+  // int LsfCommand( void )  ;
 
   int CdCommand( const char *path ) ;
   int HelpCommand( void ) const ;
@@ -87,6 +87,14 @@ class ServerCommand
       return strcmp( username, that.username ) < 0 ;
     }
   } ;
+
+  struct UserMsg
+  {
+    char sender[256];
+    char message[MSG_BUF_SIZE];
+  };
+
+
   bool           m_bstart ;     // server status
   int            m_sockfd ;     // socket
   string         m_userpath ;   // user directory

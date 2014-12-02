@@ -25,6 +25,7 @@ void *clientthread( void *arg )
         // do command
 		if ( !strncmp( COMMAND_LS, commandbuf, strlen(COMMAND_LS) ) )
 		{
+		  cout<< "ls works" << endl;
 			if ( -1 == command.LsCommand( ) )
 			{
 				goto error ;
@@ -32,6 +33,7 @@ void *clientthread( void *arg )
 		}
 		else if ( !strncmp( COMMAND_LSF, commandbuf, strlen(COMMAND_LSF) ) )
 		{
+		  cout<< "lsf works " << endl;
 			if ( -1 == command.LsfCommand( ) )
 			{
 				goto error ;
@@ -39,6 +41,7 @@ void *clientthread( void *arg )
 		}
 		else if ( !strncmp( COMMAND_LSM, commandbuf, strlen(COMMAND_LSM) ) )
 		{
+		  cout<< " it is the command " << endl;
 			if ( -1 == command.LsmCommand( ) )
 			{
 				goto error ;
@@ -120,6 +123,7 @@ done:
 	return (void*)retval ;
 error:
 	retval = -1 ;
+	//	cout << "wrong command" << endl;
 	goto done ;
 }
 
