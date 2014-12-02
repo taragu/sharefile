@@ -13,6 +13,9 @@ get <filename>	     DOWNLOAD FILE
 help		     SHOW GUIDANCE
 put <filename>	     UPLOAD FILE
 ls  		     LIST FILES IN CURRENT DIRECTORY
+lsf 		     SHOW LIST OF FRIENDS
+lsm		     SHOW LIST OF MESSAGES
+send username msg    SEND MESSAGE OR FRIEND REQUEST
 cd <directory>	     SWITCH DIRECTORY
 share filename user  SHARE FILE TO A SPECIFIC USER
 rm filename    	     ROMOVE FILE
