@@ -1,7 +1,7 @@
 #include "servercommand.h"
 #include "user_db_editor.h"
 #include <sqlite3.h>
-#include <sstring>
+#include <sstream>
 #define END 1234
 using namespace std ;
 
@@ -84,15 +84,17 @@ int ServerCommand::LsCommand( void ) const
 }
 
 //list of message
-int ServerCommand::LsmCommand ( ) const
+//int ServerCommand::LsmCommand ( ) const
+int ServerCommand::LsmCommand ( ) 
+
 {
   // To be done by database
   // I guess it's looking into database and get the result
   // this class has fields like m_username that might be useful
   // you can check the header file
-  
+  std::string username=m_username;  
     queue<message_t> MQ;
-    MQ=ude.user_db_editor::DbGetMessageQ(m_username, db_user);
+    MQ=ude.user_db_editor::DbGetMessageQ(username, db_user);
     //std::cout<<"MQ"<<(MQ.front()).isRequest<<(MQ.front()).name<<(MQ.front()).message<<std::endl;
     while(!MQ.empty()){
       stringstream MQs;
@@ -104,7 +106,9 @@ int ServerCommand::LsmCommand ( ) const
   return 0;
 }
 
-int ServerCommand::LsfCommand ( ) const
+//int ServerCommand::LsfCommand ( ) const
+int ServerCommand::LsfCommand ( ) 
+
 {
   // see above
   queue<string> FQ;
@@ -409,8 +413,8 @@ int ServerCommand::SendCommand( void )
     // DATABASE TO BE DONE
     //
     //
-     string users=user;
-  string messages=message;
+    //string users=user;
+    //string messages=message;
   bool isRequest;
   if(strcmp(message,"friend_request")==0){isRequest=1;}
   else{isRequest=0;}
@@ -431,13 +435,14 @@ int ServerCommand::SendCommand( void )
 bool ServerCommand::ApproveAddFriendCommand(std::string Name2){
   ude.user_db_editor::DbAddFriend(m_username, Name2, db_user);
   ude.user_db_editor::DbAddFriend(Name2, m_username, db_user);
+  return 0;
 }
 
 
-bool ServerCommand::RemoveFriendCommand(std::string receiverName){
+bool ServerCommand::RemoveFriendCommand(std::string receivername){
   ude.user_db_editor::DbRmFriend(m_username, receivername, db_user);
   ude.user_db_editor::DbRmFriend(receivername,m_username, db_user);
-
+  return 0;
 }
 
 

@@ -52,8 +52,12 @@ class ServerCommand
   int GetCommand( const char *fileName ) const ;
   int PutCommand( const char *fileName ) const ;
   int LsCommand( void ) const ;
-  int LsmCommand( void ) const ;
-  int LsfCommand( void ) const ;
+  //  int LsmCommand( void ) const ;
+  //  int LsfCommand( void ) const ;
+  
+  int LsmCommand( void )  ;
+  int LsfCommand( void )  ;
+
   int CdCommand( const char *path ) ;
   int HelpCommand( void ) const ;
   int LoginCommand( void ) ;   // login on 
@@ -62,6 +66,7 @@ class ServerCommand
   int RmCommand( string filename ) ; // delete
   int SendCommand( void ); // send request or message
   bool ApproveAddFriendCommand(string Name2);//add friend
+  bool RemoveFriendCommand(std::string receivername);
   
   //database
   sqlite3 * db_user;
