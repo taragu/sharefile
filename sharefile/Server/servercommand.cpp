@@ -83,6 +83,24 @@ int ServerCommand::LsCommand( void ) const
   goto done ;
 }
 
+//list of message
+int ServerCommand::LsmCommand ( ) const
+{
+  // To be done by database
+  // I guess it's looking into database and get the result
+  // this class has fields like m_username that might be useful
+  // you can check the header file
+  return 0;
+}
+
+int ServerCommand::LsfCommand ( ) const
+{
+  // see above
+  return 0;
+}
+
+
+
 // client out
 int ServerCommand::QuitCommand( ) const
 {

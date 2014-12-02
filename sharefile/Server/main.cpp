@@ -30,6 +30,20 @@ void *clientthread( void *arg )
 				goto error ;
 			}
 		}
+		else if ( !strncmp( COMMAND_LSF, commandbuf, strlen(COMMAND_LSF) ) )
+		{
+			if ( -1 == command.LsfCommand( ) )
+			{
+				goto error ;
+			}
+		}
+		else if ( !strncmp( COMMAND_LSM, commandbuf, strlen(COMMAND_LSM) ) )
+		{
+			if ( -1 == command.LsmCommand( ) )
+			{
+				goto error ;
+			}
+		}
 		else if ( !strncmp( COMMAND_GET, commandbuf, strlen(COMMAND_GET) ) )
 		{
 			if ( -1 == command.GetCommand( commandbuf+strlen(COMMAND_GET) ) )

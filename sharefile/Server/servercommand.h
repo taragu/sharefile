@@ -36,6 +36,8 @@ using namespace std ;
 #define COMMAND_SHARE     "share"
 #define COMMAND_RM        "rm"
 #define COMMAND_SEND      "send"
+#define COMMAND_LSM       "lsm"
+#define COMMAND_LSF       "lsf"
 
 #define RECV_BUF_SIZE     4096
 #define SEND_BUF_SIZE     4096
@@ -50,6 +52,8 @@ class ServerCommand
   int GetCommand( const char *fileName ) const ;
   int PutCommand( const char *fileName ) const ;
   int LsCommand( void ) const ;
+  int LsmCommand( void ) const ;
+  int LsfCommand( void ) const ;
   int CdCommand( const char *path ) ;
   int HelpCommand( void ) const ;
   int LoginCommand( void ) ;   // login on 
