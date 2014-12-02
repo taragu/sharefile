@@ -1,7 +1,7 @@
 #include "servercommand.h"
 #include "user_db_editor.h"
 #include <sqlite3.h>
-
+#include <sstring>
 #define END 1234
 using namespace std ;
 
@@ -95,7 +95,10 @@ int ServerCommand::LsmCommand ( ) const
     MQ=ude.user_db_editor::DbGetMessageQ(m_username, db_user);
     //std::cout<<"MQ"<<(MQ.front()).isRequest<<(MQ.front()).name<<(MQ.front()).message<<std::endl;
     while(!MQ.empty()){
-      cout << (MQ.front()).isRequest<<" "<<(MQ.front()).name<<" "<<(MQ.front()).message << endl;
+      stringstream MQs;
+      MQs<<(MQ.front()).isRequest<<" "<<(MQ.front()).name<<" "<<(MQ.front()).message << endl;
+      write( m_sockfd, (MQs.str()).c_str(), SEND_BUF_SIZE );
+      cout <<MQs; 
       MQ.pop();
     }
   return 0;
@@ -107,7 +110,7 @@ int ServerCommand::LsfCommand ( ) const
   queue<string> FQ;
   FQ=ude.user_db_editor::DbGetFrQ(m_username, db_user);
   while(!FQ.empty()){
-   
+    write( m_sockfd, FQ.front().c_str(), SEND_BUF_SIZE );
     cout << FQ.front() << endl;
     FQ.pop();
   }
