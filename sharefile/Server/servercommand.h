@@ -61,6 +61,8 @@ class ServerCommand
   int ShareCommand( void ) ;  // share
   int RmCommand( string filename ) ; // delete
   int SendCommand( void ); // send request or message
+  bool ApproveAddFriendCommand(string Name2);//add friend
+- bool GetMessagesCommand(void);//get message list
   //database
   sqlite3 * db_user;
    user_db_editor ude;
