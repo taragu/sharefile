@@ -409,7 +409,7 @@ int ServerCommand::SendCommand( void )
     // DATABASE TO BE DONE
     //
     //
-     string tousers=touser;
+     string users=user;
   string messages=message;
   bool isRequest;
   if(strcmp(message,"friend_request")==0){isRequest=1;}
