@@ -26,8 +26,8 @@ using namespace std ;
 typedef struct sockaddr SA ;
 
 #define COMMAND_LS            "ls"
-#define COMMAND_LSF           "fls"
-#define COMMAND_LSM           "mls"
+#define COMMAND_LSF           "lsf"
+#define COMMAND_LSM           "lsm"
 #define COMMAND_CD            "cd"
 #define COMMAND_GET           "get"
 #define COMMAND_PUT           "put"
@@ -48,9 +48,9 @@ public:
 	int GetCommand( string file, string localpath = "" ) const ;
 	int PutCommand( string fileName ) const ;
 	int HelpCommand( void ) const ;
-	int LsCommand( void ) const;
-	int LsfCommand( void ) ;
-	int LsmCommand( void ) ;
+	int LsCommand( void ) const ;
+	int LsfCommand( void ) const ;
+	int LsmCommand( void ) const;
 	int CdCommand( string path ) ;
 	int LoginCommand( void ) ;
 	int LogonCommand( void ) ;
@@ -76,13 +76,6 @@ private:
 			return strcmp( username, that.username ) < 0 ;
 		}
 	} ;
-	
-	struct UserMsg
-	{
-	  char sender[256];
-	  char message[MSG_BUF_SIZE];
-	};
-
 	int  m_sockfd ;   // socket
 	bool m_bstart ;   // server status
 	UserData m_user ; // user info
