@@ -391,6 +391,12 @@ int ServerCommand::SendCommand( void )
     // DATABASE TO BE DONE
     //
     //
+     string tousers=touser;
+  string messages=message;
+  bool isRequest;
+  if(strcmp(message,"friend_request")==0){isRequest=1;}
+  else{isRequest=0;}
+  ude.DbAddMessage(user, m_username,isRequest, message, db_user);
     cout << message << endl;
 
    
@@ -401,6 +407,24 @@ int ServerCommand::SendCommand( void )
     retval = -1 ;
     goto done;
   
+}
+
+bool ServerCommand::GetMessagesCommand(void){
+    std::queue<message_t> MQ;
+    MQ=ude.user_db_editor::DbGetMessageQ(m_username, db_user);
+    //std::cout<<"MQ"<<(MQ.front()).isRequest<<(MQ.front()).name<<(MQ.front()).message<<std::endl;
+}
+
+bool ServerCommand::ApproveAddFriendCommand(std::string Name2){
+  ude.user_db_editor::DbAddFriend(m_username, Name2, db_user);
+  ude.user_db_editor::DbAddFriend(Name2, m_username, db_user);
+}
+
+
+bool ServerCommand::RemoveFriendCommand(std::string receiverName){
+  ude.user_db_editor::DbRmFriend(m_username, receivername, db_user);
+  ude.user_db_editor::DbRmFriend(receivername,m_username, db_user);
+
 }
 
 
