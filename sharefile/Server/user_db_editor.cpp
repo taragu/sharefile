@@ -79,7 +79,7 @@ std::queue<std::string> user_db_editor::DbGetAnswerQ(std::string s,int c, sqlite
             //std::cout<<"NotOK\n";
             return answer;
         }
-       std::cout<<"R"<<nRow<<"C"<<nCol<<"\n";
+       //std::cout<<"R"<<nRow<<"C"<<nCol<<"\n";
         int nIndex = nCol;
         std::string strOut;
         for(int i=0;i<nRow;i++)
