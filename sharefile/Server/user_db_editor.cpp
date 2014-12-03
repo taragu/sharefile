@@ -42,7 +42,7 @@ bool user_db_editor::DbEditor(std::string s, sqlite3 * db)
      fprintf(stderr, "%s, SQL error: %s\n", s.c_str(),zErrMsg);
      sqlite3_free(zErrMsg);
    }else{
-     fprintf(stdout, "%s successfully\n", s.c_str());
+    // fprintf(stdout, "%s successfully\n", s.c_str());
    }
    //sqlite3_close(db_user);
    return 1;
@@ -79,7 +79,7 @@ std::queue<std::string> user_db_editor::DbGetAnswerQ(std::string s,int c, sqlite
             //std::cout<<"NotOK\n";
             return answer;
         }
-       std::cout<<"R"<<nRow<<"C"<<nCol<<"\n";
+       //std::cout<<"R"<<nRow<<"C"<<nCol<<"\n";
         int nIndex = nCol;
         std::string strOut;
         for(int i=0;i<nRow;i++)
@@ -757,14 +757,14 @@ if( rc_user ){
     fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db_user));
     exit(0);
   }else{
-    fprintf(stdout, "Opened database successfully\n");
+    //fprintf(stdout, "Opened database successfully\n");
   }
 
 if( rc_file ){
     fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db_file));
     exit(0);
   }else{
-    fprintf(stdout, "Opened database successfully\n");
+    //fprintf(stdout, "Opened database successfully\n");
   }
 
   //Create SQL statement
@@ -801,7 +801,7 @@ const char * sql_user = "CREATE TABLE UsersTable("  \
      fprintf(stderr, "SQL error: %s\n", zErrMsg);
      sqlite3_free(zErrMsg);
    }else{
-     fprintf(stdout, "Tables created successfully\n");
+     //fprintf(stdout, "Tables created successfully\n");
    }
    std::string sql = "INSERT INTO UsersTable (id,username,auth_token) " \
        "VALUES (0, 'TEST', 'TEST' ); ";
@@ -929,7 +929,7 @@ int user_db_editor::DbPrint(std::string DbName)
     exit(0);
   }
   else{
-    fprintf(stderr, "Opened database successfully\n");
+    //fprintf(stderr, "Opened database successfully\n");
   }
   /* Create merged SQL statement */
 
@@ -942,7 +942,7 @@ int user_db_editor::DbPrint(std::string DbName)
      /*sqlite3_free(zErrMsg);*/
    }
    else{
-     fprintf(stdout, "Operation done successfully\n");
+    // fprintf(stdout, "Operation done successfully\n");
    }
    sqlite3_close(db_user);
 
