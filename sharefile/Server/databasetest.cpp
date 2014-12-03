@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
     ude.DbAddFriend("Ah", "Bee", db_user);
     ude.DbAddFriend("Ah", "Cece", db_user);
     ude.DbAddMessage("Ah", "Bee", 0,"Hi!",db_user);
+    ude.DbAddMessage("Ah", "Bee", 0,"Hello!",db_user);
 
     //close databases
     //std::cout<<ude.user_db_editor::DbGetSize(db_user);
@@ -54,13 +55,23 @@ int main(int argc, char *argv[])
     ude.user_db_editor::DbAddFile( "Bee", "pathB", "FileB", db_user);
     std::cout<<"File1's path"<<ude.user_db_editor::DbGetPath("Ah",  "File1", db_user)<<std::endl;
     std::cout<<"File1's path"<<ude.user_db_editor::DbGetPathS("Bee",  "File1", db_user)<<std::endl;
-    ude.user_db_editor::DbGetFrQ("Ah",db_user);
+    std::queue<std::string> FQ;
+
+    FQ=ude.user_db_editor::DbGetFrQ("Ah",db_user);
+    std::cout<<"FQ"<<FQ.front();
+    FQ.pop();
+    std::cout<<"FQ"<<FQ.front();
+    FQ.pop();
+    //std::cout<<"FQ"<<FQ.front();
+    
     ude.user_db_editor::DbRmFriend("Ah","CeCe",db_user);
     ude.user_db_editor::DbRmFile("Ah","File1",db_user);
     std::queue<message_t> MQ;
+
     MQ=ude.user_db_editor::DbGetMessageQ("Ah", db_user);
     std::cout<<"MQ"<<(MQ.front()).isRequest<<(MQ.front()).name<<(MQ.front()).message<<std::endl;
-
+    MQ.pop();
+    std::cout<<"MQ"<<(MQ.front()).isRequest<<(MQ.front()).name<<(MQ.front()).message<<std::endl;
     sqlite3_close(db_user);
     //sqlite3_close(db_file);
     ude.user_db_editor::DbPrint("UsersTable");
