@@ -445,7 +445,8 @@ std::set<std::string> ClientCommand::LsmCommand( void ) const
       strcat(thisMessage, userMsg.sender);
       strcat(thisMessage,")");
       strcat(thisMessage,userMsg.message);
-      returnSet.insert(thisMessage);
+      std::string messageString = string(thisMessage);
+      returnSet.insert(messageString);
       //bzero(userMsg.sender, sizeof(userMsg.sender));
       //bzero(userMsg.message, sizeof(userMsg.message));
     }

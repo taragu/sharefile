@@ -236,6 +236,19 @@
      <string>Delete Selected Files</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="test_send_button">
+    <property name="geometry">
+     <rect>
+      <x>688</x>
+      <y>320</y>
+      <width>181</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TEST: send message</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">

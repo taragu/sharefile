@@ -350,3 +350,9 @@ void MainWindow::on_friends_list_itemClicked(QListWidgetItem *item)
     sendMessageDialog->setModal(true);
     sendMessageDialog->exec();
 }
+
+void MainWindow::on_test_send_button_clicked()
+{
+    sendMessageDialog->setModal(true);
+    sendMessageDialog->exec();
+}

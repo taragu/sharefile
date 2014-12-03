@@ -61,6 +61,8 @@ private slots:
 
     void on_friends_list_itemClicked(QListWidgetItem *item);
 
+    void on_test_send_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     AddAFriendDialog * addAFriendDialog;

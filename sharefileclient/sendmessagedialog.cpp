@@ -27,12 +27,12 @@ void SendMessageDialog::on_buttonBox_accepted()
     // call client command to send a message
     int retVal = ClientCommandManager::clientCommand->SendCommand(receiver, message);
     if (retVal == -1) {
-        char message[] = "SendCommand error\0";
-        changeMessage((std::string) message);
+//        char message[] = "SendCommand error\0";
+        changeMessage( "SendCommand error\0");
     }
     if (retVal == 0) {
-        char message[] = "message sent!\0";
-        changeMessage((std::string) message);
+//        char message[] = "message sent!\0";
+        changeMessage("message sent!\0");
     }
 }
 
