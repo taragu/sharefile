@@ -40,8 +40,8 @@
    <widget class="QPushButton" name="upload_button">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>50</y>
+      <x>530</x>
+      <y>40</y>
       <width>81</width>
       <height>31</height>
      </rect>
@@ -118,8 +118,8 @@
    <widget class="QLineEdit" name="browse_path_lineedit">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>50</y>
+      <x>230</x>
+      <y>40</y>
       <width>281</width>
       <height>31</height>
      </rect>
@@ -128,8 +128,8 @@
    <widget class="QPushButton" name="browse_button">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>50</y>
+      <x>110</x>
+      <y>40</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -247,6 +247,19 @@
     </property>
     <property name="text">
      <string>TEST: send message</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="greetings_label">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>90</y>
+      <width>431</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Hi there! First click on &quot;Enter IP&quot;, then &quot;Sign up&quot; or &quot;Sign in&quot;</string>
     </property>
    </widget>
   </widget>

@@ -73,6 +73,7 @@ public:
     int LoginCommand( std::string username, std::string password ) ;
     int LogonCommand( std::string username, std::string password ) ;
 
+    std::string getUsername();
     // send yuzhou friend_request
     // send yuzhou howareyou
 private:

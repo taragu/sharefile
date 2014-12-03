@@ -1,5 +1,6 @@
 #include "clientcommand.h"
 #include <QDebug>
+#include <unistd.h>
 #define COMMAND_BUF_SIZE  256
 #define END 1234
 using namespace std ;
@@ -108,86 +109,86 @@ error:
 //removing friend request
 int ClientCommand::UnCommand( string __name)
 {
-  int retval = 0;
-  int replay = 0;
-  char command[COMMAND_BUF_SIZE];
-  bzero(command, sizeof(command));
-  strcpy( command, COMMAND_AP) ;
-  char frdname[256];
-  bzero(frdname, sizeof(frdname));
-  strcpy(frdname, __name.c_str());
-
-  if( write( m_sockfd, command,  COMMAND_BUF_SIZE) < 0 )
-    {
-      perror("write un command") ;
-      goto error;
-    }
-  if( write( m_sockfd, frdname, sizeof(frdname)) < 0 )
-    {
-      perror(" send friend name" );
-      goto error;
-    }
-  if ( read( m_sockfd, &replay, sizeof(replay) ) < 0 )
-    {
-      perror(" read" );
-      goto error;
-    }
-  if( replay == 0 )
-    {
-      cout << " Friend " << frdname<< " deleted sucessfully!" << endl;
-    }
-  else
-    {
-      cout <<" command failed" << endl;
-    }
-
- done:
-  return retval;
- error:
-  retval = -1 ;
-  goto done;
+int retval = 0;
+int replay = 0;
+char command[COMMAND_BUF_SIZE];
+bzero(command, sizeof(command));
+strcpy( command, COMMAND_UN) ;
+char frdname[256];
+bzero(frdname, sizeof(frdname));
+strcpy(frdname, __name.c_str());
+cout<< frdname << endl;
+if( write( m_sockfd, command, COMMAND_BUF_SIZE) < 0 )
+{
+perror("write un command") ;
+goto error;
 }
+if( write( m_sockfd, frdname, sizeof(frdname)) < 0 )
+{
+perror(" send friend name" );
+goto error;
+}
+if ( read( m_sockfd, &replay, sizeof(replay) ) < 0 )
+{
+perror(" read" );
+goto error;
+}
+cout<< "command sent" <<endl;
+if( replay == 0 )
+{
+cout << " Friend " << frdname<< " deleted sucessfully!" << endl;
+}
+else
+{
+cout <<" command failed" << endl;
+}
+done:
+return retval;
+error:
+retval = -1 ;
+goto done;
+}
+
+
 //approving friend request
 int ClientCommand::ApCommand( string _name)
 {
-  int retval = 0;
-  int replay = 0;
-  char command[COMMAND_BUF_SIZE];
-  bzero(command, sizeof(command));
-  strcpy( command, COMMAND_AP) ;
-  char frdname[256];
-  bzero(frdname, sizeof(frdname));
-  strcpy(frdname, _name.c_str());
-
-  if( write( m_sockfd, command,  COMMAND_BUF_SIZE) < 0 )
-    {
-      perror("write ap command") ;
-      goto error;
-    }
-  if( write( m_sockfd, frdname, sizeof(frdname)) < 0 )
-    {
-      perror(" send friend name" );
-      goto error;
-    }
-  if ( read( m_sockfd, &replay, sizeof(replay) ) < 0 )
-    {
-      perror(" read" );
-      goto error;
-    }
-  if( replay == 0 )
-    {
-      cout << " Friend " << frdname<< " added sucessfully!" << endl;
-    }
-  else
-    {
-      cout <<" command failed" << endl;
-    }
-
- done:
-  return retval;
- error:
-  retval = -1 ;
-  goto done;
+int retval = 0;
+int replay = 0;
+char command[COMMAND_BUF_SIZE];
+bzero(command, sizeof(command));
+strcpy( command, COMMAND_AP) ;
+char frdname[256];
+bzero(frdname, sizeof(frdname));
+strcpy(frdname, _name.c_str());
+if( write( m_sockfd, command, COMMAND_BUF_SIZE) < 0 )
+{
+perror("write ap command") ;
+goto error;
+}
+if( write( m_sockfd, frdname, sizeof(frdname)) < 0 )
+{
+perror(" send friend name" );
+goto error;
+}
+if ( read( m_sockfd, &replay, sizeof(replay) ) < 0 )
+{
+perror(" read" );
+goto error;
+}
+if( replay == 0 )
+{
+cout << " Friend " << frdname<< " added sucessfully!" << endl;
+}
+else
+{
+cout <<" command failed" << endl;
+}
+done:
+return retval;
+error:
+retval = -1 ;
+goto done;
 }
 
 
@@ -229,10 +230,13 @@ int ClientCommand::PutCommand( string fileName ) const
         perror( "open" ) ;
         goto error ;
     }
+    //    unsigned int sleep_ms= 500;
     while ( (rbyte = read( fd, sendbuf, sizeof(sendbuf) )) >= 0 )
     {
+      usleep(2000);
         if ( write( m_sockfd, sendbuf, rbyte ) < 0 )
         {
+	 
             perror( "write" ) ;
             goto error ;
         }
@@ -286,34 +290,33 @@ error:
 }
 
 //show friend list
-std::set<std::string> ClientCommand::LsfCommand( void ) const
+std::set<std::string>  ClientCommand::LsfCommand( void ) const
 {
-  std::set<std::string> returnSet;
-  //  int retval = 0 ;
-  char frdname[MSG_BUF_SIZE];
-  bzero( frdname, sizeof(frdname) );
-  if ( write( m_sockfd, COMMAND_LSF, strlen(COMMAND_LSF)) < 0)
-    {
-      perror( "write command" ) ;
-      goto error ;
-    }
-  while( read( m_sockfd, frdname, sizeof(frdname) ) > 0 )
-    {
-        if ( END == *(int*)&frdname )
-           {
-                    break ;
-                              }
-
-                                //      cout << frdname << endl;
-        bzero( frdname, sizeof(frdname) );
-        returnSet.insert((std::string) (frdname));
-      }
-   done:
-    return returnSet ;
-   error:
-    //  retval = -1;
-    goto done ;
-  }
+//int retval = 0 ;
+    std::set<std::string> returnSet;
+char frdname[RECV_BUF_SIZE];
+bzero( frdname, sizeof(frdname) );
+if ( write( m_sockfd, COMMAND_LSF, COMMAND_BUF_SIZE) < 0)
+{
+perror( "write command" ) ;
+goto error ;
+}
+while( read( m_sockfd, frdname, sizeof(frdname) ) > 0 )
+{
+if ( END == *(int*)frdname )
+{
+break ;
+}
+//cout << frdname << endl;
+//bzero( frdname, sizeof(frdname) );
+returnSet.insert(frdname);
+}
+done:
+return returnSet ;
+error:
+//retval = -1;
+goto done ;
+}
 
 
 //show message list
@@ -342,8 +345,8 @@ std::set<std::string> ClientCommand::LsmCommand( void ) const
       strcat(thisMessage,userMsg.message);
       std::string messageString = string(thisMessage);
       returnSet.insert(messageString);
-        qDebug("inserting into returnSet in LsmCommand: ");
-        qDebug(messageString.c_str()); //TODO THIS IS NOT PRINTED OUT!!!!!!!!!!!!!!!!!!
+//        qDebug("inserting into returnSet in LsmCommand: ");
+//        qDebug(messageString.c_str()); //TODO THIS IS NOT PRINTED OUT!!!!!!!!!!!!!!!!!!
       //      cout << "( "<< userMsg.sender << " ): " << userMsg.message << endl;
       //      bzero(userMsg.sender, sizeof(userMsg.sender));
       //      bzero(userMsg.message, sizeof(userMsg.message));
@@ -597,3 +600,6 @@ int ClientCommand::SendCommand( string user, string msg )
   goto done;
 }
 
+std::string ClientCommand::getUsername(){
+    return m_user.username;
+}

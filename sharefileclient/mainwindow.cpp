@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     sendMessageDialog = new SendMessageDialog();
     readMessageDialog = new ReadMessageDialog();
     attach(errorPopup); //IMPORTANT!!! observer pattern
+    ui->test_send_button->hide();
 }
 
 void MainWindow::destroyAll(){
@@ -214,8 +215,8 @@ void MainWindow::refresh_serverfiles_list() {
          QString qstr = QString::fromStdString(thisFile);
          ui->serverfiles_list->addItem(qstr);
     }
-    char message[] = "server files refreshed!\0";
-    changeMessage((std::string) message);
+//    char message[] = "server files refreshed!\0";
+//    changeMessage((std::string) message);
 }
 
 void MainWindow::refresh_messages_list() {
@@ -228,11 +229,11 @@ void MainWindow::refresh_messages_list() {
          std::advance(it, i);
          std::string thisMessage = *it;
          QString qstr = QString::fromStdString(thisMessage);
-         qDebug(thisMessage.c_str());
+//         qDebug(thisMessage.c_str());
          ui->messages_list->addItem(qstr);
     }
-    char message[] = "message list refreshed!\0";
-    changeMessage((std::string) message);
+//    char message[] = "message list refreshed!\0";
+//    changeMessage((std::string) message);
 }
 
 void MainWindow::refresh_friends_list() {
@@ -247,8 +248,8 @@ void MainWindow::refresh_friends_list() {
          QString qstr = QString::fromStdString(thisFriend);
          ui->friends_list->addItem(qstr);
     }
-    char message[] = "friend list refreshed!\0";
-    changeMessage((std::string) message);
+//    char message[] = "friend list refreshed!\0";
+//    changeMessage((std::string) message);
 }
 
 void MainWindow::on_refresh_button_clicked()
@@ -262,16 +263,18 @@ void MainWindow::on_refresh_button_clicked()
         changeMessage((std::string) message);
         return;
     } else {
+        std::string message = "Hello "+ ClientCommandManager::clientCommand->getUsername() + "!";
+        ui->greetings_label->setText(QString::fromStdString (message));
 //        qDebug("before ls");
         refresh_serverfiles_list();
-        usleep(3000000);
+//        usleep(3000000);
 //        qDebug("after ls");
         refresh_messages_list();
-        usleep(3000000);
+//        usleep(3000000);
 //        qDebug("after lsm");
         refresh_friends_list();
-        usleep(3000000);
-        qDebug("after lsf");
+//        usleep(3000000);
+//        qDebug("after lsf");
     }
 }
 
@@ -348,11 +351,11 @@ void MainWindow::on_messages_list_itemClicked(QListWidgetItem *item)
     int closeIndex = closeParenthesis - itemArray + 1;
     //grab the sender's name and the message
     std::string itemString = (std::string) itemArray;
-    qDebug(itemString.c_str());
+//    qDebug(itemString.c_str());
     std::string senderName = itemString.substr(openIndex, closeIndex - openIndex - 1);
-    qDebug(senderName.c_str());
+//    qDebug(senderName.c_str());
     std::string message = itemString.substr(closeIndex);
-    qDebug(message.c_str());
+//    qDebug(message.c_str());
     //check if the item is a regular message or a request
     if (message == "friend_request") {
         readMessageDialog->setIsARequest(true);

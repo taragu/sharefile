@@ -31,7 +31,7 @@ private slots:
 
 private:
     Ui::ReadMessageDialog *ui;
-    bool isARequest = false;
+    bool isARequest;
     std::string message;
     ErrorPopup * errorPopup;
 

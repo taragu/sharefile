@@ -224,7 +224,7 @@ int ServerCommand::PutCommand( const char *fileName ) const
 	  close( fd ) ;
 	  return -1 ;
 	}
-      cout << "rbyte:" << rbyte << endl ;
+      //      cout << "rbyte:" << rbyte << endl ;
       if ( (rbyte < RECV_BUF_SIZE) )
 	{
 	  goto done ;

@@ -9,6 +9,7 @@ ReadMessageDialog::ReadMessageDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->decline_button->hide();
+    isARequest=false;
     errorPopup = new ErrorPopup();
 }
 
@@ -27,13 +28,10 @@ void ReadMessageDialog::setIsARequest(bool _isARequest) {
 
 void ReadMessageDialog::on_buttonBox_accepted()
 {
-    qDebug("entering isARequest okay button onclick: before isARequest");
     if (isARequest) {
         // SEND FRIEND REQUEST: clientcommand's ApCommand
-        qDebug("entering isARequest okay button onclick: after isARequest");
         QByteArray receiverByteArray = ui->sendername_lineedit->text().toUtf8();
         const char* receiver = receiverByteArray.constData();
-        qDebug(receiver);
         int retVal = ClientCommandManager::clientCommand->ApCommand((std::string) receiver);
         if (retVal == -1) {
             char message[] = "ApCommand error\0";
