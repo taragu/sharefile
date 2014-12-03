@@ -297,6 +297,11 @@ int ClientCommand::LsfCommand( void ) const
     }
   while( read( m_sockfd, frdname, sizeof(frdname) ) > 0 )
     {
+		if ( END == *(int*)&frdname )
+		{
+			break ;
+		}
+
       cout << frdname << endl;
       bzero( frdname, sizeof(frdname) );
     }
@@ -321,6 +326,10 @@ int ClientCommand::LsmCommand( void ) const
     }
   while(read( m_sockfd, &userMsg, sizeof(userMsg)) > 0 )
     {
+		if ( END == *(int*)&userMsg )
+		{
+			break ;
+		}
       cout << "( "<< userMsg.sender << " ): " << userMsg.message << endl;
       bzero(userMsg.sender, sizeof(userMsg.sender));
       bzero(userMsg.message, sizeof(userMsg.message));
@@ -398,6 +407,7 @@ int ClientCommand::LogonCommand( void )
 {
 	int retval = 0 ;
 	UserData user ;
+	memset( &user, 0, sizeof(user) ) ;
 	int replay = 0 ;
 	int trycount = 3 ;
 	// send command
@@ -450,6 +460,7 @@ int ClientCommand::LoginCommand( void )
 	int retval = 0 ;
 	int replay = 0 ;
 	UserData user ;
+	memset( &user, 0, sizeof(user) ) ;
 	int trycount = 3 ;
 	// send command
 	char command[COMMAND_BUF_SIZE] ;
