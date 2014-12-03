@@ -29,7 +29,7 @@ void *clientthread( void *arg )
         // do command
 		if ( !strncmp( COMMAND_LS, commandbuf, strlen(COMMAND_LS) ) )
 		{
-		  cout<< "ls works" << endl;
+		  //cout<< "ls works" << endl;
 			if ( -1 == command.LsCommand( ) )
 			{
 				goto error ;
@@ -37,7 +37,7 @@ void *clientthread( void *arg )
 		}
 		else if ( !strncmp( COMMAND_LSF, commandbuf, strlen(COMMAND_LSF) ) )
 		{
-		  cout<< "lsf works " << endl;
+		  //cout<< "lsf works " << endl;
 			if ( -1 == command.LsfCommand( ) )
 			{
 				goto error ;
@@ -45,7 +45,7 @@ void *clientthread( void *arg )
 		}
 		else if ( !strncmp( COMMAND_LSM, commandbuf, strlen(COMMAND_LSM) ) )
 		{
-		  cout<< " it is the command " << endl;
+		  // cout<< " it is the command " << endl;
 			if ( -1 == command.LsmCommand( ) )
 			{
 				goto error ;
@@ -72,14 +72,14 @@ void *clientthread( void *arg )
 				goto error ;
 			}
 		}
-		else if ( !strncmp( COMMAND_AP, commandbuf, strlen(COMMAND_SEND) ) )
+		else if ( !strncmp( COMMAND_AP, commandbuf, strlen(COMMAND_AP) ) )
 		{
 			if ( -1 == command.ApCommand( ) )
 			{
 				goto error ;
 			}
 		}
-		else if ( !strncmp( COMMAND_UN, commandbuf, strlen(COMMAND_SEND) ) )
+		else if ( !strncmp( COMMAND_UN, commandbuf, strlen(COMMAND_UN) ) )
 		{
 			if ( -1 == command.UnCommand( ) )
 			{

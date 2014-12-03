@@ -508,17 +508,22 @@ int ServerCommand::UnCommand(){
   int replay = 0;
   char frdname[256];
   bzero( frdname, sizeof(frdname));
+  //  cout<< "before reading friendname" << endl;
   if( read( m_sockfd, frdname, sizeof(frdname)) < 0 )
     {
       perror( " read friend name " );
       goto error;
     }
+  //cout << " before database actions" << endl;
   if(!( ude.user_db_editor::DbRmFriend(m_username, frdname, db_user) &&
 	ude.user_db_editor::DbRmFriend(frdname,m_username, db_user)))
     {
       perror("database failed");
       replay = -1 ;
     }
+
+  
+  //cout<< "before write replay" << endl;
 
   if(write(m_sockfd, &replay, sizeof(replay)) < 0 )
     {
