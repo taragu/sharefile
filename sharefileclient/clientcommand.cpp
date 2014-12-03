@@ -398,11 +398,13 @@ error:
     goto done ;
 }
 
+
+
 //show friend list
 std::set<std::string> ClientCommand::LsfCommand( void ) const
 {
-//  int retval = 0 ;
-    std::set<std::string> returnSet;
+  //  int retval = 0 ;
+  std::set<std::string> returnSet;
   char frdname[FRD_BUF_SIZE];
   bzero( frdname, sizeof(frdname) );
   if ( write( m_sockfd, COMMAND_LSF, strlen(COMMAND_LSF)) < 0)
@@ -412,42 +414,48 @@ std::set<std::string> ClientCommand::LsfCommand( void ) const
     }
   while( read( m_sockfd, frdname, sizeof(frdname) ) > 0 )
     {
-//      printf("%s\n", frdname);
-      returnSet.insert((std::string) (frdname));
+      //      printf("%s\n", frdname);
       bzero( frdname, sizeof(frdname) );
+      returnSet.insert((std::string) (frdname));
     }
  done:
-//  return retval ;
-  return returnSet;
+  return returnSet ;
  error:
-//  retval = -1;
+  //  retval = -1;
   goto done ;
 }
-
 
 //show message list
 std::set<std::string> ClientCommand::LsmCommand( void ) const
 {
-//  int retval = 0 ;
-    std::set<std::string> returnSet;
-  char msg[MSG_BUF_SIZE];
-  bzero( msg, sizeof(msg) );
+  //  int retval = 0 ;
+  std::set<std::string> returnSet;
+  //  char msg[MSG_BUF_SIZE];
+  //  bzero( msg, sizeof(msg) );
+  UserMsg userMsg;
   if ( write( m_sockfd, COMMAND_LSM, strlen(COMMAND_LSM)) < 0)
     {
       perror( "write command" ) ;
       goto error ;
     }
-  while( read( m_sockfd, msg, sizeof(msg) ) > 0 )
+  while(read( m_sockfd, &userMsg, sizeof(userMsg)) > 0 )
     {
-//      printf("%s\n", msg);
-      returnSet.insert((std::string) (msg));
-      bzero( msg, sizeof(msg) );
+      char thisMessage[MSG_BUF_SIZE+FRD_BUF_SIZE];
+      strcpy(thisMessage, "(");
+      strcat(thisMessage, userMsg.sender);
+      strcat(thisMessage,")");
+      strcat(thisMessage,userMsg.message);
+      returnSet.insert(thisMessage);
+      //bzero(userMsg.sender, sizeof(userMsg.sender));
+      //bzero(userMsg.message, sizeof(userMsg.message));
     }
+
+  //  cout << "done" << endl;
+  
  done:
-//  return retval ;
-  return returnSet;
+  return returnSet ;
  error:
-//  retval = -1;
+  //  retval = -1;
   goto done ;
 }
 

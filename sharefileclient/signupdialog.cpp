@@ -40,17 +40,20 @@ void SignUpDialog::on_signup_submit_accepted()
         //signup
         QCryptographicHash md5Generator(QCryptographicHash::Md5);
         md5Generator.addData(password);
-        int signup_ret = ClientCommandManager::clientCommand->LogonCommand((std::string)username, (std::string)md5Generator.result().toHex());
+        std::string * username_string = new std::string(username);
+        int signup_ret = ClientCommandManager::clientCommand->LogonCommand(*username_string, (std::string)md5Generator.result().toHex());
         if (signup_ret!=0) {
-            char message[] = "Signup error: username already exists\0";
-            changeMessage((std::string)message);
+//            char message[] = "Signup error: username already exists\0";
+            changeMessage("Signup error: username already exists\0");
         } else {
             usersController->setSignedIn(true);
-            usersController->setUsername((std::string)username);
-            char message[] = "login success!\0";
-            changeMessage((std::string)message);
+            usersController->setUsername(*username_string);
+//            char message[] = "login success!\0";
+            changeMessage("login success\0");
         }
+        delete username_string;
     }
+
 }
 
 void SignUpDialog::changeMessage(std::string _message) {

@@ -26,11 +26,10 @@ void ReadMessageDialog::setIsARequest(bool _isARequest) {
 void ReadMessageDialog::on_buttonBox_accepted()
 {
     if (isARequest) {
-        // SEND FRIEND REQUEST
+        // SEND FRIEND REQUEST: clientcommand's ApCommand
         QByteArray receiverByteArray = ui->sendername_lineedit->text().toUtf8();
         const char* receiver = receiverByteArray.constData();
-        char message [] = "friend\0";
-        ClientCommandManager::clientCommand->SendCommand((std::string) receiver, (std::string) message);
+        //ClientCommandManager::clientCommand->ApCommand((std::string) receiver);
     }
     //if this is a normal message, nothing will happen when user clicks 'ok'
 }

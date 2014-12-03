@@ -28,8 +28,8 @@ using namespace std ;
 typedef struct sockaddr SA ;
 
 #define COMMAND_LS            "ls"
-#define COMMAND_LSF           "lsf"
-#define COMMAND_LSM           "lsm"
+#define COMMAND_LSF           "fls"
+#define COMMAND_LSM           "mls"
 #define COMMAND_CD            "cd"
 #define COMMAND_GET           "get"
 #define COMMAND_PUT           "put"
@@ -65,6 +65,12 @@ class ClientCommand
   int manager( void ) ;
 
  private:
+  struct UserMsg
+  {
+    char sender[256];
+    char message[MSG_BUF_SIZE];
+  };
+
   struct UserData
   {
     char username[256] ;
