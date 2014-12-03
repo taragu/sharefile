@@ -334,7 +334,7 @@ int ClientCommand::LsmCommand( void ) const
       bzero(userMsg.message, sizeof(userMsg.message));
     }
 
-  cout << "done" << endl;
+  //  cout << "done" << endl;
   
  done:
   return retval ;
