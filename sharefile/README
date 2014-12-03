@@ -2,10 +2,14 @@ The program contains two part: Server and Client.
 They should be run separately.
 
 To start the server, type <./Server port> in the console. The port here should be a specific number. A number between 2000 to 10000 is suggested yet not limited.
-
 To start the client, type <./Client IP port> in the console. The IP here is the server's IP. Port should be the one that is define when you started the server.
 
-Once both server and client are started, you can either login or register an user. When a user is creater, there will be a directory under the user's name both in server and client. In client's console, you are browsing your directory in server and you can only upload the files in your directory in client. So if you want to upload a file, first put it in your directory in client and then upload.
+Once both server and client are started, you can either login or register an user. When a user is creater, there will be a directory under the user's name both in server and client. In client's console, you are browsing your directory in server and you can only upload the files in your directory in client. So if you want to upload a file, first put it in your directory in client and then upload. 
+
+
+
+NOTE:
+UPLOADING A FILE UP TO 1.5MB IS RECOMMENDED.
 
 Commands are as followed:
 
@@ -15,10 +19,13 @@ put <filename>	     UPLOAD FILE
 ls  		     LIST FILES IN CURRENT DIRECTORY
 lsf 		     SHOW LIST OF FRIENDS
 lsm		     SHOW LIST OF MESSAGES
-send username msg    SEND MESSAGE OR FRIEND REQUEST
+send username msg    SEND MESSAGE OR FRIEND REQUEST. WHEN THE MSG CONTENT IS "friend_request", DATABASE WILL HANDLE IT AS A FRIEND REQUEST INSTEAD A MESSAGE
 cd <directory>	     SWITCH DIRECTORY
 share filename user  SHARE FILE TO A SPECIFIC USER
 rm filename    	     ROMOVE FILE
+ap friendname	     APPROVE A FRIEND REQUEST FROM A FRIEND
+un friendname	     REMOVE A FRIEND
+
 
 NOTES:
 Commands that we usually used in terminal don't work here, which means you can do <cd ~> because <~> is not parsed in our code. Rule of thumb, only use the command that are listed aboved.
