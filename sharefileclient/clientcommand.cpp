@@ -106,6 +106,94 @@ error:
     goto done ;
 }
 
+
+//removing friend request
+int ClientCommand::UnCommand( string __name)
+{
+  int retval = 0;
+  int replay = 0;
+  char command[COMMAND_BUF_SIZE];
+  bzero(command, sizeof(command));
+  strcpy( command, COMMAND_AP) ;
+  char frdname[256];
+  bzero(frdname, sizeof(frdname));
+  strcpy(frdname, __name.c_str());
+
+  if( write( m_sockfd, command, strlen(command)) < 0 )
+    {
+      perror("write un command") ;
+      goto error;
+    }
+  if( write( m_sockfd, frdname, sizeof(frdname)) < 0 )
+    {
+      perror(" send friend name" );
+      goto error;
+    }
+  if ( read( m_sockfd, &replay, sizeof(replay) ) < 0 )
+    {
+      perror(" read" );
+      goto error;
+    }
+  if( replay == 0 )
+    {
+      cout << " Friend " << frdname<< "deleted sucessfully!" << endl;
+    }
+  else
+    {
+      cout <<" command failed" << endl;
+    }
+
+ done: 
+  return retval;
+ error:
+  retval = -1 ;
+  goto done;
+}
+//approving friend request
+int ClientCommand::ApCommand( string _name)
+{
+  int retval = 0;
+  int replay = 0;
+  char command[COMMAND_BUF_SIZE];
+  bzero(command, sizeof(command));
+  strcpy( command, COMMAND_AP) ;
+  char frdname[256];
+  bzero(frdname, sizeof(frdname));
+  strcpy(frdname, _name.c_str());
+
+  if( write( m_sockfd, command, strlen(command)) < 0 )
+    {
+      perror("write ap command") ;
+      goto error;
+    }
+  if( write( m_sockfd, frdname, sizeof(frdname)) < 0 )
+    {
+      perror(" send friend name" );
+      goto error;
+    }
+  if ( read( m_sockfd, &replay, sizeof(replay) ) < 0 )
+    {
+      perror(" read" );
+      goto error;
+    }
+  if( replay == 0 )
+    {
+      cout << " Friend " << frdname<< "added sucessfully!" << endl;
+    }
+  else
+    {
+      cout <<" command failed" << endl;
+    }
+
+ done: 
+  return retval;
+ error:
+  retval = -1 ;
+  goto done;
+}
+
+
+
 // uploading file
 int ClientCommand::PutCommand( string fileName ) const
 {

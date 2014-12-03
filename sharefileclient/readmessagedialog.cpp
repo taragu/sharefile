@@ -29,7 +29,7 @@ void ReadMessageDialog::on_buttonBox_accepted()
         // SEND FRIEND REQUEST: clientcommand's ApCommand
         QByteArray receiverByteArray = ui->sendername_lineedit->text().toUtf8();
         const char* receiver = receiverByteArray.constData();
-        //ClientCommandManager::clientCommand->ApCommand((std::string) receiver);
+        ClientCommandManager::clientCommand->ApCommand((std::string) receiver);
     }
     //if this is a normal message, nothing will happen when user clicks 'ok'
 }
