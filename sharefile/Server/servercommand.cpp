@@ -7,7 +7,7 @@ using namespace std ;
 
 
 ServerCommand::ServerCommand( int sockfd ) :
-  m_sockfd( sockfd )
+  m_sockfd( sockfd ), m_start(false)
 {
   m_serverpath = "." ;
   //  m_fd = open( "userdata.dat", O_CREAT | O_RDWR, 0644 ) ;

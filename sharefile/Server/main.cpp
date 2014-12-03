@@ -15,7 +15,8 @@ void *clientthread( void *arg )
 	long int retval = 0 ;
 	int clientfd = *(int*)arg ;
 	ServerCommand command( clientfd ) ;
-	char commandbuf[COMMAND_BUF] ;
+	char commandbuf[COMMAND_BUF] = {0};
+	memset( commandbuf, 0, sizeof( commandbuf));
 	while ( 1)
 	{
 		bzero( commandbuf, COMMAND_BUF ) ;
@@ -210,4 +211,5 @@ int main( int argc, char **argv )
 			return - 1;
 		}
 	}
+	return 0;
 }
