@@ -549,7 +549,7 @@ int user_db_editor::DbRmFriend(std::string username1, std::string username2, sql
     std::string DbName=DbNamess.str();
     std::string DbNamedb = DbNamess.str();
     DbNamedb.append(".db");
-    std::cout<<"DbNamedb"<<DbNamedb<<std::endl;
+    std::cout<<"RmFriend:DbNamedb"<<DbNamedb<<std::endl;
     sqlite3_open(DbNamedb.c_str(), &db_frd);
     //if(DbContain(DbName, "name", username2, db_frd )==0){
     //sqlite3_close(db_frd);
@@ -563,7 +563,7 @@ int user_db_editor::DbRmFriend(std::string username1, std::string username2, sql
     std::stringstream id2ss;
     id2ss<<id2;
     sql.append(id2ss.str());
-    std::cout<<"C"<<DbNamedb<<std::endl;
+    std::cout<<sql<<DbNamedb<<std::endl;
 
     user_db_editor::DbEditor(sql, db_frd);
     sqlite3_close(db_frd);
