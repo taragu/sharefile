@@ -72,7 +72,7 @@ int ClientCommand::GetCommand( string fileName, string localpath ) const
 
 	// open file
 	int fd = open( path.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0644 ) ;
-	if ( write( m_sockfd, command, strlen( command ) ) < 0 )
+	if ( write( m_sockfd, command, COMMAND_BUF_SIZE ) < 0 )
 	{
 		perror( "write" ) ;
 		goto error ;
@@ -116,7 +116,7 @@ int ClientCommand::UnCommand( string __name)
   bzero(frdname, sizeof(frdname));
   strcpy(frdname, __name.c_str());
 
-  if( write( m_sockfd, command, strlen(command)) < 0 )
+  if( write( m_sockfd, command,  COMMAND_BUF_SIZE) < 0 )
     {
       perror("write un command") ;
       goto error;
@@ -158,7 +158,7 @@ int ClientCommand::ApCommand( string _name)
   bzero(frdname, sizeof(frdname));
   strcpy(frdname, _name.c_str());
 
-  if( write( m_sockfd, command, strlen(command)) < 0 )
+  if( write( m_sockfd, command,  COMMAND_BUF_SIZE) < 0 )
     {
       perror("write ap command") ;
       goto error;
@@ -218,7 +218,7 @@ int ClientCommand::PutCommand( string fileName ) const
 	int fd = open( fileName.c_str(), O_RDONLY ) ;
 	ssize_t rbyte = 0 ;
 	strcpy( sendbuf, command ) ;
-	if ( write( m_sockfd, sendbuf, sizeof(sendbuf) ) < 0 )
+	if ( write( m_sockfd, sendbuf,  COMMAND_BUF_SIZE ) < 0 )
 	{
 		perror( "write" ) ;
 		goto error ;
@@ -271,7 +271,7 @@ int ClientCommand::RmCommand( string filename )
 	strcpy( command, COMMAND_RM ) ;
 	strcat( command, filename.c_str() ) ;
 	// send command
-	if ( write( m_sockfd, command, sizeof(command) ) < 0 )
+	if ( write( m_sockfd, command,  COMMAND_BUF_SIZE ) < 0 )
 	{
 		perror( "write" ) ;
 		goto error ;
@@ -290,7 +290,7 @@ int ClientCommand::LsfCommand( void ) const
   int retval = 0 ;
   char frdname[RECV_BUF_SIZE];
   bzero( frdname, sizeof(frdname) );
-  if ( write( m_sockfd, COMMAND_LSF, strlen(COMMAND_LSF)) < 0)
+  if ( write( m_sockfd, COMMAND_LSF, COMMAND_BUF_SIZE) < 0)
     {
       perror( "write command" ) ;
       goto error ;
@@ -318,7 +318,7 @@ int ClientCommand::LsmCommand( void ) const
   //  char msg[MSG_BUF_SIZE];
   //  bzero( msg, sizeof(msg) );
   UserMsg userMsg;
-  if ( write( m_sockfd, COMMAND_LSM, strlen(COMMAND_LSM)) < 0)
+  if ( write( m_sockfd, COMMAND_LSM,  COMMAND_BUF_SIZE) < 0)
     {
       perror( "write command" ) ;
       goto error ;
@@ -351,7 +351,7 @@ int ClientCommand::LsCommand( void ) const
 	char filename[RECV_BUF_SIZE] ;
 	bzero( filename, sizeof(filename) ) ;
 	//¡¡send command
-	if ( write( m_sockfd, COMMAND_LS, strlen(COMMAND_LS) ) < 0 )
+	if ( write( m_sockfd, COMMAND_LS,  COMMAND_BUF_SIZE) < 0 )
 	{
 		perror( "write" ) ;
 		goto error ;
@@ -390,7 +390,7 @@ int ClientCommand::CdCommand( string path )
 	// change directory
 	strcpy( command, COMMAND_CD ) ;
 	strcat( command, path.c_str() ) ;
-	if ( write( m_sockfd, command, strlen(command) ) < 0 )
+	if ( write( m_sockfd, command,  COMMAND_BUF_SIZE ) < 0 )
 	{
 		perror( "write" ) ;
 		goto error ;
@@ -413,7 +413,7 @@ int ClientCommand::LogonCommand( void )
 	char command[COMMAND_BUF_SIZE] ;
 	bzero( command, sizeof(command) ) ;
 	strcpy( command, COMMAND_LOGON ) ;
-	if ( write( m_sockfd, command, strlen(command) ) < 0 )
+	if ( write( m_sockfd, command,  COMMAND_BUF_SIZE ) < 0 )
 	{
 		perror( "write" ) ;
 		goto error ;
@@ -465,7 +465,7 @@ int ClientCommand::LoginCommand( void )
 	char command[COMMAND_BUF_SIZE] ;
 	bzero( command, sizeof(command) ) ;
 	strcpy( command, COMMAND_LOGIN ) ;
-	if ( write( m_sockfd, command, strlen(command) ) < 0 )
+	if ( write( m_sockfd, command,  COMMAND_BUF_SIZE ) < 0 )
 	{
 		perror( "write" ) ;
 		goto error ;
