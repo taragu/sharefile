@@ -136,7 +136,7 @@ std::queue<message_t> user_db_editor::DbGetMessage_tQ(std::string s,int ci,int c
             //std::cout<<"NotOK\n";
             return answer;
         }
-       std::cout<<"R"<<nRow<<"C"<<nCol<<"NotOK\n";
+       //std::cout<<"R"<<nRow<<"C"<<nCol<<"NotOK\n";
         int nIndex = nCol;
         std::string strOut;
 	message_t OneM;
