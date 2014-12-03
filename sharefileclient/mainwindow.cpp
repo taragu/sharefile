@@ -252,9 +252,13 @@ void MainWindow::on_refresh_button_clicked()
         changeMessage((std::string) message);
         return;
     } else {
+        qDebug("before ls");
         refresh_serverfiles_list();
+        qDebug("after ls");
         refresh_messages_list();
+        qDebug("after lsm");
         refresh_friends_list();
+        qDebug("after lsf");
     }
 }
 
