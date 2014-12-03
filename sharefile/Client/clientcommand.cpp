@@ -514,7 +514,7 @@ int ClientCommand::ShareCommand( string file, string user )
 	bzero( szuser, sizeof(szuser) ) ;
 	strcpy( szfile, file.c_str() ) ;
 	strcpy( szuser, user.c_str() ) ;
-	if ( write( m_sockfd, command, strlen(command) ) < 0 )
+	if ( write( m_sockfd, command, COMMAND_BUF_SIZE ) < 0 )
 	{
 		perror( "write" ) ;
 		goto error ;
@@ -551,7 +551,7 @@ int ClientCommand::SendCommand( string user, string msg )
   bzero( szmsg, sizeof(szmsg) );
   strcpy( szuser, user.c_str() ) ;
   strcpy( szmsg, msg.c_str() ) ;
-  if ( write( m_sockfd, command, strlen(command) ) < 0 )
+  if ( write( m_sockfd, command, COMMAND_BUF_SIZE ) < 0 )
     {
       perror( "write send command" ) ;
       goto error;
