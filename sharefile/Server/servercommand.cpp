@@ -504,8 +504,8 @@ int ServerCommand::UnCommand(){
       perror( " read friend name " );
       goto error;
     }
-  if(!( ude.user_db_editor::DbRmFriend(m_username, receivername, db_user) &&
-	ude.user_db_editor::DbRmFriend(receivername,m_username, db_user)))
+  if(!( ude.user_db_editor::DbRmFriend(m_username, frdname, db_user) &&
+	ude.user_db_editor::DbRmFriend(frdname,m_username, db_user)))
     {
       perror("database failed");
       replay = -1 ;
