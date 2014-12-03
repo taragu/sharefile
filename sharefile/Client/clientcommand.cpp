@@ -223,18 +223,23 @@ int ClientCommand::LsfCommand( void ) const
 int ClientCommand::LsmCommand( void ) const
 {
   int retval = 0 ;
-  char msg[MSG_BUF_SIZE];
-  bzero( msg, sizeof(msg) );
+  //  char msg[MSG_BUF_SIZE];
+  //  bzero( msg, sizeof(msg) );
+  UserMsg userMsg;
   if ( write( m_sockfd, COMMAND_LSM, strlen(COMMAND_LSM)) < 0)
     {
       perror( "write command" ) ;
       goto error ;
     }
-  while( read( m_sockfd, msg, sizeof(msg) ) > 0 )
+  while(read( m_sockfd, &userMsg, sizeof(userMsg)) > 0 )
     {
-      printf("%s\n", msg);
-      bzero( msg, sizeof(msg) );
+      cout << "( "<< userMsg.sender << " ): " << userMsg.message << endl;
+      bzero(userMsg.sender, sizeof(userMsg.sender));
+      bzero(userMsg.message, sizeof(userMsg.message));
     }
+
+  cout << "done" << endl;
+  
  done:
   return retval ;
  error:
