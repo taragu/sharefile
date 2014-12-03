@@ -105,7 +105,7 @@ error:
 }
 
 //removing friend request
-int ClientCommand::UnCommand( string friend)
+int ClientCommand::UnCommand( string __name)
 {
   int retval = 0;
   int replay = 0;
@@ -114,7 +114,7 @@ int ClientCommand::UnCommand( string friend)
   strcpy( command, COMMAND_AP) ;
   char frdname[256];
   bzero(frdname, sizeof(frdname));
-  strcpy(frdname, friend.c_str());
+  strcpy(frdname, __name.c_str());
 
   if( write( m_sockfd, command, strlen(command)) < 0 )
     {
@@ -147,7 +147,7 @@ int ClientCommand::UnCommand( string friend)
   goto done;
 }
 //approving friend request
-int ClientCommand::ApCommand( string friend)
+int ClientCommand::ApCommand( string _name)
 {
   int retval = 0;
   int replay = 0;
@@ -156,7 +156,7 @@ int ClientCommand::ApCommand( string friend)
   strcpy( command, COMMAND_AP) ;
   char frdname[256];
   bzero(frdname, sizeof(frdname));
-  strcpy(frdname, friend.c_str());
+  strcpy(frdname, _name.c_str());
 
   if( write( m_sockfd, command, strlen(command)) < 0 )
     {

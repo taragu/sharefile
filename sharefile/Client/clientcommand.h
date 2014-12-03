@@ -61,8 +61,8 @@ public:
 	int RmCommand( string strfilename ) ;
 	int SendCommand(string user, string msg) ;
 	int manager( void ) ;
-	int ApCommand(string friend);
-	int UnCommand(string friend);
+	int ApCommand(string _name);
+	int UnCommand(string __name);
 	// send yuzhou friend_request
 	// send yuzhou howareyou
 private:
