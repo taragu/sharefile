@@ -69,7 +69,7 @@ class ServerCommand
   int RmCommand( string filename ) ; // delete
   int SendCommand( void ); // send request or message
   int ApCommand( void );//add friend
-  int UnCommand( void );
+  int UnCommand( void ); // remove friend
   
   //database
   sqlite3 * db_user;
