@@ -17,12 +17,12 @@
 #include <iostream>
 #include <string>
 #include <set>
+
 using namespace std ;
 
 #define RECV_BUF_SIZE         4096
 #define SEND_BUF_SIZE         4096
-#define MSG_BUF_SIZE          4096
-#define FRD_BUF_SIZE          256
+#define MSG_BUF_SIZE          256
 
 
 typedef struct sockaddr SA ;
@@ -43,56 +43,63 @@ typedef struct sockaddr SA ;
 #define COMMAND_UN            "un"
 #define COMMAND_AP            "ap"
 
+
 class ClientCommand
 {
- public:
-  ClientCommand( const char *ip, int port ) ;
-  ~ClientCommand( void ) ;
-  int QuitCommand( void ) ;
-  int GetCommand( string file, string localpath = "" ) const ;
-  int PutCommand( string fileName ) const ;
-  int HelpCommand( void ) const ;
-//  int LsCommand( void ) const ;
-//  int LsfCommand( void ) const ;
-//  int LsmCommand( void ) const;
-  std::set<std::string> LsfCommand( void ) const ;
-  std::set<std::string> LsmCommand( void ) const;
-  std::set<std::string> LsCommand( void ) const ;
-  int CdCommand( string path ) ;
-  int LoginCommand( std::string username, std::string password ) ;
-  int LogonCommand( std::string username, std::string password ) ;
-  int ShareCommand( string file, string user ) ;
-  int RmCommand( string strfilename ) ;
-  int SendCommand(string user, string msg) ;
-  int manager( void ) ;
-  int ApCommand(string _name);
-  int UnCommand(string __name);
+public:
+    ClientCommand( const char *ip, int port ) ;
+    ~ClientCommand( void ) ;
+    int QuitCommand( void ) ;
+    int GetCommand( string file, string localpath = "" ) const ;
+    int PutCommand( string fileName ) const ;
+    int HelpCommand( void ) const ;
+//    int LsCommand( void ) const ;
+//    int LsfCommand( void ) const ;
+//    int LsmCommand( void ) const;
+    int CdCommand( string path ) ;
+//    int LoginCommand( void ) ;
+//    int LogonCommand( void ) ;
+    int ShareCommand( string file, string user ) ;
+    int RmCommand( string strfilename ) ;
+    int SendCommand(string user, string msg) ;
+    int manager( void ) ;
+    int ApCommand(string _name);
+    int UnCommand(string __name);
 
- private:
-  struct UserMsg
-  {
-    char sender[256];
-    char message[MSG_BUF_SIZE];
-  };
+    std::set<std::string> LsfCommand( void ) const ;
+    std::set<std::string> LsmCommand( void ) const;
+    std::set<std::string> LsCommand( void ) const ;
 
-  struct UserData
-  {
-    char username[256] ;
-    char password[256] ;
-    UserData( const std::string &name = "",
-              const std::string &passwd = "" )
+    int LoginCommand( std::string username, std::string password ) ;
+    int LogonCommand( std::string username, std::string password ) ;
+
+    // send yuzhou friend_request
+    // send yuzhou howareyou
+private:
+    struct UserMsg
     {
-      strcpy( username, name.c_str() ) ;
-      strcpy( password, passwd.c_str() ) ;
-    }
-    bool operator<( const UserData &that ) const
+      char sender[256];
+      char message[MSG_BUF_SIZE];
+    };
+
+    struct UserData
     {
-      return strcmp( username, that.username ) < 0 ;
-    }
-  } ;
-  int  m_sockfd ;   // socket
-  bool m_bstart ;   // server status
-  UserData m_user ; // user info
+        char username[256] ;
+        char password[256] ;
+        UserData( const std::string &name = "",
+                  const std::string &passwd = "" )
+        {
+            strcpy( username, name.c_str() ) ;
+            strcpy( password, passwd.c_str() ) ;
+        }
+        bool operator<( const UserData &that ) const
+        {
+            return strcmp( username, that.username ) < 0 ;
+        }
+    } ;
+    int  m_sockfd ;   // socket
+    bool m_bstart ;   // server status
+    UserData m_user ; // user info
 } ;
 
 #endif //

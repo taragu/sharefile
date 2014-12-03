@@ -1,0 +1,236 @@
+  std::set<std::string> LsfCommand( void ) const ;
+  std::set<std::string> LsmCommand( void ) const;
+  std::set<std::string> LsCommand( void ) const ;
+
+  int LoginCommand( std::string username, std::string password ) ;
+  int LogonCommand( std::string username, std::string password ) ;
+
+
+-------------ls-------------------------------------------------
+std::set<std::string> ClientCommand::LsCommand( void ) const
+{
+        std::set<std::string> returnSet;
+        char filename[RECV_BUF_SIZE] ;
+        bzero( filename, sizeof(filename) ) ;
+        //　send command
+        if ( write( m_sockfd, COMMAND_LS, strlen(COMMAND_LS) ) < 0 )
+        {
+            perror( "write" ) ;
+                goto error ;
+        }
+        while( read( m_sockfd, filename, sizeof(filename) ) > 0  )
+        {
+                if ( END == *(int*)filename )
+                {
+//                        printf( "\n" ) ;
+                        goto done ;
+                }
+                else if ( DT_DIR == *(int*)filename )
+                {
+//                        printf( "\033[0;34m%s\033[0m \t", filename+sizeof(int) ) ; TODO WHAT TO DO WITH THIS???
+//                        returnSet.insert((std::string) filename+sizeof(int));
+                }
+                else
+                {
+//                        printf( "%s \t", filename+sizeof(int) ) ;
+//                    qDebug("adding to returnSet: ");
+//                    qDebug(filename+sizeof(int));
+                        returnSet.insert((std::string) (filename+sizeof(int)));
+                }
+                fflush( stdout ) ;
+                bzero( filename, sizeof(filename) ) ;
+        }
+done:
+        return returnSet ;
+error:
+//        retval = - 1;
+        goto done ;
+}
+
+
+
+
+
+
+--------------------------------------------lsm---------------------------------------------
+//show message list
+std::set<std::string> ClientCommand::LsmCommand( void ) const
+{
+  std::set<std::string> returnSet;
+  //  int retval = 0 ;
+  //  char msg[MSG_BUF_SIZE];
+  //  bzero( msg, sizeof(msg) );
+  UserMsg userMsg;
+  if ( write( m_sockfd, COMMAND_LSM, strlen(COMMAND_LSM)) < 0)
+    {
+      perror( "write command" ) ;
+      goto error ;
+    }
+  while(read( m_sockfd, &userMsg, sizeof(userMsg)) > 0 )
+    {
+	if ( END == *(int*)&userMsg )
+	   {
+			break ;
+			      }
+      char thisMessage[MSG_BUF_SIZE+FRD_BUF_SIZE];
+      strcpy(thisMessage, "(");
+      strcat(thisMessage, userMsg.sender);
+      strcat(thisMessage,")");
+      strcat(thisMessage,userMsg.message);
+      std::string messageString = string(thisMessage);
+      returnSet.insert(messageString);
+//        qDebug("inserting into returnSet in LsmCommand: ");
+//        qDebug(messageString.c_str());
+      //      cout << "( "<< userMsg.sender << " ): " << userMsg.message << endl;
+      //      bzero(userMsg.sender, sizeof(userMsg.sender));
+      //      bzero(userMsg.message, sizeof(userMsg.message));
+    }
+
+//  cout << "done" << endl;
+  
+ done:
+  qDebug("lsm: before return");
+  return returnSet ;
+ error:
+  //  retval = -1;
+  goto done ;
+}
+
+
+
+
+--------------------------------------lsf-------------------------------
+//show friend list
+std::set<std::string> ClientCommand::LsfCommand( void ) const
+{
+  std::set<std::string> returnSet;
+  //  int retval = 0 ;
+  char frdname[MSG_BUF_SIZE];
+  bzero( frdname, sizeof(frdname) );
+  if ( write( m_sockfd, COMMAND_LSF, strlen(COMMAND_LSF)) < 0)
+    {
+      perror( "write command" ) ;
+      goto error ;
+    }
+  while( read( m_sockfd, frdname, sizeof(frdname) ) > 0 )
+    {
+	if ( END == *(int*)&frdname )
+	   {
+			break ;
+			      }
+
+				//      cout << frdname << endl;
+      bzero( frdname, sizeof(frdname) );
+      returnSet.insert((std::string) (frdname));
+    }
+ done:
+  return returnSet ;
+ error:
+  //  retval = -1;
+  goto done ;
+}
+
+
+
+
+-------------------------------logon and login--------------------------
+// register
+int ClientCommand::LogonCommand( std::string username, std::string password )
+{
+    int retval = 0 ;
+    UserData user ;
+    int replay = 0 ;
+    int trycount = 3 ;
+    // send command
+    char command[COMMAND_BUF_SIZE] ;
+    bzero( command, sizeof(command) ) ;
+    strcpy( command, COMMAND_LOGON ) ;
+    if ( write( m_sockfd, command, strlen(command) ) < 0 )
+    {
+        perror( "write" ) ;
+        goto error ;
+    }
+retry:
+//    cout << "Please enter your username:" ;
+//    cin >> user.username ;
+//    cout << "Please enter your password:" ;
+//    cin >> user.password ;
+    strncpy(user.username, username.c_str(), sizeof(user.username));
+    strncpy(user.password, password.c_str(), sizeof(user.password));
+    if ( write( m_sockfd, &user, sizeof(user) ) < 0 )
+    {
+        perror( "write" ) ;
+        goto error ;
+    }
+    // read verification result
+    read( m_sockfd, &replay, sizeof(replay) ) ;
+    if ( -1 == replay && trycount )
+    {
+        cout << "user already exists" << endl;
+        --trycount ;
+        goto retry ;
+    }
+    if ( -1 == replay )
+    {
+        goto error ;
+    }
+    if ( -1 == mkdir( user.username, 0755 ) )
+    {
+        perror( "mkdir" ) ;
+        goto error ;
+    }
+    strcpy( m_user.username, user.username ) ;
+done:
+    return retval ;
+error:
+    retval = -1 ;
+    goto done ;
+}
+
+// login
+int ClientCommand::LoginCommand( std::string username, std::string password )
+{
+    int retval = 0 ;
+    int replay = 0 ;
+    UserData user ;
+    int trycount = 3 ;
+    // send command
+    char command[COMMAND_BUF_SIZE] ;
+    bzero( command, sizeof(command) ) ;
+    strcpy( command, COMMAND_LOGIN ) ;
+    if ( write( m_sockfd, command, strlen(command) ) < 0 )
+    {
+        perror( "write" ) ;
+        goto error ;
+    }
+retry:
+//    cout << "Please enter your username:" ;
+//    cin >> user.username ;
+//    cout << "Please enter password:" ;
+//    cin >> user.password ;
+    strncpy(user.username, username.c_str(), sizeof(user.username));
+    strncpy(user.password, password.c_str(), sizeof(user.password));
+    // send username and password to socket
+    if ( write( m_sockfd, &user, sizeof(user) ) < 0 )
+    {
+        perror( "write" ) ;
+        goto error ;
+    }
+    // receiving verificaion result
+    if ( read( m_sockfd, &replay, sizeof(replay) ) < 0 )
+    {
+        perror( "read" ) ;
+        goto error ;
+    }
+    if ( -1 == replay && trycount )
+    {
+        cout << "incorrect username or password" << endl ;
+        goto retry ;
+    }
+    strcpy( m_user.username, user.username ) ;
+done:
+    return retval ;
+error:
+    retval = -1;
+    goto done ;
+}

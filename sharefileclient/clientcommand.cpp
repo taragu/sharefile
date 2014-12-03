@@ -2,7 +2,6 @@
 #include <QDebug>
 #define COMMAND_BUF_SIZE  256
 #define END 1234
-
 using namespace std ;
 
 ClientCommand::ClientCommand( const char *ip, int port )
@@ -74,7 +73,7 @@ int ClientCommand::GetCommand( string fileName, string localpath ) const
 
     // open file
     int fd = open( path.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0644 ) ;
-    if ( write( m_sockfd, command, strlen( command ) ) < 0 )
+    if ( write( m_sockfd, command, COMMAND_BUF_SIZE ) < 0 )
     {
         perror( "write" ) ;
         goto error ;
@@ -106,7 +105,6 @@ error:
     goto done ;
 }
 
-
 //removing friend request
 int ClientCommand::UnCommand( string __name)
 {
@@ -119,7 +117,7 @@ int ClientCommand::UnCommand( string __name)
   bzero(frdname, sizeof(frdname));
   strcpy(frdname, __name.c_str());
 
-  if( write( m_sockfd, command, strlen(command)) < 0 )
+  if( write( m_sockfd, command,  COMMAND_BUF_SIZE) < 0 )
     {
       perror("write un command") ;
       goto error;
@@ -136,14 +134,14 @@ int ClientCommand::UnCommand( string __name)
     }
   if( replay == 0 )
     {
-      cout << " Friend " << frdname<< "deleted sucessfully!" << endl;
+      cout << " Friend " << frdname<< " deleted sucessfully!" << endl;
     }
   else
     {
       cout <<" command failed" << endl;
     }
 
- done: 
+ done:
   return retval;
  error:
   retval = -1 ;
@@ -161,7 +159,7 @@ int ClientCommand::ApCommand( string _name)
   bzero(frdname, sizeof(frdname));
   strcpy(frdname, _name.c_str());
 
-  if( write( m_sockfd, command, strlen(command)) < 0 )
+  if( write( m_sockfd, command,  COMMAND_BUF_SIZE) < 0 )
     {
       perror("write ap command") ;
       goto error;
@@ -178,19 +176,20 @@ int ClientCommand::ApCommand( string _name)
     }
   if( replay == 0 )
     {
-      cout << " Friend " << frdname<< "added sucessfully!" << endl;
+      cout << " Friend " << frdname<< " added sucessfully!" << endl;
     }
   else
     {
       cout <<" command failed" << endl;
     }
 
- done: 
+ done:
   return retval;
  error:
   retval = -1 ;
   goto done;
 }
+
 
 
 
@@ -220,7 +219,7 @@ int ClientCommand::PutCommand( string fileName ) const
     int fd = open( fileName.c_str(), O_RDONLY ) ;
     ssize_t rbyte = 0 ;
     strcpy( sendbuf, command ) ;
-    if ( write( m_sockfd, sendbuf, sizeof(sendbuf) ) < 0 )
+    if ( write( m_sockfd, sendbuf,  COMMAND_BUF_SIZE ) < 0 )
     {
         perror( "write" ) ;
         goto error ;
@@ -251,7 +250,7 @@ error:
     goto done ;
 }
 
-//　helper
+//��helper
 int ClientCommand::HelpCommand( void ) const
 {
     cout << "help                  show help" << endl ;
@@ -260,7 +259,7 @@ int ClientCommand::HelpCommand( void ) const
     cout << "put filename          upload file to server" << endl ;
     cout << "cd  director          switch directory" << endl ;
     cout << "by                    quit" << endl;
-    cout << "share filename user 　share to user" << endl ;
+    cout << "share filename user   share to user" << endl ;
     cout << "rm    filename        delete file" << endl ;
     return 0 ;
 }
@@ -273,7 +272,7 @@ int ClientCommand::RmCommand( string filename )
     strcpy( command, COMMAND_RM ) ;
     strcat( command, filename.c_str() ) ;
     // send command
-    if ( write( m_sockfd, command, sizeof(command) ) < 0 )
+    if ( write( m_sockfd, command,  COMMAND_BUF_SIZE ) < 0 )
     {
         perror( "write" ) ;
         goto error ;
@@ -284,6 +283,80 @@ error:
     retval = -1 ;
     goto done ;
 
+}
+
+//show friend list
+std::set<std::string> ClientCommand::LsfCommand( void ) const
+{
+  std::set<std::string> returnSet;
+  //  int retval = 0 ;
+  char frdname[MSG_BUF_SIZE];
+  bzero( frdname, sizeof(frdname) );
+  if ( write( m_sockfd, COMMAND_LSF, strlen(COMMAND_LSF)) < 0)
+    {
+      perror( "write command" ) ;
+      goto error ;
+    }
+  while( read( m_sockfd, frdname, sizeof(frdname) ) > 0 )
+    {
+        if ( END == *(int*)&frdname )
+           {
+                    break ;
+                              }
+
+                                //      cout << frdname << endl;
+        bzero( frdname, sizeof(frdname) );
+        returnSet.insert((std::string) (frdname));
+      }
+   done:
+    return returnSet ;
+   error:
+    //  retval = -1;
+    goto done ;
+  }
+
+
+//show message list
+std::set<std::string> ClientCommand::LsmCommand( void ) const
+{
+  std::set<std::string> returnSet;
+  //  int retval = 0 ;
+  //  char msg[MSG_BUF_SIZE];
+  //  bzero( msg, sizeof(msg) );
+  UserMsg userMsg;
+  if ( write( m_sockfd, COMMAND_LSM, strlen(COMMAND_LSM)) < 0)
+    {
+      perror( "write command" ) ;
+      goto error ;
+    }
+  while(read( m_sockfd, &userMsg, sizeof(userMsg)) > 0 )
+    {
+        if ( END == *(int*)&userMsg )
+           {
+                    break ;
+                              }
+      char thisMessage[5000];
+      strcpy(thisMessage, "(");
+      strcat(thisMessage, userMsg.sender);
+      strcat(thisMessage,")");
+      strcat(thisMessage,userMsg.message);
+      std::string messageString = string(thisMessage);
+      returnSet.insert(messageString);
+//        qDebug("inserting into returnSet in LsmCommand: ");
+//        qDebug(messageString.c_str());
+      //      cout << "( "<< userMsg.sender << " ): " << userMsg.message << endl;
+      //      bzero(userMsg.sender, sizeof(userMsg.sender));
+      //      bzero(userMsg.message, sizeof(userMsg.message));
+    }
+
+//  cout << "done" << endl;
+
+ done:
+  qDebug("lsm: before return");
+  return returnSet ;
+ error:
+  //  retval = -1;
+  goto done ;
 }
 
 
@@ -306,12 +379,12 @@ std::set<std::string> ClientCommand::LsCommand( void ) const
                         goto done ;
                 }
                 else if ( DT_DIR == *(int*)filename )
-                {
+            {
 //                        printf( "\033[0;34m%s\033[0m \t", filename+sizeof(int) ) ; TODO WHAT TO DO WITH THIS???
 //                        returnSet.insert((std::string) filename+sizeof(int));
-                }
+            }
                 else
-                {
+            {
 //                        printf( "%s \t", filename+sizeof(int) ) ;
 //                    qDebug("adding to returnSet: ");
 //                    qDebug(filename+sizeof(int));
@@ -337,7 +410,7 @@ int ClientCommand::CdCommand( string path )
     // change directory
     strcpy( command, COMMAND_CD ) ;
     strcat( command, path.c_str() ) ;
-    if ( write( m_sockfd, command, strlen(command) ) < 0 )
+    if ( write( m_sockfd, command,  COMMAND_BUF_SIZE ) < 0 )
     {
         perror( "write" ) ;
         goto error ;
@@ -347,6 +420,7 @@ done:
 error:
     goto done ;
 }
+
 
 // register
 int ClientCommand::LogonCommand( std::string username, std::string password )
@@ -449,6 +523,7 @@ error:
     goto done ;
 }
 
+
 // share
 int ClientCommand::ShareCommand( string file, string user )
 {
@@ -463,7 +538,7 @@ int ClientCommand::ShareCommand( string file, string user )
     bzero( szuser, sizeof(szuser) ) ;
     strcpy( szfile, file.c_str() ) ;
     strcpy( szuser, user.c_str() ) ;
-    if ( write( m_sockfd, command, strlen(command) ) < 0 )
+    if ( write( m_sockfd, command, COMMAND_BUF_SIZE ) < 0 )
     {
         perror( "write" ) ;
         goto error ;
@@ -487,81 +562,6 @@ error:
 }
 
 
-
-//show friend list
-std::set<std::string> ClientCommand::LsfCommand( void ) const
-{
-  std::set<std::string> returnSet;
-  //  int retval = 0 ;
-  char frdname[MSG_BUF_SIZE];
-  bzero( frdname, sizeof(frdname) );
-  if ( write( m_sockfd, COMMAND_LSF, strlen(COMMAND_LSF)) < 0)
-    {
-      perror( "write command" ) ;
-      goto error ;
-    }
-  while( read( m_sockfd, frdname, sizeof(frdname) ) > 0 )
-    {
-		if ( END == *(int*)&frdname )
-		{
-			break ;
-		}
-
-		//      cout << frdname << endl;
-      bzero( frdname, sizeof(frdname) );
-      returnSet.insert((std::string) (frdname));
-    }
- done:
-  return returnSet ;
- error:
-  //  retval = -1;
-  goto done ;
-}
-
-//show message list
-std::set<std::string> ClientCommand::LsmCommand( void ) const
-{
-  std::set<std::string> returnSet;
-  //  int retval = 0 ;
-  //  char msg[MSG_BUF_SIZE];
-  //  bzero( msg, sizeof(msg) );
-  UserMsg userMsg;
-  if ( write( m_sockfd, COMMAND_LSM, strlen(COMMAND_LSM)) < 0)
-    {
-      perror( "write command" ) ;
-      goto error ;
-    }
-  while(read( m_sockfd, &userMsg, sizeof(userMsg)) > 0 )
-    {
-		if ( END == *(int*)&userMsg )
-		{
-			break ;
-		}
-      char thisMessage[MSG_BUF_SIZE+FRD_BUF_SIZE];
-      strcpy(thisMessage, "(");
-      strcat(thisMessage, userMsg.sender);
-      strcat(thisMessage,")");
-      strcat(thisMessage,userMsg.message);
-      std::string messageString = string(thisMessage);
-      returnSet.insert(messageString);
-//        qDebug("inserting into returnSet in LsmCommand: ");
-//        qDebug(messageString.c_str());
-      //      cout << "( "<< userMsg.sender << " ): " << userMsg.message << endl;
-      //      bzero(userMsg.sender, sizeof(userMsg.sender));
-      //      bzero(userMsg.message, sizeof(userMsg.message));
-    }
-
-//  cout << "done" << endl;
-  
- done:
-  qDebug("lsm: before return");
-  return returnSet ;
- error:
-  //  retval = -1;
-  goto done ;
-}
-
-
 // send command
 int ClientCommand::SendCommand( string user, string msg )
 {
@@ -575,7 +575,7 @@ int ClientCommand::SendCommand( string user, string msg )
   bzero( szmsg, sizeof(szmsg) );
   strcpy( szuser, user.c_str() ) ;
   strcpy( szmsg, msg.c_str() ) ;
-  if ( write( m_sockfd, command, strlen(command) ) < 0 )
+  if ( write( m_sockfd, command, COMMAND_BUF_SIZE ) < 0 )
     {
       perror( "write send command" ) ;
       goto error;
