@@ -111,11 +111,11 @@ int ClientCommand::UnCommand( string __name)
   int replay = 0;
   char command[COMMAND_BUF_SIZE];
   bzero(command, sizeof(command));
-  strcpy( command, COMMAND_AP) ;
+  strcpy( command, COMMAND_UN) ;
   char frdname[256];
   bzero(frdname, sizeof(frdname));
   strcpy(frdname, __name.c_str());
-
+  cout<< frdname << endl;
   if( write( m_sockfd, command,  COMMAND_BUF_SIZE) < 0 )
     {
       perror("write un command") ;
@@ -131,6 +131,8 @@ int ClientCommand::UnCommand( string __name)
       perror(" read" );
       goto error;
     }
+  cout<< "command sent" <<endl;
+
   if( replay == 0 )
     {
       cout << " Friend " << frdname<< " deleted sucessfully!" << endl;
