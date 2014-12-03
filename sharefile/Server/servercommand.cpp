@@ -93,25 +93,34 @@ int ServerCommand::LsmCommand ( )
   // I guess it's looking into database and get the result
   // this class has fields like m_username that might be useful
   // you can check the header file
-  //  UserMsg userMsg;
+  int retval = 0;
+  UserMsg userMsg;
     std::string username=m_username;
-  // strcpy(userMsg.sender, m_username.c_str());
+    strcpy(userMsg.sender, m_username.c_str());
     queue<message_t> MQ;
     MQ=ude.user_db_editor::DbGetMessageQ(username, db_user);
     //std::cout<<"MQ"<<(MQ.front()).isRequest<<(MQ.front()).name<<(MQ.front()).message<<std::endl;
     while(!MQ.empty()){
       stringstream MQs;
       MQs<<(MQ.front()).isRequest<<" "<<(MQ.front()).name<<" "<<(MQ.front()).message << endl;
-      //   strcpy(userMsg.message, MQ.front().message.c_str());
-      // write( m_sockfd, &userMsg, sizeof(userMsg));
+      strcpy(userMsg.message, MQ.front().message.c_str());
+      if( write( m_sockfd, &userMsg, sizeof(userMsg)) < 0)
+	{
+	  perror( "write" ) ;
+	  goto error;
+	}
       // cout <<"( " <<userMsg.sender <<" ) " <<userMsg.message<< endl ; 
-      cout << MQs.str() << endl;
+      cout << MQs.str();
       MQ.pop();
     }
 
 
-  cout << " empty queue " << endl;
-  return 0;
+ done:
+    return retval;
+ error:
+    retval = -1 ;
+    goto done;
+
 }
 
 //int ServerCommand::LsfCommand ( ) const
