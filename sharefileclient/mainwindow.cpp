@@ -13,6 +13,8 @@
 #include <unistd.h>
 #include <fstream>
 #include <sstream>
+#include <unistd.h>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -211,6 +213,8 @@ void MainWindow::refresh_serverfiles_list() {
          QString qstr = QString::fromStdString(thisFile);
          ui->serverfiles_list->addItem(qstr);
     }
+    char message[] = "server files refreshed!\0";
+    changeMessage((std::string) message);
 }
 
 void MainWindow::refresh_messages_list() {
@@ -225,6 +229,8 @@ void MainWindow::refresh_messages_list() {
          QString qstr = QString::fromStdString(thisMessage);
          ui->messages_list->addItem(qstr);
     }
+    char message[] = "message list refreshed!\0";
+    changeMessage((std::string) message);
 }
 
 void MainWindow::refresh_friends_list() {
@@ -239,6 +245,8 @@ void MainWindow::refresh_friends_list() {
          QString qstr = QString::fromStdString(thisFriend);
          ui->friends_list->addItem(qstr);
     }
+    char message[] = "friend list refreshed!\0";
+    changeMessage((std::string) message);
 }
 
 void MainWindow::on_refresh_button_clicked()
@@ -252,12 +260,15 @@ void MainWindow::on_refresh_button_clicked()
         changeMessage((std::string) message);
         return;
     } else {
-        qDebug("before ls");
+//        qDebug("before ls");
         refresh_serverfiles_list();
-        qDebug("after ls");
+        usleep(3000000);
+//        qDebug("after ls");
         refresh_messages_list();
-        qDebug("after lsm");
+        usleep(3000000);
+//        qDebug("after lsm");
         refresh_friends_list();
+        usleep(3000000);
         qDebug("after lsf");
     }
 }
