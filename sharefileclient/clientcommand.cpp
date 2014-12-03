@@ -491,9 +491,9 @@ error:
 //show friend list
 std::set<std::string> ClientCommand::LsfCommand( void ) const
 {
-  //  int retval = 0 ;
   std::set<std::string> returnSet;
-  char frdname[FRD_BUF_SIZE];
+  //  int retval = 0 ;
+  char frdname[MSG_BUF_SIZE];
   bzero( frdname, sizeof(frdname) );
   if ( write( m_sockfd, COMMAND_LSF, strlen(COMMAND_LSF)) < 0)
     {
@@ -502,7 +502,12 @@ std::set<std::string> ClientCommand::LsfCommand( void ) const
     }
   while( read( m_sockfd, frdname, sizeof(frdname) ) > 0 )
     {
-      //      printf("%s\n", frdname);
+		if ( END == *(int*)&frdname )
+		{
+			break ;
+		}
+
+		//      cout << frdname << endl;
       bzero( frdname, sizeof(frdname) );
       returnSet.insert((std::string) (frdname));
     }
@@ -516,8 +521,8 @@ std::set<std::string> ClientCommand::LsfCommand( void ) const
 //show message list
 std::set<std::string> ClientCommand::LsmCommand( void ) const
 {
-  //  int retval = 0 ;
   std::set<std::string> returnSet;
+  //  int retval = 0 ;
   //  char msg[MSG_BUF_SIZE];
   //  bzero( msg, sizeof(msg) );
   UserMsg userMsg;
@@ -528,6 +533,10 @@ std::set<std::string> ClientCommand::LsmCommand( void ) const
     }
   while(read( m_sockfd, &userMsg, sizeof(userMsg)) > 0 )
     {
+		if ( END == *(int*)&userMsg )
+		{
+			break ;
+		}
       char thisMessage[MSG_BUF_SIZE+FRD_BUF_SIZE];
       strcpy(thisMessage, "(");
       strcat(thisMessage, userMsg.sender);
@@ -535,11 +544,13 @@ std::set<std::string> ClientCommand::LsmCommand( void ) const
       strcat(thisMessage,userMsg.message);
       std::string messageString = string(thisMessage);
       returnSet.insert(messageString);
-      //bzero(userMsg.sender, sizeof(userMsg.sender));
-      //bzero(userMsg.message, sizeof(userMsg.message));
+
+      //      cout << "( "<< userMsg.sender << " ): " << userMsg.message << endl;
+      //      bzero(userMsg.sender, sizeof(userMsg.sender));
+      //      bzero(userMsg.message, sizeof(userMsg.message));
     }
 
-  //  cout << "done" << endl;
+  cout << "done" << endl;
   
  done:
   return returnSet ;
