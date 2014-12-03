@@ -431,7 +431,7 @@ int ServerCommand::SendCommand( void )
   cout << "COMMAND_SEND" << endl;
   int retval = 0 ;
   char user[256] ;
-  char message[MSG_BUF_SIZE];
+  char message[256];
   bzero( user, sizeof(user));
   bzero( message, sizeof(message ) );
   // get receiver and message
