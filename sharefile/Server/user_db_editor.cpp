@@ -549,6 +549,7 @@ int user_db_editor::DbRmFriend(std::string username1, std::string username2, sql
     std::string DbName=DbNamess.str();
     std::string DbNamedb = DbNamess.str();
     DbNamedb.append(".db");
+    std::cout<<"DbNamedb"<<DbNamedb<<std::endl;
     sqlite3_open(DbNamedb.c_str(), &db_frd);
     if(!DbContain(DbName, "name", username2, db_frd )){
       sqlite3_close(db_frd);
