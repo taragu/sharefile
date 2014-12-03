@@ -228,6 +228,7 @@ void MainWindow::refresh_messages_list() {
          std::advance(it, i);
          std::string thisMessage = *it;
          QString qstr = QString::fromStdString(thisMessage);
+         qDebug(thisMessage.c_str());
          ui->messages_list->addItem(qstr);
     }
     char message[] = "message list refreshed!\0";
@@ -347,10 +348,13 @@ void MainWindow::on_messages_list_itemClicked(QListWidgetItem *item)
     int closeIndex = closeParenthesis - itemArray + 1;
     //grab the sender's name and the message
     std::string itemString = (std::string) itemArray;
+    qDebug(itemString.c_str());
     std::string senderName = itemString.substr(openIndex, closeIndex - openIndex - 1);
-    std::string message = itemString.substr(closeIndex+1);
+    qDebug(senderName.c_str());
+    std::string message = itemString.substr(closeIndex);
+    qDebug(message.c_str());
     //check if the item is a regular message or a request
-    if (message == "friend") {
+    if (message == "friend_request") {
         readMessageDialog->setIsARequest(true);
     }
     readMessageDialog->setSenderName(senderName);

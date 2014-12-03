@@ -9,10 +9,12 @@ ReadMessageDialog::ReadMessageDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->decline_button->hide();
+    errorPopup = new ErrorPopup();
 }
 
 ReadMessageDialog::~ReadMessageDialog()
 {
+    delete errorPopup;
     delete ui;
 }
 
@@ -25,11 +27,22 @@ void ReadMessageDialog::setIsARequest(bool _isARequest) {
 
 void ReadMessageDialog::on_buttonBox_accepted()
 {
+    qDebug("entering isARequest okay button onclick: before isARequest");
     if (isARequest) {
         // SEND FRIEND REQUEST: clientcommand's ApCommand
+        qDebug("entering isARequest okay button onclick: after isARequest");
         QByteArray receiverByteArray = ui->sendername_lineedit->text().toUtf8();
         const char* receiver = receiverByteArray.constData();
-        ClientCommandManager::clientCommand->ApCommand((std::string) receiver);
+        qDebug(receiver);
+        int retVal = ClientCommandManager::clientCommand->ApCommand((std::string) receiver);
+        if (retVal == -1) {
+            char message[] = "ApCommand error\0";
+            changeMessage((std::string) message);
+        }
+        if (retVal == 0) {
+            char message[] = "yay!\0";
+            changeMessage((std::string) message);
+        }
     }
     //if this is a normal message, nothing will happen when user clicks 'ok'
 }
@@ -50,4 +63,13 @@ void ReadMessageDialog::setSenderName(std::string username) {
 void ReadMessageDialog::setMessage(std::string message) {
     QString qstr = QString::fromStdString(message);
     ui->message_label->setText(qstr);
+}
+
+void ReadMessageDialog::changeMessage(std::string _message) {
+    message = _message;
+    notify(message);
+}
+
+std::string ReadMessageDialog::getMessage() {
+    return message;
 }

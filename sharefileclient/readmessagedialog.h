@@ -2,12 +2,14 @@
 #define READMESSAGEDIALOG_H
 
 #include <QDialog>
+#include "messagesubject.h"
+#include "errorpopup.h"
 
 namespace Ui {
 class ReadMessageDialog;
 }
 
-class ReadMessageDialog : public QDialog
+class ReadMessageDialog : public QDialog, public MessageSubject
 {
     Q_OBJECT
 
@@ -23,11 +25,15 @@ private slots:
 
     void on_decline_button_clicked();
 
+    void changeMessage(std::string string);
 
+    std::string getMessage();
 
 private:
     Ui::ReadMessageDialog *ui;
-    bool isARequest;
+    bool isARequest = false;
+    std::string message;
+    ErrorPopup * errorPopup;
 
 };
 
