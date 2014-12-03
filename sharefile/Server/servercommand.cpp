@@ -7,7 +7,8 @@ using namespace std ;
 
 
 ServerCommand::ServerCommand( int sockfd ) :
-  m_sockfd( sockfd ), m_bstart(false)
+  db_user(NULL), m_sockfd( sockfd ), m_bstart(false),
+  ude()
 {
   m_serverpath = "." ;
   //  m_fd = open( "userdata.dat", O_CREAT | O_RDWR, 0644 ) ;
@@ -25,6 +26,7 @@ ServerCommand::ServerCommand( int sockfd ) :
   
   
   sqlite3_open("UsersTable.db", &db_user);
+  m_bstart = true ;
 }
 
 ServerCommand::~ServerCommand( void )
@@ -117,6 +119,8 @@ int ServerCommand::LsmCommand ( )
     bzero(userMsg.sender, sizeof(userMsg.sender));
     bzero(userMsg.message, sizeof(userMsg.message));
   }
+  *(int*)&userMsg = END ;
+  write( m_sockfd, &userMsg, sizeof(userMsg) ) ;
   
   //    cout<< " done tshi command" << endl;
  done:
@@ -315,6 +319,7 @@ int ServerCommand::LogonCommand( void )
 {
   int retval = 0 ;
   UserData user ;
+  memset( &user, 0, sizeof(user) ) ;
   int replay = 0 ;
   int trycount = 3 ;
   //  set<UserData>::iterator it ;

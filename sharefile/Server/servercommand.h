@@ -73,7 +73,7 @@ class ServerCommand
   
   //database
   sqlite3 * db_user;
-   user_db_editor ude;
+  user_db_editor ude;
  private:
   struct UserData
   {
