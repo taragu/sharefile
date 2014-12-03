@@ -133,7 +133,7 @@ int ClientCommand::UnCommand( string __name)
     }
   if( replay == 0 )
     {
-      cout << " Friend " << frdname<< "deleted sucessfully!" << endl;
+      cout << " Friend " << frdname<< " deleted sucessfully!" << endl;
     }
   else
     {
@@ -175,7 +175,7 @@ int ClientCommand::ApCommand( string _name)
     }
   if( replay == 0 )
     {
-      cout << " Friend " << frdname<< "added sucessfully!" << endl;
+      cout << " Friend " << frdname<< " added sucessfully!" << endl;
     }
   else
     {
@@ -288,7 +288,7 @@ error:
 int ClientCommand::LsfCommand( void ) const
 {
   int retval = 0 ;
-  char frdname[MSG_BUF_SIZE];
+  char frdname[RECV_BUF_SIZE];
   bzero( frdname, sizeof(frdname) );
   if ( write( m_sockfd, COMMAND_LSF, strlen(COMMAND_LSF)) < 0)
     {
@@ -297,11 +297,10 @@ int ClientCommand::LsfCommand( void ) const
     }
   while( read( m_sockfd, frdname, sizeof(frdname) ) > 0 )
     {
-		if ( END == *(int*)&frdname )
-		{
-			break ;
-		}
-
+	  if ( END == *(int*)frdname )
+	  {
+		  break ;
+	  }
       cout << frdname << endl;
       bzero( frdname, sizeof(frdname) );
     }
