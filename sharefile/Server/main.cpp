@@ -68,6 +68,20 @@ void *clientthread( void *arg )
 				goto error ;
 			}
 		}
+		else if ( !strncmp( COMMAND_AP, commandbuf, strlen(COMMAND_SEND) ) )
+		{
+			if ( -1 == command.ApCommand( ) )
+			{
+				goto error ;
+			}
+		}
+		else if ( !strncmp( COMMAND_UN, commandbuf, strlen(COMMAND_SEND) ) )
+		{
+			if ( -1 == command.UnCommand( ) )
+			{
+				goto error ;
+			}
+		}
 		else if ( !strncmp( COMMAND_HELP, commandbuf, strlen(COMMAND_HELP) ) )
 		{
 			if ( -1 == command.HelpCommand( ) )

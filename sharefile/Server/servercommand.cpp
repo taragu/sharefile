@@ -95,39 +95,44 @@ int ServerCommand::LsmCommand ( )
   // you can check the header file
   int retval = 0;
   UserMsg userMsg;
-    std::string username=m_username;
-    strcpy(userMsg.sender, m_username.c_str());
-    queue<message_t> MQ;
-    MQ=ude.user_db_editor::DbGetMessageQ(username, db_user);
-    //std::cout<<"MQ"<<(MQ.front()).isRequest<<(MQ.front()).name<<(MQ.front()).message<<std::endl;
-    while(!MQ.empty()){
-      stringstream MQs;
-      MQs<<(MQ.front()).isRequest<<" "<<(MQ.front()).name<<" "<<(MQ.front()).message << endl;
-      strcpy(userMsg.message, MQ.front().message.c_str());
-      if( write( m_sockfd, &userMsg, sizeof(userMsg)) < 0)
-	{
-	  perror( "write" ) ;
-	  goto error;
-	}
-      // cout <<"( " <<userMsg.sender <<" ) " <<userMsg.message<< endl ; 
-      cout << MQs.str();
-      MQ.pop();
-    }
-
-
+  std::string username=m_username;
+  bzero(userMsg.sender, sizeof(userMsg.sender));
+  bzero(userMsg.message, sizeof(userMsg.message));
+  queue<message_t> MQ;
+  MQ=ude.user_db_editor::DbGetMessageQ(username, db_user);
+  //std::cout<<"MQ"<<(MQ.front()).isRequest<<(MQ.front()).name<<(MQ.front()).message<<std::endl;
+  while(!MQ.empty()){
+    stringstream MQs;
+    MQs<<(MQ.front()).isRequest<<" "<<(MQ.front()).name<<" "<<(MQ.front()).message << endl;
+    strcpy(userMsg.sender, MQ.front().name.c_str());
+    strcpy(userMsg.message, MQ.front().message.c_str());
+    if( write( m_sockfd, &userMsg, sizeof(userMsg)) < 0)
+      {
+	perror( "write" ) ;
+	goto error;
+      }
+    // cout <<"( " <<userMsg.sender <<" ) " <<userMsg.message<< endl ; 
+    cout << MQs.str();
+    MQ.pop();
+    bzero(userMsg.sender, sizeof(userMsg.sender));
+    bzero(userMsg.message, sizeof(userMsg.message));
+  }
+  
+  //    cout<< " done tshi command" << endl;
  done:
-    return retval;
+  return retval;
  error:
-    retval = -1 ;
-    goto done;
-
+  retval = -1 ;
+  goto done;
+  
 }
 
 //int ServerCommand::LsfCommand ( ) const
 int ServerCommand::LsfCommand ( )  
 
 {
-  /*
+  int retval = 0;
+
   // see above
   queue<string> FQ;
   FQ=ude.user_db_editor::DbGetFrQ(m_username, db_user);
@@ -137,10 +142,11 @@ int ServerCommand::LsfCommand ( )
     FQ.pop();
   }
 
-  */
-  cout<<"lsf function wokrs" << endl;
-
-  return 0;
+ done:
+  return retval;
+ error:
+  retval = -1 ;
+  goto done;
 }
 
 
@@ -454,17 +460,68 @@ int ServerCommand::SendCommand( void )
 }
 
 
-bool ServerCommand::ApproveAddFriendCommand(std::string Name2){
-  ude.user_db_editor::DbAddFriend(m_username, Name2, db_user);
-  ude.user_db_editor::DbAddFriend(Name2, m_username, db_user);
-  return 0;
+int ServerCommand::ApCommand(){
+  int retval = 0;
+  char frdname[MSG_BUF_SIZE];
+  int replay = 0;
+  bzero( frdname, sizeof(frdname));
+
+  if( read( m_sockfd, frdname, sizeof(frdname)) < 0 )
+    {
+      perror( " read friend name " );
+      goto error;
+    }
+
+  if( !(ude.user_db_editor::DbAddFriend(m_username, frdname, db_user) && 
+	ude.user_db_editor::DbAddFriend(frdname, m_username, db_user)))
+    {
+      perror("database failed");
+      replay = -1;
+    }
+  if( write( m_sockfd, &replay, sizeof(replay)) < 0 )
+    {
+      perror("write");
+      goto error;
+    }
+
+
+ done:
+  return retval;
+ error:
+  retval = -1 ;
+  goto done;
+
 }
 
 
-bool ServerCommand::RemoveFriendCommand(std::string receivername){
-  ude.user_db_editor::DbRmFriend(m_username, receivername, db_user);
-  ude.user_db_editor::DbRmFriend(receivername,m_username, db_user);
-  return 0;
+int ServerCommand::UnCommand(){
+  int retval = 0;
+  int replay = 0;
+  char frdname[256];
+  bzero( frdname, sizeof(frdname));
+  if( read( m_sockfd, frdname, sizeof(frdname)) < 0 )
+    {
+      perror( " read friend name " );
+      goto error;
+    }
+  if(!( ude.user_db_editor::DbRmFriend(m_username, receivername, db_user) &&
+	ude.user_db_editor::DbRmFriend(receivername,m_username, db_user)))
+    {
+      perror("database failed");
+      replay = -1 ;
+    }
+
+  if(write(m_sockfd, &replay, sizeof(replay)) < 0 )
+    {
+      perror("write");
+      goto error;
+    }
+  
+ done:
+  return retval;
+ error:
+  retval = -1;
+  goto done;
 }
 
 
