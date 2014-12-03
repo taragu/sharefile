@@ -45,16 +45,16 @@ void SendMessageDialog::on_unfriend_button_clicked()
     }
     QByteArray friendNameByteArray = ui->friendname_lineedit->text().toUtf8();
     const char* friendName = friendNameByteArray.constData();
-    //TODO CALL CLIENTCOMMAND TO UNFRIEND
-    //int retVal = ClientCommandManager::clientCommand->UnCommand(friendName);
-//    if (retVal == -1) {
-//        char message[] = "unfriend error\0";
-//        changeMessage((std::string) message);
-//    }
-//    if (retVal == 0) {
-//        char message[] = "unfriend success\0";
-//        changeMessage((std::string) message);
-//    }
+    // CALL CLIENTCOMMAND TO UNFRIEND
+    int retVal = ClientCommandManager::clientCommand->UnCommand(friendName);
+    if (retVal == -1) {
+        char message[] = "unfriend error\0";
+        changeMessage((std::string) message);
+    }
+    if (retVal == 0) {
+        char message[] = "unfriend success\0";
+        changeMessage((std::string) message);
+    }
 }
 
 void SendMessageDialog::changeMessage(std::string _message) {
