@@ -20,8 +20,8 @@ using namespace std ;
 
 #define RECV_BUF_SIZE         4096
 #define SEND_BUF_SIZE         4096
-#define MSG_BUF_SIZE          4096
-#define FRD_BUF_SIZE          256
+#define MSG_BUF_SIZE          256
+
 
 typedef struct sockaddr SA ;
 
@@ -38,6 +38,9 @@ typedef struct sockaddr SA ;
 #define COMMAND_SHARE         "share"
 #define COMMAND_RM            "rm"
 #define COMMAND_SEND          "send"
+#define COMMAND_UN            "un"
+#define COMMAND_AP            "ap"
+
 
 class ClientCommand
 {
@@ -58,6 +61,8 @@ public:
 	int RmCommand( string strfilename ) ;
 	int SendCommand(string user, string msg) ;
 	int manager( void ) ;
+	int ApCommand(string friend);
+	int UnCommand(string friend);
 	// send yuzhou friend_request
 	// send yuzhou howareyou
 private:
