@@ -38,10 +38,13 @@ using namespace std ;
 #define COMMAND_SEND      "send"
 #define COMMAND_LSM       "mls"
 #define COMMAND_LSF       "fls"
+#define COMMAND_UN        "un"
+#define COMMAND_AP        "ap"
+
 
 #define RECV_BUF_SIZE     4096
 #define SEND_BUF_SIZE     4096
-#define MSG_BUF_SIZE      4096
+#define MSG_BUF_SIZE      256
 
 class ServerCommand
 {
@@ -65,8 +68,8 @@ class ServerCommand
   int ShareCommand( void ) ;  // share
   int RmCommand( string filename ) ; // delete
   int SendCommand( void ); // send request or message
-  bool ApproveAddFriendCommand(string Name2);//add friend
-  bool RemoveFriendCommand(std::string receivername);
+  int ApCommand( void );//add friend
+  int UnCommand( void );
   
   //database
   sqlite3 * db_user;
