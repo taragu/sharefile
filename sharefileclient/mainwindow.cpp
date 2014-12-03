@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::destroyAll(){
+    ClientCommandManager::clientCommand->QuitCommand();
     delete ui;
     delete signupDialog;
     delete signinDialog;

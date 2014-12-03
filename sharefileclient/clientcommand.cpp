@@ -544,8 +544,8 @@ std::set<std::string> ClientCommand::LsmCommand( void ) const
       strcat(thisMessage,userMsg.message);
       std::string messageString = string(thisMessage);
       returnSet.insert(messageString);
-        qDebug("inserting into returnSet in LsmCommand: ");
-        qDebug(messageString.c_str());
+//        qDebug("inserting into returnSet in LsmCommand: ");
+//        qDebug(messageString.c_str());
       //      cout << "( "<< userMsg.sender << " ): " << userMsg.message << endl;
       //      bzero(userMsg.sender, sizeof(userMsg.sender));
       //      bzero(userMsg.message, sizeof(userMsg.message));
