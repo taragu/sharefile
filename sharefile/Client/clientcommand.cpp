@@ -651,11 +651,11 @@ retry:
 		}
 		else if ( COMMAND_AP == cmd )
 		{
-			ApCommand() ;
+			ApCommand( file ) ;
 		}
 		else if ( COMMAND_UN == cmd )
 		{
-			UnCommand() ;
+			UnCommand( file ) ;
 		}
 		else if ( COMMAND_LSM == cmd )
 		{
