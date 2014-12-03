@@ -140,12 +140,16 @@ int ServerCommand::LsfCommand ( )
   // see above
   queue<string> FQ;
   FQ=ude.user_db_editor::DbGetFrQ(m_username, db_user);
+  char sendBuf[SEND_BUF_SIZE] = { 0 } ;
   while(!FQ.empty()){
-    write( m_sockfd, FQ.front().c_str(), SEND_BUF_SIZE );
+	memset( sendBuf, 0, SEND_BUF_SIZE ) ;
+	strcpy( sendBuf, FQ.front().c_str() ) ;
+    write( m_sockfd, sendBuf, SEND_BUF_SIZE ) ;
     cout << FQ.front() << endl;
     FQ.pop();
   }
-
+  *(int*)sendBuf = END ;
+  write( m_sockfd, sendBuf, SEND_BUF_SIZE ) ;
  done:
   return retval;
  error:
