@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <pthread.h>
 
+#include "user_db_editor.h"
+#include <sqlite3.h>
+
 #define COMMAND_BUF      256
 
 typedef struct sockaddr SA ;
@@ -148,6 +151,8 @@ int main( int argc, char **argv )
 		std::cerr << "Enter:" << argv[0] << "<Port>" << std::endl ;
 		return - 1;
 	}
+	user_db_editor ude;
+	ude.user_db_editor::DbInitialize();
 	// prepare to listen
 	int listenfd = socket( AF_INET, SOCK_STREAM, 0 ) ;
 	if ( - 1 == listenfd )

@@ -23,7 +23,7 @@ ServerCommand::ServerCommand( int sockfd ) :
   //   m_Datas.insert( data ) ;
   // }
   
-  ude.user_db_editor::DbInitialize();
+  
   sqlite3_open("UsersTable.db", &db_user);
 }
 
