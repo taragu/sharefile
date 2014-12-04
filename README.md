@@ -1,5 +1,7 @@
 #sharefile
 
+Checkout our git repository at https://github.com/taragu/sharefile. 
+
 ##Installing Qt binary packages
 
 ###Ubuntu
@@ -32,4 +34,5 @@ Note: if you're running make in Qt Creator, PLEASE disable "shadow build"! (Go t
 	./sharefileclient
 
 ####Note
-For uploading files, we can support up to 1.5MB for each file.
+- For uploading files, sharefile can support up to 1.5MB for each file.
+- Valgrind: there was no memory leak when we run Valgrind in Qt Creator. However, if we run Valgrind in the terminal, there are many memory issues that come from the Qt Library. We could not figure out why.

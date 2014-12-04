@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->test_send_button->hide();
 }
 
-void MainWindow::destroyAll(){
+void MainWindow::destroyAll() {
     ClientCommandManager::clientCommand->QuitCommand();
     delete ui;
     delete signupDialog;
@@ -58,9 +58,9 @@ void MainWindow::on_signup_button_clicked()
         changeMessage((std::string) message);
         return;
     } else {
-       signupDialog->setUsersController(usersController);
-       signupDialog->setModal(true);
-       signupDialog->exec();
+        signupDialog->setUsersController(usersController);
+        signupDialog->setModal(true);
+        signupDialog->exec();
     }
 }
 
@@ -179,7 +179,7 @@ void MainWindow::on_sharefile_button_clicked()
         char message[] = "please sign in first!\0";
         changeMessage((std::string) message);
         return;
-    } else if (ui->friend_lineedit->text().isEmpty()){
+    } else if (ui->friend_lineedit->text().isEmpty()) {
         char message[] = "please enter your friend's name!\0";
         changeMessage((std::string) message);
         return;
@@ -209,11 +209,11 @@ void MainWindow::refresh_serverfiles_list() {
     int size = filesSet.size();
     std::set<std::string>::iterator it = filesSet.begin();
     ui->serverfiles_list->clear();
-    for (int i=0;i<size;i++){
-         std::advance(it, i);
-         std::string thisFile = *it;
-         QString qstr = QString::fromStdString(thisFile);
-         ui->serverfiles_list->addItem(qstr);
+    for (int i=0; i<size; i++) {
+        std::advance(it, i);
+        std::string thisFile = *it;
+        QString qstr = QString::fromStdString(thisFile);
+        ui->serverfiles_list->addItem(qstr);
     }
 //    char message[] = "server files refreshed!\0";
 //    changeMessage((std::string) message);
@@ -225,12 +225,12 @@ void MainWindow::refresh_messages_list() {
     int size = messagesSet.size();
     std::set<std::string>::iterator it = messagesSet.begin();
     ui->messages_list->clear();
-    for (int i=0;i<size;i++){
-         std::advance(it, i);
-         std::string thisMessage = *it;
-         QString qstr = QString::fromStdString(thisMessage);
+    for (int i=0; i<size; i++) {
+        std::advance(it, i);
+        std::string thisMessage = *it;
+        QString qstr = QString::fromStdString(thisMessage);
 //         qDebug(thisMessage.c_str());
-         ui->messages_list->addItem(qstr);
+        ui->messages_list->addItem(qstr);
     }
 //    char message[] = "message list refreshed!\0";
 //    changeMessage((std::string) message);
@@ -242,11 +242,11 @@ void MainWindow::refresh_friends_list() {
     int size = friendsSet.size();
     std::set<std::string>::iterator it = friendsSet.begin();
     ui->friends_list->clear();
-    for (int i=0;i<size;i++){
-         std::advance(it, i);
-         std::string thisFriend = *it;
-         QString qstr = QString::fromStdString(thisFriend);
-         ui->friends_list->addItem(qstr);
+    for (int i=0; i<size; i++) {
+        std::advance(it, i);
+        std::string thisFriend = *it;
+        QString qstr = QString::fromStdString(thisFriend);
+        ui->friends_list->addItem(qstr);
     }
 //    char message[] = "friend list refreshed!\0";
 //    changeMessage((std::string) message);

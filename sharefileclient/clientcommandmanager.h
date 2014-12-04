@@ -13,16 +13,16 @@ class ClientCommandManager {
 
 public:
 
-  static ClientCommand * clientCommand;
+    static ClientCommand * clientCommand;
 
-  static void setClientCommand(ClientCommand * _clientCommand) {
-    clientCommand = _clientCommand;
-  }
+    static void setClientCommand(ClientCommand * _clientCommand) {
+        clientCommand = _clientCommand;
+    }
 
-  ~ClientCommandManager( void )
-  {
-      delete clientCommand;
-  }
+    ~ClientCommandManager( void )
+    {
+        delete clientCommand;
+    }
 
 };
 

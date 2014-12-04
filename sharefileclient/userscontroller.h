@@ -10,7 +10,7 @@ private:
 public:
     UsersController(): signedIn(false) {}
     UsersController(bool _signedIn) : signedIn(_signedIn) {}
-    bool isSignedIn(){
+    bool isSignedIn() {
         return signedIn;
     }
 
@@ -28,7 +28,7 @@ public:
         return username;
     }
 
-    void setUsername(std::string _username){
+    void setUsername(std::string _username) {
         username = _username;
     }
 };

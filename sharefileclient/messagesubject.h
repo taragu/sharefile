@@ -9,14 +9,14 @@
 #include <vector>
 #include <errorpopup.h>
 
-class MessageSubject{
+class MessageSubject {
     std::vector<ErrorPopup *> dialogList;
 public:
     void attach(ErrorPopup * objectToUpdate) {
         dialogList.push_back(objectToUpdate);
     }
 
-    void detach(ErrorPopup * objectToUpdate){
+    void detach(ErrorPopup * objectToUpdate) {
         dialogList.erase(std::remove(dialogList.begin(), dialogList.end(), objectToUpdate), dialogList.end());
     }
 

@@ -79,8 +79,8 @@ public:
 private:
     struct UserMsg
     {
-      char sender[256];
-      char message[MSG_BUF_SIZE];
+        char sender[256];
+        char message[MSG_BUF_SIZE];
     };
 
     struct UserData

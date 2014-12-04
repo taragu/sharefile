@@ -16,7 +16,7 @@
 //#include <QFile>
 int main(int argc, char *argv[])
 {
-  //QCoreApplication a(argc, argv);
+    //QCoreApplication a(argc, argv);
 
     //Initialize and open databases
     sqlite3 * db_user;
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     std::cout<<"FQ"<<FQ.front();
     FQ.pop();
     //std::cout<<"FQ"<<FQ.front();
-    
+
     ude.user_db_editor::DbRmFriend("Ah","CeCe",db_user);
     ude.user_db_editor::DbRmFile("Ah","File1",db_user);
     std::queue<message_t> MQ;

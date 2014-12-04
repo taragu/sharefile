@@ -586,6 +586,15 @@ moc_addafrienddialog.cpp: ../../../Qt/5.3/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt/5.3/gcc_64/include/QtCore/qfiledevice.h \
 		../../../Qt/5.3/gcc_64/include/QtGui/qvector2d.h \
 		../../../Qt/5.3/gcc_64/include/QtGui/qtouchdevice.h \
+		clientcommandmanager.h \
+		clientcommand.h \
+		errorpopup.h \
+		IObserver.h \
+		messagesubject.h \
+		../../../Qt/5.3/gcc_64/include/QtCore/QDebug \
+		../../../Qt/5.3/gcc_64/include/QtCore/QDir \
+		../../../Qt/5.3/gcc_64/include/QtCore/qdir.h \
+		../../../Qt/5.3/gcc_64/include/QtCore/qfileinfo.h \
 		addafrienddialog.h
 	/home/tara/Qt/5.3/gcc_64/bin/moc $(DEFINES) -I/home/tara/Qt/5.3/gcc_64/mkspecs/linux-g++ -I/home/tara/Documents/sharefile/sharefileclient -I/home/tara/Documents/sharefile/sharefileclient -I/home/tara/Qt/5.3/gcc_64/include -I/home/tara/Qt/5.3/gcc_64/include/QtWidgets -I/home/tara/Qt/5.3/gcc_64/include/QtGui -I/home/tara/Qt/5.3/gcc_64/include/QtCore addafrienddialog.h -o moc_addafrienddialog.cpp
 
@@ -915,6 +924,8 @@ moc_mainwindow.cpp: ../../../Qt/5.3/gcc_64/include/QtWidgets/QMainWindow \
 		userscontroller.h \
 		signindialog.h \
 		addafrienddialog.h \
+		clientcommandmanager.h \
+		clientcommand.h \
 		sendmessagedialog.h \
 		readmessagedialog.h \
 		mainwindow.h
@@ -1356,6 +1367,13 @@ moc_readmessagedialog.cpp: ../../../Qt/5.3/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt/5.3/gcc_64/include/QtCore/qfiledevice.h \
 		../../../Qt/5.3/gcc_64/include/QtGui/qvector2d.h \
 		../../../Qt/5.3/gcc_64/include/QtGui/qtouchdevice.h \
+		messagesubject.h \
+		../../../Qt/5.3/gcc_64/include/QtCore/QDebug \
+		../../../Qt/5.3/gcc_64/include/QtCore/QDir \
+		../../../Qt/5.3/gcc_64/include/QtCore/qdir.h \
+		../../../Qt/5.3/gcc_64/include/QtCore/qfileinfo.h \
+		errorpopup.h \
+		IObserver.h \
 		readmessagedialog.h
 	/home/tara/Qt/5.3/gcc_64/bin/moc $(DEFINES) -I/home/tara/Qt/5.3/gcc_64/mkspecs/linux-g++ -I/home/tara/Documents/sharefile/sharefileclient -I/home/tara/Documents/sharefile/sharefileclient -I/home/tara/Qt/5.3/gcc_64/include -I/home/tara/Qt/5.3/gcc_64/include/QtWidgets -I/home/tara/Qt/5.3/gcc_64/include/QtGui -I/home/tara/Qt/5.3/gcc_64/include/QtCore readmessagedialog.h -o moc_readmessagedialog.cpp
 
@@ -1500,6 +1518,15 @@ addafrienddialog.o: addafrienddialog.cpp addafrienddialog.h \
 		../../../Qt/5.3/gcc_64/include/QtCore/qfiledevice.h \
 		../../../Qt/5.3/gcc_64/include/QtGui/qvector2d.h \
 		../../../Qt/5.3/gcc_64/include/QtGui/qtouchdevice.h \
+		clientcommandmanager.h \
+		clientcommand.h \
+		errorpopup.h \
+		IObserver.h \
+		messagesubject.h \
+		../../../Qt/5.3/gcc_64/include/QtCore/QDebug \
+		../../../Qt/5.3/gcc_64/include/QtCore/QDir \
+		../../../Qt/5.3/gcc_64/include/QtCore/qdir.h \
+		../../../Qt/5.3/gcc_64/include/QtCore/qfileinfo.h \
 		ui_addafrienddialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o addafrienddialog.o addafrienddialog.cpp
 
@@ -1923,9 +1950,10 @@ main.o: main.cpp mainwindow.h \
 		userscontroller.h \
 		signindialog.h \
 		addafrienddialog.h \
+		clientcommandmanager.h \
+		clientcommand.h \
 		sendmessagedialog.h \
 		readmessagedialog.h \
-		clientcommand.h \
 		../../../Qt/5.3/gcc_64/include/QtWidgets/QApplication \
 		../../../Qt/5.3/gcc_64/include/QtWidgets/qapplication.h \
 		../../../Qt/5.3/gcc_64/include/QtCore/qcoreapplication.h \
@@ -2053,11 +2081,11 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		userscontroller.h \
 		signindialog.h \
 		addafrienddialog.h \
+		clientcommandmanager.h \
+		clientcommand.h \
 		sendmessagedialog.h \
 		readmessagedialog.h \
 		connectdialog.h \
-		clientcommand.h \
-		clientcommandmanager.h \
 		../../../Qt/5.3/gcc_64/include/QtWidgets/QFileDialog \
 		../../../Qt/5.3/gcc_64/include/QtWidgets/qfiledialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
@@ -2512,6 +2540,13 @@ readmessagedialog.o: readmessagedialog.cpp readmessagedialog.h \
 		../../../Qt/5.3/gcc_64/include/QtCore/qfiledevice.h \
 		../../../Qt/5.3/gcc_64/include/QtGui/qvector2d.h \
 		../../../Qt/5.3/gcc_64/include/QtGui/qtouchdevice.h \
+		messagesubject.h \
+		../../../Qt/5.3/gcc_64/include/QtCore/QDebug \
+		../../../Qt/5.3/gcc_64/include/QtCore/QDir \
+		../../../Qt/5.3/gcc_64/include/QtCore/qdir.h \
+		../../../Qt/5.3/gcc_64/include/QtCore/qfileinfo.h \
+		errorpopup.h \
+		IObserver.h \
 		ui_readmessagedialog.h \
 		clientcommandmanager.h \
 		clientcommand.h

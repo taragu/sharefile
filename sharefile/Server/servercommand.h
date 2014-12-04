@@ -48,67 +48,67 @@ using namespace std ;
 
 class ServerCommand
 {
- public:
-  ServerCommand( int sockfd ) ;
-  ~ServerCommand( void ) ;
-  int QuitCommand( void ) const ;
-  int GetCommand( const char *fileName ) const ;
-  int PutCommand( const char *fileName ) const ;
-  int LsCommand( void ) const ;
-  int LsmCommand( void )  ;
-  int LsfCommand( void )  ;
-  
-  // int LsmCommand( void )  ;
-  // int LsfCommand( void )  ;
+public:
+    ServerCommand( int sockfd ) ;
+    ~ServerCommand( void ) ;
+    int QuitCommand( void ) const ;
+    int GetCommand( const char *fileName ) const ;
+    int PutCommand( const char *fileName ) const ;
+    int LsCommand( void ) const ;
+    int LsmCommand( void )  ;
+    int LsfCommand( void )  ;
 
-  int CdCommand( const char *path ) ;
-  int HelpCommand( void ) const ;
-  int LoginCommand( void ) ;   // login on 
-  int LogonCommand( void ) ;   // register
-  int ShareCommand( void ) ;  // share
-  int RmCommand( string filename ) ; // delete
-  int SendCommand( void ); // send request or message
-  int ApCommand( void );//add friend
-  int UnCommand( void ); // remove friend
-  
-  //database
-  sqlite3 * db_user;
-  user_db_editor ude;
- private:
-  struct UserData
-  {
-    UserData( const string &name = "",
-	      const string &passwd = "" )
+    // int LsmCommand( void )  ;
+    // int LsfCommand( void )  ;
+
+    int CdCommand( const char *path ) ;
+    int HelpCommand( void ) const ;
+    int LoginCommand( void ) ;   // login on
+    int LogonCommand( void ) ;   // register
+    int ShareCommand( void ) ;  // share
+    int RmCommand( string filename ) ; // delete
+    int SendCommand( void ); // send request or message
+    int ApCommand( void );//add friend
+    int UnCommand( void ); // remove friend
+
+    //database
+    sqlite3 * db_user;
+    user_db_editor ude;
+private:
+    struct UserData
     {
-      strcpy( username, name.c_str() ) ;
-      strcpy( password, passwd.c_str() ) ;
-    }
-    char username[256] ;
-    char password[256] ;
-    bool operator<( const UserData &that ) const
+        UserData( const string &name = "",
+                  const string &passwd = "" )
+        {
+            strcpy( username, name.c_str() ) ;
+            strcpy( password, passwd.c_str() ) ;
+        }
+        char username[256] ;
+        char password[256] ;
+        bool operator<( const UserData &that ) const
+        {
+            return strcmp( username, that.username ) < 0 ;
+        }
+    } ;
+
+    struct UserMsg
     {
-      return strcmp( username, that.username ) < 0 ;
-    }
-  } ;
-
-  struct UserMsg
-  {
-    char sender[256];
-    char message[MSG_BUF_SIZE];
-  };
+        char sender[256];
+        char message[MSG_BUF_SIZE];
+    };
 
 
-  bool           m_bstart ;     // server status
-  int            m_sockfd ;     // socket
-  string         m_userpath ;   // user directory
-  string         m_serverpath ; // server directory
-  string         m_username ;   // user
-  string         m_password ;   // password
-  //  int            m_fd ;         // user data file
-  set<UserData>  m_Datas ;      // user data
- private:
-  //user not found
-  bool FindUser( const string &name ) const ;   
+    bool           m_bstart ;     // server status
+    int            m_sockfd ;     // socket
+    string         m_userpath ;   // user directory
+    string         m_serverpath ; // server directory
+    string         m_username ;   // user
+    string         m_password ;   // password
+    //  int            m_fd ;         // user data file
+    set<UserData>  m_Datas ;      // user data
+private:
+    //user not found
+    bool FindUser( const string &name ) const ;
 } ;
 
 template<typename T, typename Container=std::deque<T> >
@@ -118,10 +118,18 @@ public:
     typedef typename Container::iterator iterator;
     typedef typename Container::const_iterator const_iterator;
 
-    iterator begin() { return this->c.begin(); }
-    iterator end() { return this->c.end(); }
-    const_iterator begin() const { return this->c.begin(); }
-    const_iterator end() const { return this->c.end(); }
+    iterator begin() {
+        return this->c.begin();
+    }
+    iterator end() {
+        return this->c.end();
+    }
+    const_iterator begin() const {
+        return this->c.begin();
+    }
+    const_iterator end() const {
+        return this->c.end();
+    }
 };
 
-#endif 
+#endif
